@@ -17,46 +17,10 @@
     <script src="https://kit.fontawesome.com/a3e7be1751.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-sm bg-success navbar-dark mb-5">
-        <!-- Brand -->
-        <a class="navbar-brand" href="/">Quản lý thú cưng</a>
-
-        <ul class="navbar-nav ml-auto">
-            <!-- Dropdown -->
-            {{#if email}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        <i class="fa-regular fa-circle-user"></i> {{email}}
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/"><i class="fa-solid fa-cash-register"></i> Bán hàng</a>
-                        <a class="dropdown-item" href="/"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử bán hàng</a>
-                        <a class="dropdown-item" href="/"><i class="fa-solid fa-chart-simple"></i> Báo cáo thống kê</a>
-                        <a class="dropdown-item" href="/"><i class="fa-solid fa-address-card"></i> Hồ sơ</a>
-                        <a class="dropdown-item" href="/"><i class="fa-solid fa-arrow-right-to-bracket"></i> Đăng xuất</a>
-                    </div>
-                </li>
-
-            {{else}}
-                <li class="nav-item">
-                    <a class="btn btn-light" href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Đăng nhập</a>
-                </li>
-            {{/if}}
-        </ul>
-    </nav>
+    {{> header}}
     
     {{{body}}}
 
-    <div style="height:300px;"></div>
-    <footer class="bg-success text-light text-center py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; 2024 Quản lý môi trường và sức khỏe thú cưng. Tất cả các quyền được bảo lưu.
-                </div>
-            </div>
-        </div>
-    </footer>
+    {{> footer}}
 </body>
 </html>

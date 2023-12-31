@@ -1,0 +1,140 @@
+header {
+    background-color: #02B8FE;
+    /* Màu nền của header */
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 1200px;
+    /* Giới hạn chiều rộng của header */
+}
+
+.logo img {
+    height: 60px;
+}
+
+.navigation-menu ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    margin-left: 60px;
+    padding: 0;
+}
+
+.navigation-menu ul li {
+    margin-right: 20px;
+}
+
+.navigation-menu ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.navigation-menu ul li a:hover {
+    color: #eaff00;
+    /* Màu chữ khi hover */
+}
+
+.auth-buttons button {
+    padding: 8px 16px;
+    /* Đảm bảo cùng padding cho cả hai nút để chúng bằng nhau về kích thước */
+    margin: 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    /* Thêm thuộc tính này để loại bỏ khoảng cách giữa các nút */
+    margin-left: 2px;
+    /* Hoặc bạn có thể thiết lập khoảng cách cụ thể giữa các nút nếu muốn */
+}
+
+#login {
+    background-color: #ff0f43;
+    color: white;
+}
+
+#register {
+    background-color: #4caf50;
+    color: white;
+}
+
+#login,
+#register {
+    flex: none;
+    /* Bảo đảm rằng flexbox không ảnh hưởng đến kích thước của nút */
+    /* ...các thuộc tính khác giữ nguyên... */
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.search-bar input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 8px;
+    flex-grow: 1;
+}
+
+.auth-buttons {
+    display: flex;
+    margin-left: auto;
+    /* Để đẩy khối nút ra bên phải */
+    margin-right: 2px;
+    /* Điều chỉnh khoảng cách từ khối nút đến cạnh phải */
+}
+
+#search {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff5722;
+    font-size: 16px;
+    /* Điều chỉnh kích thước của icon nếu cần */
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+
+/* Responsive design adjustments */
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+    }
+    .navigation-menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    .navigation-menu ul li {
+        margin-bottom: 10px;
+    }
+    .search-bar {
+        order: -1;
+        /* Đặt search-bar lên trên cùng khi ở chế độ responsive */
+        width: 100%;
+        /* Chiếm đầy chiều rộng khi ở chế độ responsive */
+        margin-right: 0;
+        /* Xóa khoảng cách khi ở chế độ responsive */
+    }
+    .auth-buttons {
+        margin-top: 10px;
+        width: 100%;
+        /* Cho phép auth-buttons chiếm đầy chiều rộng */
+        justify-content: flex-end;
+        /* Căn các nút ra bên phải khi ở chế độ responsive */
+    }
+}
