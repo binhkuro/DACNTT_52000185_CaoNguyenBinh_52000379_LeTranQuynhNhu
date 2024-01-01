@@ -40,6 +40,7 @@ header {
 .navigation-menu ul li a:hover {
     color: #eaff00;
     /* Màu chữ khi hover */
+    transition: background-color 0.3s ease;
 }
 
 .auth-buttons button {
@@ -60,9 +61,23 @@ header {
     color: white;
 }
 
+#login:hover {
+    background-color: #eaff00;
+    /* Màu vàng cho hiệu ứng hover */
+    /* Có thể thêm transition cho hiệu ứng mượt mà */
+    transition: background-color 0.3s ease;
+}
+
 #register {
     background-color: #4caf50;
     color: white;
+}
+
+#register:hover {
+    background-color: #eaff00;
+    /* Màu vàng cho hiệu ứng hover */
+    /* Có thể thêm transition cho hiệu ứng mượt mà */
+    transition: background-color 0.3s ease;
 }
 
 #login,
@@ -106,6 +121,13 @@ header {
     color: white;
     cursor: pointer;
     white-space: nowrap;
+}
+
+#search:hover {
+    background-color: #eaff00;
+    /* Màu vàng cho hiệu ứng hover */
+    /* Có thể thêm transition cho hiệu ứng mượt mà */
+    transition: background-color 0.3s ease;
 }
 
 

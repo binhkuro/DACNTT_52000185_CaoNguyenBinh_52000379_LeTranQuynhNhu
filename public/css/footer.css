@@ -1,0 +1,61 @@
+footer {
+    background-color: #02B8FE;
+    font-family: 'Arial', sans-serif;
+    color: white;
+    line-height: 30px;
+    /* Đảm bảo các thành phần cùng một hàng */
+}
+
+footer .container {
+    max-width: 1200px;
+    /* hoặc bất kỳ giá trị nào phù hợp với layout của bạn */
+}
+
+footer .row {
+    align-items: center;
+}
+
+footer .brand-name {
+    margin-bottom: 0;
+    text-align: center;
+    /* Canh giữa chữ */
+}
+
+footer .social-icons a {
+    color: #eaff00;
+    padding: 0 10px;
+    font-size: 1.5em;
+    /* Đặt kích thước của icons */
+}
+
+footer .social-icons a:hover {
+    color: rgb(0, 51, 255);
+    transition: background-color 0.3s ease;
+}
+
+.footer-logo {
+    max-height: 50px;
+    /* Điều chỉnh kích thước logo */
+    width: auto;
+}
+
+
+/* Responsive tweaks */
+
+@media (max-width: 768px) {
+    .footer-logo {
+        margin-bottom: 20px;
+    }
+    .brand-name {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .social-icons {
+        text-align: center;
+    }
+    .col-md-4 {
+        text-align: center;
+        /* Canh giữa tất cả khi màn hình nhỏ */
+        margin-bottom: 10px;
+    }
+}
