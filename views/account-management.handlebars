@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th>AVATAR</th>
+                    <th>HỌ TÊN</th>
+                    <th>SỐ ĐIỆN THOẠI</th>
+                    <th>ĐỊA CHỈ</th>
+                    <th>TRẠNG THÁI KHÓA</th>
+                    <th>HÀNH ĐỘNG</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each accounts}}
+                    <tr {{{isActivateAccount activateStatus}}}>
+                        <td><img src="/uploads/avatars/{{profilePicture}}" class="old"></td>
+                        <td>{{fullname}}</td>
+                        <td>{{phoneNumber}}</td>
+                        <td>{{address}}</td>
+                        <td>
+                            {{#getLockedStatus email lockedStatus}}{{/getLockedStatus}}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" onclick="resendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
+                            <a href="/profileid/{{email}}" class="btn btn-secondary" style="text-decoration: none; color: white;">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

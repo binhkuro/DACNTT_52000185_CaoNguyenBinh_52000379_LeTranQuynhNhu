@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 // Import các module controller
-
+const accountController = require('./controllers/AccountController')
 
 // Lấy dữ liệu từ file .env ra
 const PORT = process.env.PORT;
@@ -61,6 +61,22 @@ app.get("/medical", (req, res) => {
         title: 'Lịch trình y tế',
     });
 });
+app.get("/register", (req, res) => {
+    if (req.session.email) {
+        delete req.session.email;
+    }
+
+    res.render('register');
+})
+
+app.post("/register", (req, res) => {
+    accountController.addAccount(req, res);
+})
+
+app.post("/send-email", (req, res) => {
+    accountController.sendEmail(req, res);
+    res.end();
+})
 
 // Middle ware 404 error
 app.use((req, res) => {
@@ -76,14 +92,15 @@ app.use((err, req, res, next) => {
 })
 
 // Kết nối tới database ()
-// mongoose.connect(CONNECTION_STRING)
-//     .then(() => {
-//         console.log('Database connected');
-//         app.listen(PORT); // Tạo server trên cổng 8080 hoặc PORT từ .env
-//     })
-//     .catch((error) => {
-//         console.log('Error connecting to database', error);
-//     });
+mongoose.connect(CONNECTION_STRING)
+    .then(() => {
+        accountController.initData();
+        console.log('Database connected');
+        app.listen(PORT); // Tạo server trên cổng 8080 hoặc PORT từ .env
+    })
+    .catch((error) => {
+        console.log('Error connecting to database', error);
+    });
 
 console.log('Database connected');
 app.listen(PORT);
