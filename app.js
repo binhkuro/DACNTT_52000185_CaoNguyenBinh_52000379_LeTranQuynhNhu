@@ -101,6 +101,3 @@ mongoose.connect(CONNECTION_STRING)
     .catch((error) => {
         console.log('Error connecting to database', error);
     });
-
-console.log('Database connected');
-app.listen(PORT);

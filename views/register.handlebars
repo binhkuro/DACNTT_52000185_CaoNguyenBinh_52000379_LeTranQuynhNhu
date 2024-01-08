@@ -1,42 +1,38 @@
-{{!-- <link rel="stylesheet" href="/css/register.css"> --}}
-
+<link rel="stylesheet" href="/css/register.css">
 <div class="register-container">
     <h2>ĐĂNG KÝ</h2>
     <form action="/register" method="post" novalidate>
         <div class="form-field">
-            <label for="email">Email:</label>
+            <label for="email">Nhập email:</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Email của bạn (VD: abc@gmail.com)" value="{{email}}">
         </div>
-        <div class="form-field">
-            <label for="fullname">Họ và tên:</label>
+		<div class="form-field">
+            <label for="fullname">Nhập họ và tên:</label>
             <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Họ và tên của bạn (VD: Cao Như Quỳnh)" value="{{fullname}}">
         </div>
         <div class="form-field">
-            <label for="phoneNumber">Số điện thoại:</label>
+            <label for="phoneNumber">Nhập số điện thoại:</label>
             <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Số điện thoại của bạn (VD: 0948834943)" value="{{phoneNumber}}">
         </div>
         <div class="form-field">
-            <label for="address">Địa chỉ:</label>
+            <label for="address">Nhập địa chỉ:</label>
             <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ của bạn (VD: Quận 8, thành phố Hồ Chí Minh)" value="{{address}}">
         </div>
         <div class="form-field">
-            <label for="password">Mật khẩu:</label>
+            <label for="password">Nhập mật khẩu:</label>
             <input type="password" id="password" name="password" placeholder="Mật khẩu của bạn" required>
         </div>
         <div class="form-field">
-            <label for="confirmPassword">Xác nhận mật khẩu:</label>
+            <label for="confirmPassword">Xác nhận lại mật khẩu:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
         </div>
         <div class="form-field">
             <input type="submit" value="ĐĂNG KÝ">
         </div>
         <img src="/img/cat-image.png" alt="Cat Image" class="cat-image">
-        <div class="signup-prompt">
-            <p>Bạn đã có tài khoản? <a href="/login" style="font-weight: bold;">Đăng Nhập</a></p>
-        </div>
     </form>
-
-    {{#if error}}
+	
+	{{#if error}}
         <div class="alert alert-danger">{{error}}</div>
     {{/if}}
 
