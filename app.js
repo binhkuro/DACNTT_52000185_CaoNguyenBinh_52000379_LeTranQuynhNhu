@@ -44,6 +44,12 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/login", (req, res) => {
+    res.render('login', {
+        title: 'Đăng nhập',
+    });
+});
+
 // Middle ware 404 error
 app.use((req, res) => {
     res.status(404)
