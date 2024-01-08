@@ -50,6 +50,18 @@ app.get("/login", (req, res) => {
     });
 });
 
+app.get("/forgot-password", (req, res) => {
+    res.render('forgot-password', {
+        title: 'Quên mật khẩu',
+    });
+});
+
+app.get("/medical", (req, res) => {
+    res.render('medical', {
+        title: 'Lịch trình y tế',
+    });
+});
+
 // Middle ware 404 error
 app.use((req, res) => {
     res.status(404)

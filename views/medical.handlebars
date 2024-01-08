@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="/css/medical.css">
+<div class="medical-container">
+    <form action="/medical" method="post"></form>
+    <!-- Container cho nút và lịch -->
+    <div class="content-container">
+        <div class="buttons-container">
+            <button id="schedule-button">Ghi lịch trình</button>
+            <button id="reminder-button">Tạo nhắc nhở</button>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <span class="month-year-header">
+                    <button class="prev-month">&lt;</button>
+                    <span class="month-year-text">February 2021</span>
+                    <button class="next-month">&gt;</button>
+                </span>
+            </div>
+            <div class="calendar-week-day">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-days">
+                <!-- Dữ liệu ngày sẽ được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/medical.js"></script>

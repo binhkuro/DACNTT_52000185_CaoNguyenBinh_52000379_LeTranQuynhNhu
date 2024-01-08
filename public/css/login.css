@@ -8,9 +8,9 @@
         .login-container {
             position: relative;
             background: #d8aa18;
-            width: 300px;
+            width: 500px;
             margin: 100px auto;
-            padding: 20px;
+            padding: 60px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -57,12 +57,20 @@
             font-weight: bold;
         }
         
+        .forgot-password {
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .forgot-password a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
         .cat-image {
             position: absolute;
-            right: -50px;
-            /* Adjust as necessary to position the cat outside the container */
-            bottom: -20px;
-            /* Adjust as necessary */
-            width: 100px;
-            /* Set a specific width for the cat image */
+            right: 20px;
+            bottom: 10px;
+            width: 120px;
         }
