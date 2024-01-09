@@ -11,44 +11,44 @@ async function initData() {
     // Trước khi khởi tạo dữ liệu mẫu thì ta cần xóa các dữ liệu hiện có
     await Account.deleteMany()
 
+    const hashedPasswordAdmin = await bcrypt.hash("1234567890", 10);
     // Tài khoản admin
     let account = new Account({
         email: "admin@gmail.com", 
-        password: "1234567890",
+        password: hashedPasswordAdmin,
         fullname: "Administrator",
         phoneNumber: "0942563747",
         address: "142, Thống Nhất, khóm 01, phường 05, thành phố Bạc Liêu",
         profilePicture: "default-avatar.png",
         activateStatus: 1,
-        isNewUser: 0,
         lockedStatus: 0
     });
 
     await account.save()
 
+    const hashedPasswordUser1 = await bcrypt.hash("1234567890", 10);
     let account1 = new Account({
         email: "caonguyenbinh12@gmail.com", 
-        password: "1234567890",
+        password: hashedPasswordUser1,
         fullname: "Cao Nguyên Bình",
         phoneNumber: "0942563747",
         address: "142, Thống Nhất, khóm 01, phường 05, thành phố Bạc Liêu, tỉnh Bạc Liêu",
         profilePicture: "default-avatar.png",
         activateStatus: 1,
-        isNewUser: 1,
         lockedStatus: 0
     });
 
     await account1.save()
 
+    const hashedPasswordUser2 = await bcrypt.hash("1234567890", 10);
     let account2 = new Account({
         email: "letranquynhnhu1692@gmail.com", 
-        password: "1234567890",
+        password: hashedPasswordUser2,
         fullname: "Lê Trần Quỳnh Như",
         phoneNumber: "0853094094",
         address: "160/8A, chợ Láng Tròn, Thị Xã Giá Rai, tỉnh Bạc Liêu",
         profilePicture: "default-avatar.png",
         activateStatus: 1,
-        isNewUser: 0,
         lockedStatus: 0
     });
 
@@ -71,7 +71,7 @@ function getAccountManagementPage(req, res) {
 }
 
 // Đăng ký
-async function addAccount(req, res) {
+async function registerAccount(req, res) {
     // Kiểm tra tính hợp lệ của dữ liệu
     if(req.body.email === "" || req.body.fullname === "" || req.body.phoneNumber === "" || req.body.address === "" || req.body.password === "" || req.body.confirmPassword === "") {
         req.flash("error", "Vui lòng không bỏ trống thông tin");
@@ -93,15 +93,16 @@ async function addAccount(req, res) {
         return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }
 
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     let account = new Account({
         email: req.body.email, 
-        password: req.body.password,
+        password: hashedPassword,
         fullname: req.body.fullname,
         phoneNumber: req.body.phoneNumber,
         address: req.body.address,
         profilePicture: "default-avatar.png",
         activateStatus: 0, // tài khoản mới tạo mặc định chưa được activate (tức là chưa click vào đường dẫn trong email)
-        isNewUser: 1, // tài khoản mới tạo mặc định là user mới
         lockedStatus: 0 // tài khoản mới tạo mặc định chưa bị khóa
     });
 
@@ -116,6 +117,61 @@ async function addAccount(req, res) {
         res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     });
 }
+
+// Đăng nhập
+function loginAccount(req, res) {
+    let email = req.body.email;
+    let password = req.body.password;
+
+    if(email === "" || password === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin")
+        return res.render("login", {error: req.flash("error"), email: email, password: password})
+    }
+
+    Account.findOne({email: email})
+    .then(async account => {
+        if(!account) {
+            req.flash("error", "Tài khoản hoặc mật khẩu không chính xác")
+            return res.render("login", {error: req.flash("error"), email: email, password: password, token: req.body.token})
+        }
+
+        const isMatch = await bcrypt.compare(password, account.password);
+        if(!isMatch) {
+            req.flash("error", "Tài khoản hoặc mật khẩu không chính xác");
+            return res.render("login", {error: req.flash("error"), email: email, password: password, token: req.body.token});
+        }
+
+        if(account.lockedStatus === 1) {
+            req.flash("error", "Tài khoản của bạn đã bị khóa.")
+            return res.render("login", {error: req.flash("error")})
+        }
+
+        // User chưa kích hoạt tài khoản
+        if(account.activateStatus === 0) {
+            // Người dùng KHÔNG truy cập trang login thông qua đường link trong email
+            if(!req.body.token || !bcrypt.compareSync(email, req.body.hashedEmail)) {
+                req.flash("error", "Vui lòng nhấn vào đường link được gửi đến email của bạn.")
+                return res.render("login", {error: req.flash("error")})
+            }
+
+            await Account.updateOne({email: email}, {$set: {activateStatus: 1}}, { new: true })
+
+            req.session.email = email;
+            return res.redirect("login")
+        }
+
+        req.session.email = email;
+        
+        if(email === "admin@gmail.com")
+            res.redirect("/account-management")
+        else
+            res.redirect("/")
+    })
+    .catch(error => {
+        req.flash("error", "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại sau.")
+        res.render("login", {error: req.flash("error"), email: email, password: password})
+    });
+} 
 
 function sendEmail(req, res) {
     let email = req.body.email;
@@ -135,6 +191,7 @@ function sendEmail(req, res) {
 module.exports = {
     initData,
     getAccountManagementPage,
-    addAccount,
+    registerAccount,
+    loginAccount,
     sendEmail,
 };

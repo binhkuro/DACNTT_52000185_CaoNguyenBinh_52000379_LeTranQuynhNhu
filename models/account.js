@@ -16,7 +16,6 @@ let accountSchema = new Schema({
     address: String,
     profilePicture: String,
     activateStatus: Number, // 0 || 1
-    isNewUser: Number, // 0 || 1
     lockedStatus: Number // 0 || 1
 });
 

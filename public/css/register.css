@@ -46,6 +46,17 @@ body {
     background-color: #555;
 }
 
+.login-prompt {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.login-prompt a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .cat-image {
     position: absolute;
     right: 20px;

@@ -69,8 +69,47 @@ app.get("/register", (req, res) => {
     res.render('register');
 })
 
+app.get("/login", (req, res) => {
+    if (req.session.email) {
+        delete req.session.email;
+    }
+
+    const token = req.query.token;
+    const hashedEmail = req.query.hashedEmail;
+
+    // Kiểm tra xem token và hashedEmail có được cung cấp hay không
+    if (!token || !hashedEmail) {
+        return res.render('login'); // Hiển thị trang đăng nhập mà không có dữ liệu liên quan đến token
+    }
+
+    // Xác thực token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            if (err.name === 'TokenExpiredError') {
+                // Token đã hết hạn
+                return res.render('timeout'); // Hiển thị trang thông báo hết thời gian
+            } else {
+                // Token không hợp lệ vì lý do khác
+                return res.render('404');
+            }
+        }
+
+        // Kiểm tra sự tương đồng giữa hash của email và hashedEmail từ đường link
+        if (!bcrypt.compareSync(decoded.email, hashedEmail)) {
+            return res.status(401).send('Xác thực không thành công');
+        }
+
+        // Token và xác thực thành công, tiếp tục xử lý đăng nhập
+        res.render('login', { token, hashedEmail});
+    });
+});
+
 app.post("/register", (req, res) => {
-    accountController.addAccount(req, res);
+    accountController.registerAccount(req, res);
+})
+
+app.post("/login", (req, res) => {
+    accountController.loginAccount(req, res);
 })
 
 app.post("/send-email", (req, res) => {
