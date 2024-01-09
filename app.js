@@ -44,12 +44,6 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/login", (req, res) => {
-    res.render('login', {
-        title: 'Đăng nhập',
-    });
-});
-
 app.get("/forgot-password", (req, res) => {
     res.render('forgot-password', {
         title: 'Quên mật khẩu',

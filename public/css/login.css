@@ -45,6 +45,17 @@
         .form-field input[type="submit"]:hover {
             background-color: #555;
         }
+
+        .password-container {
+            position: relative;
+        }
+        
+        .password-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
         
         .signup-prompt {
             text-align: center;
@@ -73,4 +84,18 @@
             right: 20px;
             bottom: 10px;
             width: 120px;
+        }
+        
+        .background-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            position: absolute;
+            left: 0;
+            right: 0;
+            /* Đặt container này ở cuối trang */
+        }
+        
+        .background-image {
+            width: 800px;
         }

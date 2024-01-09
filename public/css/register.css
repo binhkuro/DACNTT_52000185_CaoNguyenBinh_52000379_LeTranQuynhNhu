@@ -46,6 +46,17 @@ body {
     background-color: #555;
 }
 
+.password-container, .confirm-password-container {
+    position: relative;
+}
+
+.password-container i, .confirm-password-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .login-prompt {
     text-align: center;
     margin-top: 24px;
@@ -62,4 +73,18 @@ body {
     right: 20px;
     bottom: 10px;
     width: 120px;
+}
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Đặt container này ở cuối trang */
+}
+
+.background-image {
+    width: 800px;
 }

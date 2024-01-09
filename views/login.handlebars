@@ -2,13 +2,18 @@
 <div class="login-container">
     <h2>ĐĂNG NHẬP</h2>
     <form action="/login" method="post">
+        <input type="hidden" value="{{token}}" name="token" id="token">
+        <input type="hidden" value="{{hashedEmail}}" name="hashedEmail" id="hashedEmail">
         <div class="form-field">
-            <label for="username">Nhập email của bạn:</label>
-            <input type="email" id="email" name="email" placeholder="Email của bạn" required>
+            <label for="username">Nhập username của bạn:</label>
+            <input type="username" id="username" name="username" placeholder="Username của bạn" required>
         </div>
         <div class="form-field">
             <label for="password">Nhập mật khẩu</label>
-            <input type="password" id="password" name="password" placeholder="Mật khẩu của bạn" required>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Mật khẩu của bạn" required>
+                <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+            </div>
         </div>
         <div class="form-field">
             <input type="submit" value="ĐĂNG NHẬP">
@@ -27,3 +32,8 @@
     {{/if}}
 
 </div>
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
+</div>
+
+<script src="/js/login.js"></script>

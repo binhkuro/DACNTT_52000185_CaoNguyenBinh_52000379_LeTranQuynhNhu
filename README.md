@@ -18,12 +18,12 @@ Mở trình duyệt và truy cập vào địa chỉ `http://localhost:8080`.
 ### Tài khoản admin
 
 - Tài khoản: admin
-- Mật khẩu: admin
+- Mật khẩu: A12345678
 
-### Tài khoản nhân viên
+### Tài khoản người dùng
 
-- Tài khoản: quynhnhu1609
-- Mật khẩu: quynhnhu1609
+- Tài khoản: cnbinhblvn
+- Mật khẩu: A12345678
 
 ## Video demo
 
