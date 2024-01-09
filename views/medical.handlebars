@@ -6,7 +6,7 @@
         <div class="buttons-container">
             <button id="schedule-button">
                 <img src="img/note-icon.png" alt="Note Icon" />
-                <div>Ghi lịch trình</div> 
+                <div>Ghi lịch trình</div>
             </button>
             <button id="reminder-button">
                 <img src="img/alarm-icon.png" alt="Alarm Icon" />
@@ -40,6 +40,27 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Reminder -->
+<div id="reminderModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form id="reminder-form">
+        <div class="form-field">
+            <label for="time">Nhập ngày tháng năm:</label>
+            <input type="text" class="form-control" id="time" name="time" placeholder="VD: dd/mm/yyyy" value="{{time}}">
+        </div>
+        <div class="form-field">
+            <label for="event">Nhập tên sự kiện:</label>
+            <input type="text" class="form-control" id="event" name="event" placeholder="Nhập sự kiện cần nhắc nhở." value="{{event}}">
+        </div>
+        <div class="form-field">
+            <input type="submit" value="Tạo Nhắc Nhở">
+        </div>
+    </form>
+  </div>
+</div>
+
 <script src="/js/medical.js"></script>
 <div class="background-image-container">
     <img src="/img/background.png" alt="Image" class="background-image">

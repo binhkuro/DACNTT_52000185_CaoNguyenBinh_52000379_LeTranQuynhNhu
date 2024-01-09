@@ -5,15 +5,12 @@ body {
     padding: 0;
 }
 
-.medical-container {
+.schedule-container {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
-
-
-/* CSS cho container bên trong bao gồm nút và lịch */
 
 .content-container {
     display: flex;
@@ -21,84 +18,53 @@ body {
     align-items: flex-start;
 }
 
-
-/* CSS cho container của các nút */
-
-.buttons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.buttons-container button:hover {
-    background-color: #d8aa18;
-}
-
-
-/* CSS cho các nút */
-
-.buttons-container button {
-    background-color: #fff;
-    border: 1px solid #d3d3d3;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    width: 177px;
-    height: 177px;
-    margin-bottom: 10px;
-}
-
-
-/* Styling cho lịch */
-
-.calendar-container {
+.table-container {
     background-color: #fff;
     border: 1px solid #d3d3d3;
     border-radius: 8px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 80%;
-    max-width: 600px;
+    width: 1200px;
+    height: 500px;
 }
 
-.calendar-header {
+.table-header h2 {
+    font-weight: bold;
+}
+
+.table-header {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding-bottom: 20px;
     border-bottom: 1px solid #d3d3d3;
     margin-bottom: 20px;
 }
 
-.calendar-header button {
+.table-header button {
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
 }
 
-.month-year-text {
-    font-size: 24px;
-    text-align: center;
-}
-
-.calendar-week-day {
+.table {
     display: flex;
     justify-content: space-between;
 }
 
-.calendar-week-day div {
+.table div {
     font-weight: bold;
     width: 14.28%;
     text-align: center;
 }
 
-.calendar-days {
+.data {
     display: flex;
     flex-wrap: wrap;
 }
 
-.calendar-days div {
+.data div {
     width: 14.28%;
     padding: 10px 0;
     text-align: center;
@@ -107,43 +73,8 @@ body {
     transition: background-color 0.3s;
 }
 
-.calendar-days div:hover {
+.data div:hover {
     background-color: #d8aa18;
-}
-
-
-/* Căn giữa nội dung bên trong lịch */
-
-.calendar-header,
-.calendar-week-day,
-.calendar-days {
-    text-align: center;
-}
-
-.today-button-container {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    border: 1px solid black;
-    background-color: black;
-    border-radius: 4px;
-}
-
-.today-button {
-    font-size: 1em !important;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: white;
-}
-
-.today-button:hover {
-    background-color: #d8aa18;
-}
-
-.calendar-day.today {
-    background-color: #ffff00;
-    color: #000000;
 }
 
 .background-image-container {
@@ -158,6 +89,27 @@ body {
 
 .background-image {
     width: 800px;
+}
+
+.add-button-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.add-button {
+    font-size: 0.9em !important;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: black;
+}
+
+.add-button:hover {
+    background-color: #d8aa18;
 }
 
 .modal {

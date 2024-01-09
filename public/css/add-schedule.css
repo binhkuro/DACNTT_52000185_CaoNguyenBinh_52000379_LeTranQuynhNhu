@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0b70e;
+    margin: 0;
+    padding: 0;
+}
+
+.add-schedule-container {
+    position: relative;
+    background: #d8aa18;
+    width: 700px;
+    margin: 100px auto;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-schedule-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-field input[type="submit"] {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.form-field input[type="submit"]:hover {
+    background-color: #555;
+}
+
+.cat-image {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    width: 120px;
+}
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Đặt container này ở cuối trang */
+}
+
+.background-image {
+    width: 800px;
+}

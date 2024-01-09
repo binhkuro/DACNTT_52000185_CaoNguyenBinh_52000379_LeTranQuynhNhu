@@ -69,6 +69,13 @@ app.get("/medical", (req, res) => {
         title: 'Lịch trình y tế',
     });
 });
+
+app.get("/schedule", (req, res) => {
+    res.render('schedule', {
+        title: 'Ghi lịch trình y tế',
+    });
+});
+
 app.get("/register", (req, res) => {
     if (req.session.username) {
         delete req.session.username;
