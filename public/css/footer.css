@@ -29,7 +29,7 @@ footer .social-icons a {
 }
 
 footer .social-icons a:hover {
-    color: rgb(0, 51, 255);
+    color: rgb(255, 255, 255);
     transition: background-color 0.3s ease;
 }
 

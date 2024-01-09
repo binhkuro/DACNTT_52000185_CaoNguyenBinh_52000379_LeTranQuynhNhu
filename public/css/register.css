@@ -52,3 +52,17 @@ body {
     bottom: 10px;
     width: 120px;
 }
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Đặt container này ở cuối trang */
+}
+
+.background-image {
+    width: 800px;
+}
