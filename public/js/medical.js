@@ -36,13 +36,31 @@ document.addEventListener('DOMContentLoaded', function() {
             calendarDaysContainer.appendChild(spacer);
         }
 
+        // Lấy ngày hiện tại để so sánh và làm nổi bật
+        const today = new Date();
+        const todayDate = today.getDate();
+        const todayMonth = today.getMonth();
+        const todayYear = today.getFullYear();
+
         // Tạo và thêm ngày vào lịch
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = document.createElement('div');
             dayElement.classList.add('calendar-day');
             dayElement.textContent = day;
+            // Nếu là tháng và năm hiện tại, kiểm tra ngày và làm nổi bật ngày hôm nay
+            if (day === todayDate && month === todayMonth && year === todayYear) {
+                dayElement.classList.add('today');
+            }
             calendarDaysContainer.appendChild(dayElement);
         }
+    }
+
+    // Hàm để di chuyển lịch về ngày hiện tại
+    function goToToday() {
+        currentDate = new Date();
+        currentMonth = currentDate.getMonth();
+        currentYear = currentDate.getFullYear();
+        updateCalendar(currentMonth, currentYear);
     }
 
     // Sự kiện khi nhấp vào nút tháng trước
@@ -64,6 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateCalendar(currentMonth, currentYear);
     });
+
+    // Thêm sự kiện cho nút Today - đảm bảo nút này đã được thêm vào DOM trong file HTML của bạn
+    const todayButton = document.querySelector('.today-button');
+    if (todayButton) {
+        todayButton.addEventListener('click', goToToday);
+    }
 
     // Khởi tạo lịch với tháng hiện tại và năm
     updateCalendar(currentMonth, currentYear);

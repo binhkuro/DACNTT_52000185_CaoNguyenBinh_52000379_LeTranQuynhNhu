@@ -4,16 +4,26 @@
     <!-- Container cho nút và lịch -->
     <div class="content-container">
         <div class="buttons-container">
-            <button id="schedule-button">Ghi lịch trình</button>
-            <button id="reminder-button">Tạo nhắc nhở</button>
+            <button id="schedule-button">
+                <img src="img/note-icon.png" alt="Note Icon" />
+                <div>Ghi lịch trình</div> 
+            </button>
+            <button id="reminder-button">
+                <img src="img/alarm-icon.png" alt="Alarm Icon" />
+                <div>Tạo nhắc nhở</div>
+            </button>
         </div>
         <div class="calendar-container">
             <div class="calendar-header">
                 <span class="month-year-header">
+                    <!-- Các nút điều hướng tháng trước và tháng sau đã có sẵn -->
                     <button class="prev-month">&lt;</button>
                     <span class="month-year-text">February 2021</span>
                     <button class="next-month">&gt;</button>
                 </span>
+                <div class="today-button-container">
+                    <button class="today-button">Today</button>
+                </div>
             </div>
             <div class="calendar-week-day">
                 <div>Sun</div>
@@ -31,3 +41,6 @@
     </div>
 </div>
 <script src="/js/medical.js"></script>
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
+</div>

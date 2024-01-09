@@ -8,12 +8,8 @@ body {
 .medical-container {
     display: flex;
     justify-content: center;
-    /* Căn giữa các phần tử con theo chiều ngang */
     align-items: center;
-    /* Căn giữa các phần tử con theo chiều dọc */
-    /* Bỏ min-height: 100vh; */
     padding: 20px;
-    /* Thêm padding nếu cần */
 }
 
 
@@ -22,10 +18,7 @@ body {
 .content-container {
     display: flex;
     flex-direction: row;
-    /* Để các items nằm trên cùng một hàng */
     align-items: flex-start;
-    /* Để các items không bị căng giãn chiều cao */
-    /* Bạn có thể thêm margin-top hoặc padding-top nếu cần */
 }
 
 
@@ -36,20 +29,23 @@ body {
     flex-direction: column;
     align-items: center;
     margin-right: 20px;
-    /* Khoảng cách giữa các nút và lịch */
+}
+
+.buttons-container button:hover {
+    background-color: #d8aa18;
 }
 
 
 /* CSS cho các nút */
 
 .buttons-container button {
-    width: 150px;
-    /* Chiều rộng cho các nút */
-    height: 150px;
-    /* Chiều cao cho các nút để làm chúng vuông */
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 177px;
+    height: 177px;
     margin-bottom: 10px;
-    /* Khoảng cách giữa các nút */
-    /* Các thuộc tính khác cho nút */
 }
 
 
@@ -57,21 +53,16 @@ body {
 
 .calendar-container {
     background-color: #fff;
-    /* Màu nền cho lịch */
     border: 1px solid #d3d3d3;
-    /* Viền xung quanh lịch */
     border-radius: 8px;
-    /* Bo tròn góc */
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    /* Bóng mờ cho lịch */
     padding: 20px;
     width: 80%;
-    /* Chiều rộng của lịch */
     max-width: 600px;
-    /* Chiều rộng tối đa của lịch */
 }
 
 .calendar-header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
@@ -109,40 +100,15 @@ body {
 
 .calendar-days div {
     width: 14.28%;
-    /* 100% / 7 */
     padding: 10px 0;
-    /* Padding để các ngày cao hơn */
     text-align: center;
     border-radius: 4px;
-    /* Bo tròn các ngày */
     cursor: pointer;
     transition: background-color 0.3s;
-    /* Hiệu ứng chuyển màu khi hover */
 }
 
 .calendar-days div:hover {
-    background-color: #f0e4c3;
-    /* Màu khi hover */
-}
-
-.today {
-    background-color: #009688;
-    /* Màu nền cho nút Today */
-    color: white;
-    /* Màu chữ cho nút Today */
-    padding: 5px 10px;
-    /* Padding cho nút Today */
-    border: none;
-    /* Bỏ viền nút Today */
-    cursor: pointer;
-    /* Dấu nháy khi hover nút Today */
-    border-radius: 4px;
-    /* Bo tròn nút Today */
-}
-
-.today:hover {
-    background-color: #00796b;
-    /* Màu khi hover nút Today */
+    background-color: #d8aa18;
 }
 
 
@@ -152,4 +118,44 @@ body {
 .calendar-week-day,
 .calendar-days {
     text-align: center;
+}
+
+.today-button-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border: 1px solid black;
+    background-color: black;
+    border-radius: 4px;
+}
+
+.today-button {
+    font-size: 1em !important;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.today-button:hover {
+    background-color: #d8aa18;
+}
+
+.calendar-day.today {
+    background-color: #ffff00;
+    color: #000000;
+}
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    /* Đặt container này ở cuối trang */
+}
+
+.background-image {
+    width: 800px;
 }
