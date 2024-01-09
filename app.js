@@ -55,6 +55,25 @@ app.get("/medical", (req, res) => {
         title: 'Lịch trình y tế',
     });
 });
+
+app.get("/schedule", (req, res) => {
+    res.render('schedule', {
+        title: 'Ghi lịch trình y tế',
+    });
+});
+
+app.get("/add-schedule", (req, res) => {
+    res.render('add-schedule', {
+        title: 'Thêm lịch trình y tế',
+    });
+});
+
+app.get("/reminder", (req, res) => {
+    res.render('reminder', {
+        title: 'Tạo nhắc nhở',
+    });
+});
+
 app.get("/register", (req, res) => {
     if (req.session.username) {
         delete req.session.username;
@@ -94,8 +113,12 @@ app.get("/login", (req, res) => {
         }
 
         // Token và xác thực thành công, tiếp tục xử lý đăng nhập
-        res.render('login', { token, hashedEmail});
+        res.render('login', { token, hashedEmail });
     });
+});
+
+app.post('/add-schedule', function(req, res) {
+    res.json({ success: true });
 });
 
 app.post("/register", (req, res) => {

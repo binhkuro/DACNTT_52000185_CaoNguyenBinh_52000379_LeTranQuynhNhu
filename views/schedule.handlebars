@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="/css/schedule.css">
+<div class="schedule-container">
+    <form action="/schedule" method="post"></form>
+    <div class="content-container">
+        <div class="table-container">
+            <div class="table-header">
+                <h2>Lịch Trình Y Tế</h2>
+                <div class="add-button-container">
+                    <button class="add-button">
+                        <img src="img/add.png" alt="Add Icon" />
+                        Thêm lịch trình y tế
+                    </button>
+                </div>
+            </div>
+            <div class="table">
+                <div>STT</div>
+                <div>Ngày tháng năm</div>
+                <div>Hoạt động</div>
+                <div>Mục đích</div>
+                <div>Liên hệ</div>
+                <div>Ghi chú</div>
+                <div>Kết quả</div>
+            </div>
+            <div class="data">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Schedule -->
+<div id="scheduleModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form id="schedule-form">
+        <div class="form-field">
+            <label for="time">Nhập ngày tháng năm:</label>
+            <input type="text" class="form-control" id="time" name="time" placeholder="VD: dd/mm/yyyy" value="{{time}}">
+        </div>
+        <div class="form-field">
+            <label for="activity">Nhập hoạt động:</label>
+            <input type="text" class="form-control" id="activity" name="activity" placeholder="VD: Tiêm phòng, Sổ giun, Khám sức khỏe định kỳ,..." value="{{activity}}">
+        </div>
+		<div class="form-field">
+            <label for="purpose">Nhập mục đích:</label>
+            <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Ghi chú mục đích của hoạt động." value="{{purpose}}">
+        </div>
+        <div class="form-field">
+            <label for="contact">Nhập liên hệ:</label>
+            <input type="text" class="form-control" id="contact" name="contact" placeholder="Thông tin liên hệ của bác sĩ hoặc cơ sở y tế." value="{{contact}}">
+        </div>
+        <div class="form-field">
+            <label for="note">Nhập ghi chú:</label>
+            <input type="text" class="form-control" id="note" name="note" placeholder="Thêm bất kỳ ghi chú hoặc thông tin quan trọng nào về hoạt động y tế." value="{{note}}">
+        </div>
+        <div class="form-field">
+            <label for="result">Nhập kết quả:</label>
+            <input type="text" class="form-control" id="result" name="result" placeholder="Ghi kết quả sau khi hoàn thành hoạt động y tế." value="{{result}}">
+        </div>
+        <div class="form-field">
+            <input type="submit" value="HOÀN THÀNH">
+        </div>
+    </form>
+  </div>
+</div>
+<script src="/js/schedule.js"></script>
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
+</div>

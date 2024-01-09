@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCalendar(currentMonth, currentYear);
     });
 
-    // Thêm sự kiện cho nút Today - đảm bảo nút này đã được thêm vào DOM trong file HTML của bạn
+    // Thêm sự kiện cho nút Today
     const todayButton = document.querySelector('.today-button');
     if (todayButton) {
         todayButton.addEventListener('click', goToToday);
@@ -91,4 +91,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Khởi tạo lịch với tháng hiện tại và năm
     updateCalendar(currentMonth, currentYear);
+
+    // MODAL REMINDER
+    var btnReminder = document.getElementById("reminder-button");
+    var modalReminder = document.getElementById("reminderModal");
+    var spanClose = modalReminder.getElementsByClassName("close")[0];
+    btnReminder.onclick = function() {
+        modalReminder.style.display = "block";
+        spanClose.onclick = function() {
+            modalReminder.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modalReminder) {
+                modalReminder.style.display = "none";
+            }
+        }
+    }
 });
