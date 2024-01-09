@@ -10,6 +10,11 @@ let accountSchema = new Schema({
         unique: true, // Đảm bảo rằng giá trị email là duy nhất
         index: true,  // Tạo một index trên trường email để tối ưu tìm kiếm
     },
+    username: {
+        type: String,
+        unique: true, // Đảm bảo rằng giá trị username là duy nhất
+        index: true,  // Tạo một index trên trường username để tối ưu tìm kiếm
+    },
     password: String,
     fullname: String,
     phoneNumber: String,

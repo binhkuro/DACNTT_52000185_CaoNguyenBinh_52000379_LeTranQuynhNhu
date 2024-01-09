@@ -56,16 +56,16 @@ app.get("/medical", (req, res) => {
     });
 });
 app.get("/register", (req, res) => {
-    if (req.session.email) {
-        delete req.session.email;
+    if (req.session.username) {
+        delete req.session.username;
     }
 
     res.render('register');
 })
 
 app.get("/login", (req, res) => {
-    if (req.session.email) {
-        delete req.session.email;
+    if (req.session.username) {
+        delete req.session.username;
     }
 
     const token = req.query.token;

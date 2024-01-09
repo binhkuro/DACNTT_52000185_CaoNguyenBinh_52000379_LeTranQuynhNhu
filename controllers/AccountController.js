@@ -11,7 +11,7 @@ async function initData() {
     // Trước khi khởi tạo dữ liệu mẫu thì ta cần xóa các dữ liệu hiện có
     await Account.deleteMany()
 
-    const hashedPasswordAdmin = await bcrypt.hash("1234567890", 10);
+    const hashedPasswordAdmin = await bcrypt.hash("A12345678", 10);
     // Tài khoản admin
     let account = new Account({
         email: "admin@gmail.com", 
@@ -27,7 +27,7 @@ async function initData() {
 
     await account.save()
 
-    const hashedPasswordUser1 = await bcrypt.hash("1234567890", 10);
+    const hashedPasswordUser1 = await bcrypt.hash("A12345678", 10);
     let account1 = new Account({
         email: "caonguyenbinh12@gmail.com",
         username: "cnbinhblvn", 
@@ -42,7 +42,7 @@ async function initData() {
 
     await account1.save()
 
-    const hashedPasswordUser2 = await bcrypt.hash("1234567890", 10);
+    const hashedPasswordUser2 = await bcrypt.hash("A12345678", 10);
     let account2 = new Account({
         email: "letranquynhnhu1692@gmail.com",
         username: "ltqn1692",  
@@ -78,12 +78,12 @@ async function registerAccount(req, res) {
     // Kiểm tra tính hợp lệ của dữ liệu
     if(req.body.email === "" || req.body.username === "" || req.body.fullname === "" || req.body.phoneNumber === "" || req.body.address === "" || req.body.password === "" || req.body.confirmPassword === "") {
         req.flash("error", "Vui lòng không bỏ trống thông tin");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }
 
     if(!mailController.isEmail(req.body.email)) {
         req.flash("error", "Email không hợp lệ");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }
 
     // Kiểm tra username (ít nhất 5 kí tự, không chứa kí tự đặc biệt)
@@ -95,23 +95,23 @@ async function registerAccount(req, res) {
     // Kiểm tra số điện thoại
     if(!/^\d{10}$/.test(req.body.phoneNumber)) {
         req.flash("error", "Số điện thoại phải gồm 10 chữ số.");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }
 
     // Kiểm tra mật khẩu
     if(!/(?=.*[A-Z]).{8,16}/.test(req.body.password)) {
         req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa.");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }    
     
     if(req.body.password !== req.body.confirmPassword) {
         req.flash("error", "Mật khẩu và xác nhận mật khẩu không khớp");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }    
 
     if((await mailController.checkEmailExistence(req.body.email)) === false) {
         req.flash("error", "Địa chỉ email không tồn tại");
-        return res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
+        return res.render("register", {error: req.flash("error"), email: req.body.email, email: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -135,7 +135,7 @@ async function registerAccount(req, res) {
         res.render("register", {success: req.flash("success")});
     })
     .catch(error => {
-        req.flash("error", "Email này đã tồn tại");
+        req.flash("error", "Email hoặc username này đã tồn tại");
         res.render("register", {error: req.flash("error"), email: req.body.email, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address});
     });
 }
