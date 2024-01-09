@@ -1,4 +1,13 @@
 <link rel="stylesheet" href="/css/register.css">
+
+{{#if error}}
+    <div class="alert alert-danger">{{error}}</div>
+{{/if}}
+
+{{#if success}}
+    <div class="alert alert-success">{{success}}</div>
+{{/if}}
+
 <div class="register-container">
     <h2>ĐĂNG KÝ</h2>
     <form action="/register" method="post" novalidate>
@@ -8,7 +17,7 @@
         </div>
         <div class="form-field">
             <label for="username">Nhập username:</label>
-            <input type="username" class="form-control" id="username" name="username" placeholder="Username của bạn (VD: binhtdtu)" value="{{username}}">
+            <input type="username" class="form-control" id="username" name="username" placeholder="5 kí tự và không chứa kí tự đặc biệt (VD: binhtdtu)" value="{{username}}">
         </div>
 		<div class="form-field">
             <label for="fullname">Nhập họ và tên:</label>
@@ -16,7 +25,7 @@
         </div>
         <div class="form-field">
             <label for="phoneNumber">Nhập số điện thoại:</label>
-            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Số điện thoại của bạn (VD: 0948834943)" value="{{phoneNumber}}">
+            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="10 số (VD: 0948834943)" value="{{phoneNumber}}">
         </div>
         <div class="form-field">
             <label for="address">Nhập địa chỉ:</label>
@@ -25,7 +34,7 @@
         <div class="form-field">
             <label for="password">Nhập mật khẩu:</label>
             <div class="password-container">
-                <input type="password" id="password" name="password" placeholder="Mật khẩu của bạn" required>
+                <input type="password" id="password" name="password" placeholder="8 - 16 kí tự, ít nhất một chữ cái in hoa" required>
                 <i class="fa fa-eye" id="togglePassword1" style="cursor: pointer;"></i>
             </div>
         </div>
@@ -44,14 +53,6 @@
             Bạn đã có tài khoản ?<a href="/login"> Đăng nhập</a>
         </div>
     </form>
-	
-	{{#if error}}
-        <div class="alert alert-danger">{{error}}</div>
-    {{/if}}
-
-    {{#if success}}
-        <div class="alert alert-success">{{success}}</div>
-    {{/if}}
 </div>
 
 <div class="background-image-container">

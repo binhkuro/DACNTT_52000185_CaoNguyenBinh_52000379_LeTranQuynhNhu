@@ -146,21 +146,30 @@ function loginAccount(req, res) {
     let password = req.body.password;
 
     if (username === "" || password === "") {
-        req.flash("error", "Vui lòng không bỏ trống thông tin")
-        return res.render("login", { error: req.flash("error"), username: username, password: password })
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        // Redirect with the token and hashedEmail in the query string if they exist
+        return res.redirect('/login' + 
+            (req.body.token ? `?token=${encodeURIComponent(req.body.token)}` : '') + 
+            (req.body.hashedEmail ? `&hashedEmail=${encodeURIComponent(req.body.hashedEmail)}` : ''));
     }
 
     Account.findOne({ username: username })
         .then(async account => {
             if (!account) {
-                req.flash("error", "Tài khoản hoặc mật khẩu không chính xác")
-                return res.render("login", { error: req.flash("error"), username: username, password: password, token: req.body.token })
+                req.flash("error", "Tài khoản hoặc mật khẩu không chính xác");
+                // Redirect with the token and hashedEmail in the query string if they exist
+                return res.redirect('/login' + 
+                    (req.body.token ? `?token=${encodeURIComponent(req.body.token)}` : '') + 
+                    (req.body.hashedEmail ? `&hashedEmail=${encodeURIComponent(req.body.hashedEmail)}` : ''));
             }
 
             const isMatch = await bcrypt.compare(password, account.password);
             if (!isMatch) {
                 req.flash("error", "Tài khoản hoặc mật khẩu không chính xác");
-                return res.render("login", { error: req.flash("error"), username: username, password: password, token: req.body.token });
+                // Redirect with the token and hashedEmail in the query string if they exist
+                return res.redirect('/login' + 
+                    (req.body.token ? `?token=${encodeURIComponent(req.body.token)}` : '') + 
+                    (req.body.hashedEmail ? `&hashedEmail=${encodeURIComponent(req.body.hashedEmail)}` : ''));
             }
 
             if (account.lockedStatus === 1) {
@@ -192,9 +201,87 @@ function loginAccount(req, res) {
                 res.redirect("/")
         })
         .catch(error => {
-            req.flash("error", "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại sau.")
-            res.render("login", { error: req.flash("error"), username: username, password: password })
+            req.flash("error", "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại sau.");
+            return res.redirect('/login' + 
+                (req.body.token ? `?token=${encodeURIComponent(req.body.token)}` : '') + 
+                (req.body.hashedEmail ? `&hashedEmail=${encodeURIComponent(req.body.hashedEmail)}` : ''));
         });
+}
+
+// Quên mật khẩu
+async function forgotPassword(req, res) {
+    let username = req.body.username;
+
+    try {
+        const user = await Account.findOne({ username: username });
+
+        if (!user) {
+            req.flash("error", "Tài khoản không tồn tại");
+            return res.render("forgot-password", { error: req.flash("error"), username: username  });
+        }
+
+        // Gọi hàm emailForgot để gửi email đổi mật khẩu
+        req.body.email = user.email; // Thiết lập email từ dữ liệu người dùng
+        emailForgot(req, res); // Gửi email
+
+        // Thông báo cho người dùng kiểm tra email
+        req.flash("success", "Vui lòng kiểm tra email của bạn để đổi mật khẩu");
+        res.render("forgot-password", { success: req.flash("success"), username: username });
+
+    } catch (error) {
+        req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
+        res.render("forgot-password", { error: req.flash("error"), username: username });
+    }
+}
+
+// Đổi mật khẩu khi quên mật khẩu
+async function changePasswordAfterForgot(req, res) {
+    let newPassword = req.body.newPassword;
+    let confirmPassword = req.body.confirmPassword;
+    let token = req.body.token;
+    let hashedEmail = req.body.hashedEmail;
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!newPassword || !confirmPassword || !token || !hashedEmail) {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
+    }
+
+    // Kiểm tra mật khẩu mới
+    if (!/(?=.*[A-Z]).{8,16}/.test(newPassword)) {
+        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa.");
+        return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
+    }
+
+    // So sánh mật khẩu và xác nhận mật khẩu
+    if (newPassword !== confirmPassword) {
+        req.flash("error", "Mật khẩu và xác nhận mật khẩu không khớp");
+        return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));    
+    }
+
+    try {
+        // Xác thực token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // Kiểm tra hash của email
+        const isValidHash = bcrypt.compareSync(decoded.email, hashedEmail);
+        if (!isValidHash) {
+            req.flash("error", "Xác thực không thành công");
+            return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
+        }
+
+        // Hash mật khẩu mới và cập nhật trong cơ sở dữ liệu
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await Account.findOneAndUpdate({ email: decoded.email }, { password: hashedNewPassword });
+
+        // Thông báo cập nhật thành công và chuyển hướng
+        req.flash("success", "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng về trang đăng nhập");
+        res.render('password-changed', { message: "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng..." });
+
+    } catch (error) {
+        console.error(error);
+        req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
+        return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
+    }
 }
 
 function sendEmail(req, res) {
@@ -212,10 +299,28 @@ function sendEmail(req, res) {
     mailController.sendMail(email, subject, content);
 }
 
+function emailForgot(req, res) {
+    let email = req.body.email;
+    let subject = "Xác nhận đổi mật khẩu";
+
+    // Tạo token với thời gian hết hạn là 60 giây
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: 60 });
+
+    // Sử dụng bcrypt để tạo hash của email
+    const hashedEmail = bcrypt.hashSync(email, 3);
+
+    // Tạo đường link với token và hash của email
+    let content = `<a href="${process.env.APP_URL}/change-password2?token=${token}&hashedEmail=${hashedEmail}"> Vui lòng nhấn vào đây để hoàn tất thủ tục đổi mật khẩu</a>`;
+    mailController.sendMail(email, subject, content);	
+}
+
 module.exports = {
     initData,
     getAccountManagementPage,
     registerAccount,
     loginAccount,
+    forgotPassword,
+    changePasswordAfterForgot,
     sendEmail,
+    emailForgot
 };

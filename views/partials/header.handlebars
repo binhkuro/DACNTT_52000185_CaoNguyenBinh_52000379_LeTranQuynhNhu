@@ -14,13 +14,25 @@
             </ul>
         </nav>
         <div class="dropdown">
-            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                <img src="/img/account-icon.png" alt="Tài khoản"> Tài khoản
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="/login">Đăng nhập</a></li>
-                <li><a class="dropdown-item" href="/register">Đăng ký</a></li>
-            </ul>
+            {{#if username}}
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    <img src="/img/account-icon.png" alt="Tài khoản">{{username}}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Quản lý</a></li>
+                    <li><a class="dropdown-item" href="/self-information">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="/change-password1">Đổi mật khẩu</a></li>
+                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                </ul>
+            {{else}}
+                <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    <img src="/img/account-icon.png" alt="Tài khoản">Tài khoản
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="/login">Đăng nhập</a></li>
+                    <li><a class="dropdown-item" href="/register">Đăng ký</a></li>
+                </ul>
+            {{/if}}
         </div>
     </div>
 </header>

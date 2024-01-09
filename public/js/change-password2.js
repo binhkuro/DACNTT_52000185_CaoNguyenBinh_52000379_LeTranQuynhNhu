@@ -1,5 +1,5 @@
 document.getElementById("togglePassword1").addEventListener("click", function() {
-    var passwordInput = document.getElementById("password");
+    var passwordInput = document.getElementById("newPassword");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
         this.classList.remove("fa-eye");

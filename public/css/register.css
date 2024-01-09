@@ -88,3 +88,15 @@ body {
 .background-image {
     width: 800px;
 }
+
+.alert {
+    text-align: center;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+}
+
+.alert.hide {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s 1s, opacity 1s ease-out;
+}

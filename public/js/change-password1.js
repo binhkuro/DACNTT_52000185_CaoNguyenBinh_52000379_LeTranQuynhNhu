@@ -1,5 +1,5 @@
 document.getElementById("togglePassword1").addEventListener("click", function() {
-    var passwordInput = document.getElementById("password");
+    var passwordInput = document.getElementById("currentPassword");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";
         this.classList.remove("fa-eye");
@@ -12,6 +12,19 @@ document.getElementById("togglePassword1").addEventListener("click", function() 
 });
 
 document.getElementById("togglePassword2").addEventListener("click", function() {
+    var passwordInput = document.getElementById("newPassword");
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        this.classList.remove("fa-eye");
+        this.classList.add("fa-eye-slash");
+    } else {
+        passwordInput.type = "password";
+        this.classList.remove("fa-eye-slash");
+        this.classList.add("fa-eye");
+    }
+});
+
+document.getElementById("togglePassword3").addEventListener("click", function() {
     var passwordInput = document.getElementById("confirmPassword");
     if (passwordInput.type === "password") {
         passwordInput.type = "text";

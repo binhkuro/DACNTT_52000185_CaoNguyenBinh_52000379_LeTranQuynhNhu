@@ -38,9 +38,23 @@ app.engine('handlebars', hbs.engine({
 }))
 app.set('view engine', 'handlebars')
 
+app.use((req, res, next) => {
+    res.locals.messages = req.flash();
+    next();
+});
+
+function isAuthenticated(req, res, next) {
+    if (req.session && req.session.username) {
+        return next();
+    } else {
+        res.redirect('/');
+    }
+}
+
 app.get("/", (req, res) => {
     res.render('index', {
         title: 'Trang Chủ',
+        username: req.session.username
     });
 });
 
@@ -98,6 +112,41 @@ app.get("/login", (req, res) => {
     });
 });
 
+app.get("/change-password2", (req, res) => {
+    if (req.session.username) {
+        delete req.session.username;
+    }
+
+    const token = req.query.token;
+    const hashedEmail = req.query.hashedEmail;
+
+    // Kiểm tra xem token và hashedEmail có được cung cấp hay không
+    if (!token || !hashedEmail) {
+        return res.render('index'); // Hiển thị trang chủ
+    }
+
+    // Xác thực token
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            if (err.name === 'TokenExpiredError') {
+                // Token đã hết hạn
+                return res.render('timeout'); // Hiển thị trang thông báo hết thời gian
+            } else {
+                // Token không hợp lệ vì lý do khác
+                return res.render('404');
+            }
+        }
+
+        // Kiểm tra sự tương đồng giữa hash của email và hashedEmail từ đường link
+        if (!bcrypt.compareSync(decoded.email, hashedEmail)) {
+            return res.status(401).send('Xác thực không thành công');
+        }
+
+        // Token và xác thực thành công, tiếp tục xử lý đổi mật khẩu
+        res.render('change-password2', { token, hashedEmail});
+    });
+});
+
 app.post("/register", (req, res) => {
     accountController.registerAccount(req, res);
 })
@@ -106,8 +155,35 @@ app.post("/login", (req, res) => {
     accountController.loginAccount(req, res);
 })
 
+app.post("/forgot-password", (req, res) => {
+    accountController.forgotPassword(req, res);
+})
+
+app.post("/change-password2", (req, res) => {
+    accountController.changePasswordAfterForgot(req, res);
+});
+
 app.post("/send-email", (req, res) => {
     accountController.sendEmail(req, res);
+    res.end();
+})
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
+});
+
+app.get("/change-password1", isAuthenticated, (req, res) => {
+    res.render('change-password1');
+})
+
+app.post("/email-forgot", (req, res) => {
+    accountController.emailForgot(req, res);
     res.end();
 })
 
