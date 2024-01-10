@@ -76,6 +76,12 @@ app.get("/schedule", (req, res) => {
     });
 });
 
+app.get("/introduce", (req, res) => {
+    res.render('introduce', {
+        title: 'Giới thiệu',
+    });
+});
+
 app.get("/register", (req, res) => {
     if (req.session.username) {
         delete req.session.username;
@@ -115,7 +121,7 @@ app.get("/login", (req, res) => {
         }
 
         // Token và xác thực thành công, tiếp tục xử lý đăng nhập
-        res.render('login', { token, hashedEmail});
+        res.render('login', { token, hashedEmail });
     });
 });
 
@@ -150,7 +156,7 @@ app.get("/change-password2", (req, res) => {
         }
 
         // Token và xác thực thành công, tiếp tục xử lý đổi mật khẩu
-        res.render('change-password2', { token, hashedEmail});
+        res.render('change-password2', { token, hashedEmail });
     });
 });
 

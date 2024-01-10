@@ -1,24 +1,48 @@
-{{!-- views/index.handlebars --}}
-{{!-- Đây là nội dung mẫu cho trang chủ của bạn --}}
+<link rel="stylesheet" href="/css/index.css">
 <div class="container">
-    <h1 class="text-center my-4">Chào mừng đến với Hệ thống quản lý sức khỏe và môi trường cho thú cưng</h1>
-    <p class="lead text-center">Ứng dụng kết hợp Internet of Things (IoT) để quản lý và theo dõi sức khỏe thú cưng của bạn.</p>
+    <div class="content-container">
+        <div class="notification-container">
+            <div class="notification-header">
+                <h2>Thông Báo</h2>
+            </div>
+            <div class="notification">
+                <div>STT</div>
+                <div class="text">Nội dung</div>
+            </div>
+            <div class="data">
+                <!-- Dữ liệu sẽ được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+    <img src="/img/mydieu.png" alt="Cat Image" class="cat-image">
+</div>
+<div>
+    <!-- Bao bên ngoài cho cả ba section -->
+    <div class="services-container">
+        <!-- Section Theo dõi sức khỏe -->
+        <section id="health-tracking">
+            <img src="/img/health.png" alt="Health Tracking Icon">
+            <h2>Theo dõi sức khỏe</h2>
+            <p>Kết nối với cảm biến nhiệt độ, độ ẩm, và nhịp tim để theo dõi sức khỏe.</p>
+        </section>
 
-    {{!-- Các chức năng chính có thể đi vào các section khác nhau ở đây --}}
-    <section id="health-tracking">
-        <h2>Theo dõi sức khỏe</h2>
-        <p>Kết nối với cảm biến nhiệt độ, độ ẩm, và nhịp tim để theo dõi sức khỏe.</p>
-    </section>
+        <!-- Section Quản lý lịch trình y tế -->
+        <section id="medical-schedule">
+            <img src="/img/yte.png" alt="Medical Schedule Icon">
+            <h2>Quản lý lịch trình y tế</h2>
+            <p>Ghi chú và nhắc nhở về lịch trình tiêm phòng và kiểm tra sức khỏe.</p>
+        </section>
 
-    <section id="medical-schedule">
-        <h2>Quản lý lịch trình y tế</h2>
-        <p>Ghi chú và nhắc nhở về lịch trình tiêm phòng và kiểm tra sức khỏe.</p>
-    </section>
+        <!-- Section Môi trường sống thú cưng -->
+        <section id="environment-management">
+            <img src="/img/environment.png" alt="Environment Management Icon">
+            <h2>Môi trường sống thú cưng</h2>
+            <p>Đảm bảo môi trường sống thoải mái và an toàn cho thú cưng.</p>
+        </section>
+    </div>
 
-    <section id="environment-management">
-        <h2>Môi trường sống thú cưng</h2>
-        <p>Đảm bảo môi trường sống thoải mái và an toàn cho thú cưng.</p>
-    </section>
+</div>
 
-    {{!-- Thêm các phần khác tương tự như trên dựa vào các chức năng của website --}}
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
 </div>
