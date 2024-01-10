@@ -195,6 +195,10 @@ app.get('/logout', (req, res) => {
 });
 
 app.get("/change-password1", isAuthenticated, (req, res) => {
+    if (req.session.username) {
+        delete req.session.username;
+    }
+
     res.render('change-password1', { 
         title: "Đổi mật khẩu",
         username: req.session.username 
