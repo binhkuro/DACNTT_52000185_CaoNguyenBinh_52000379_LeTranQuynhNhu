@@ -84,7 +84,6 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    /* Đặt container này ở cuối trang */
 }
 
 .background-image {
@@ -114,33 +113,49 @@ body {
 
 .modal {
     display: none;
-    /* Ẩn modal */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
 }
 
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    /* Could be more or less, depending on screen size */
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-field input[type="submit"] {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.form-field input[type="submit"]:hover {
+    background-color: #555;
 }
 
 .close {
