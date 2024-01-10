@@ -8,7 +8,7 @@ body {
 .register-container {
     position: relative;
     background: #d8aa18;
-    width: 500px;
+    width: 550px;
     margin: 100px auto;
     padding: 60px;
     border-radius: 8px;
@@ -46,11 +46,13 @@ body {
     background-color: #555;
 }
 
-.password-container, .confirm-password-container {
+.password-container,
+.confirm-password-container {
     position: relative;
 }
 
-.password-container i, .confirm-password-container i {
+.password-container i,
+.confirm-password-container i {
     position: absolute;
     right: 10px;
     top: 50%;
