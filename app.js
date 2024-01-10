@@ -54,7 +54,8 @@ function isAuthenticated(req, res, next) {
 app.get("/", (req, res) => {
     res.render('index', {
         title: 'Trang Chủ',
-        username: req.session.username
+        username: req.session.username,
+        profilePicture: req.session.profilePicture,
     });
 });
 
@@ -67,12 +68,14 @@ app.get("/forgot-password", (req, res) => {
 app.get("/medical", (req, res) => {
     res.render('medical', {
         title: 'Lịch trình y tế',
+        username: req.session.username
     });
 });
 
 app.get("/schedule", (req, res) => {
     res.render('schedule', {
         title: 'Ghi lịch trình y tế',
+        username: req.session.username
     });
 });
 
@@ -186,7 +189,32 @@ app.get('/logout', (req, res) => {
 });
 
 app.get("/change-password1", isAuthenticated, (req, res) => {
-    res.render('change-password1');
+    res.render('change-password1', { 
+        title: "Đổi mật khẩu",
+        username: req.session.username 
+    });
+})
+
+app.get("/profile", (req, res) => {
+    if(!req.session.username)
+        return res.redirect("/login");
+
+    accountController.getProfilePage(req, res);
+})
+
+app.get("/profileid/:username", (req, res) => {
+    if(!req.session.username)
+        return res.redirect("/login");
+
+    accountController.getProfileByUsername(req, res);
+})
+
+app.post("/profile", (req, res) => {
+    accountController.changeProfilePicture(req, res);
+})
+
+app.post("/update-fullname", (req, res) => {
+    accountController.updateFullname(req, res);
 })
 
 app.post("/email-forgot", (req, res) => {

@@ -194,7 +194,7 @@ function loginAccount(req, res) {
             }
 
             req.session.username = username;
-
+            req.session.profilePicture = account.profilePicture;
             if (username === "admin")
                 res.redirect("/account-management")
             else
@@ -314,6 +314,129 @@ function emailForgot(req, res) {
     mailController.sendMail(email, subject, content);	
 }
 
+// Load trang profile dựa vào session
+function getProfilePage(req, res) {
+    Account.findOne({
+        username: req.session.username,
+    })
+    .then(account => {
+        let options = {
+            email: account.email, 
+            username: account.username,
+            fullname: account.fullname, 
+            password: account.password,
+            phoneNumber: account.phoneNumber,
+            address: account.address,
+            profilePicture: account.profilePicture, 
+            success: req.flash("success"), 
+            error: req.flash("error")
+        };
+
+        res.render("profile", options)
+    })
+}
+
+// Load profile user theo username tại trang quản lí
+function getProfileByUsername(req, res) {
+    Account.findOne({
+        username: req.params.username,
+    })
+    .then(account => {
+        let options = {
+            layout: "admin",
+            email: account.email, 
+            username: account.username,
+            fullname: account.fullname, 
+            phoneNumber: account.phoneNumber,
+            address: account.address,
+            profilePicture: account.profilePicture, 
+            success: req.flash("success"), 
+            error: req.flash("error")
+        };
+
+        res.render("profileid", options)
+    })
+}
+
+// Cập nhật avatar
+function changeProfilePicture(req, res) {
+    let form = new multiparty.Form()
+
+    form.parse(req, (error, data, files) => {
+        if (error) {
+            req.flash("error", "Thay đổi ảnh thất bại")
+            return res.redirect('profile')
+        }
+        
+        let file = files.file[0];
+        
+        // Validate file
+        if(file.size > 1048576) {
+            req.flash("error", "Không chấp nhận ảnh có kích thước lớn hơn 1MB")
+            return res.redirect('profile')
+        }
+
+        // Đổi tên file là username + extension
+        let newFileName = (req.session.username).split("@")[0] + path.extname(file.originalFilename);
+
+        // Lưu file đã được upload vào server
+        let tempPath = file.path;
+        let savePath = path.join(__dirname, "../public/uploads/avatars/", newFileName);
+
+        fsx.copy(tempPath, savePath, (err) => {
+            if (err) {
+                req.flash("error", "Thay đổi ảnh thất bại")
+                return res.redirect('profile')
+            }
+        });
+
+        // Cập nhật lại giá trị của profilePicture trong database    
+        Account.updateOne({username: req.session.username}, {$set: {profilePicture: newFileName}}, { new: true })
+        .then(updatedAccount => {
+            if (!updatedAccount) {
+                req.flash("error", "Thay đổi ảnh thất bại");
+            } else {
+                req.session.profilePicture = newFileName;
+                req.flash("success", "Thay đổi ảnh thành công");
+            }
+            res.redirect('profile');
+        })
+        .catch(error => {
+            req.flash("error", "Thay đổi ảnh thất bại.")
+            res.redirect('profile')
+        });
+    })
+}
+
+function updateFullname(req, res) {
+    const newFullname = req.body.fullname;
+    const username = req.session.username;
+
+    if (!username) {
+        req.flash('error', 'Người dùng chưa được xác thực');
+        return res.status(401).send({ message: req.flash('error') });
+    }
+
+    Account.findOneAndUpdate(
+        { username: username },
+        { $set: { fullname: newFullname } },
+        { new: true }
+    )
+    .then(account => {
+        if (!account) {
+            req.flash('error', 'Không tìm thấy tài khoản');
+            res.status(404).send({ message: req.flash('error') });
+        } else {
+            req.flash('success', 'Cập nhật họ và tên thành công');
+            res.send({ fullname: account.fullname, message: req.flash('success') });
+        }
+    })
+    .catch(error => {
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.status(500).send({ message: req.flash('error') });
+    });
+}
+
 module.exports = {
     initData,
     getAccountManagementPage,
@@ -322,5 +445,9 @@ module.exports = {
     forgotPassword,
     changePasswordAfterForgot,
     sendEmail,
-    emailForgot
+    emailForgot,
+    getProfilePage,
+    getProfileByUsername,
+    changeProfilePicture,
+    updateFullname,
 };

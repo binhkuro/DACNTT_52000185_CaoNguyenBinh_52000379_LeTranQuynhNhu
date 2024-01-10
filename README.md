@@ -26,5 +26,3 @@ Mở trình duyệt và truy cập vào địa chỉ `http://localhost:8080`.
 - Mật khẩu: A12345678
 
 ## Video demo
-
-[![Video Demo](http://img.youtube.com/vi/bJZ9QppnX20/0.jpg)](https://youtu.be/bJZ9QppnX20 "Video Demo")

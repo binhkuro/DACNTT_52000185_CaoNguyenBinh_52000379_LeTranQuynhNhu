@@ -1,6 +1,5 @@
 header {
     background-color: #000000;
-    /* Màu nền của header */
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -12,7 +11,6 @@ header {
     margin: 0 auto;
     padding: 0 20px;
     max-width: 1200px;
-    /* Giới hạn chiều rộng của header */
 }
 
 .logo img {
@@ -39,7 +37,6 @@ header {
 
 .navigation-menu ul li a:hover {
     color: #eaff00;
-    /* Màu chữ khi hover */
     transition: background-color 0.3s ease;
 }
 
@@ -51,9 +48,7 @@ header {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    /* Thêm thuộc tính này để loại bỏ khoảng cách giữa các nút */
     margin-left: 2px;
-    /* Hoặc bạn có thể thiết lập khoảng cách cụ thể giữa các nút nếu muốn */
 }
 
 #login {
@@ -63,8 +58,6 @@ header {
 
 #login:hover {
     background-color: #eaff00;
-    /* Màu vàng cho hiệu ứng hover */
-    /* Có thể thêm transition cho hiệu ứng mượt mà */
     transition: background-color 0.3s ease;
 }
 
@@ -75,16 +68,12 @@ header {
 
 #register:hover {
     background-color: #eaff00;
-    /* Màu vàng cho hiệu ứng hover */
-    /* Có thể thêm transition cho hiệu ứng mượt mà */
     transition: background-color 0.3s ease;
 }
 
 #login,
 #register {
     flex: none;
-    /* Bảo đảm rằng flexbox không ảnh hưởng đến kích thước của nút */
-    /* ...các thuộc tính khác giữ nguyên... */
 }
 
 .search-bar {
@@ -106,9 +95,7 @@ header {
 .auth-buttons {
     display: flex;
     margin-left: auto;
-    /* Để đẩy khối nút ra bên phải */
     margin-right: 2px;
-    /* Điều chỉnh khoảng cách từ khối nút đến cạnh phải */
 }
 
 #search {
@@ -117,7 +104,6 @@ header {
     border-radius: 4px;
     background-color: #ff5722;
     font-size: 16px;
-    /* Điều chỉnh kích thước của icon nếu cần */
     color: white;
     cursor: pointer;
     white-space: nowrap;
@@ -125,13 +111,24 @@ header {
 
 #search:hover {
     background-color: #eaff00;
-    /* Màu vàng cho hiệu ứng hover */
-    /* Có thể thêm transition cho hiệu ứng mượt mà */
     transition: background-color 0.3s ease;
 }
 
+.btn.dropdown-toggle img {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    margin-right: 0.5rem;
+    vertical-align: middle; 
+}
 
-/* Responsive design adjustments */
+.btn.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
 
 @media (max-width: 768px) {
     .header-container {
@@ -146,17 +143,12 @@ header {
     }
     .search-bar {
         order: -1;
-        /* Đặt search-bar lên trên cùng khi ở chế độ responsive */
         width: 100%;
-        /* Chiếm đầy chiều rộng khi ở chế độ responsive */
         margin-right: 0;
-        /* Xóa khoảng cách khi ở chế độ responsive */
     }
     .auth-buttons {
         margin-top: 10px;
         width: 100%;
-        /* Cho phép auth-buttons chiếm đầy chiều rộng */
         justify-content: flex-end;
-        /* Căn các nút ra bên phải khi ở chế độ responsive */
     }
 }
