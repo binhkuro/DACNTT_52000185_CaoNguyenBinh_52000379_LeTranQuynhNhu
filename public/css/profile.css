@@ -2,7 +2,7 @@
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    background-color: #f5f8f2;
+    background-color: #f6f8f2;
 }
 
 .password-container {
@@ -26,7 +26,7 @@
     width: 200px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #c5f2a2;
+    border: 3px solid #000000;
 }
 
 #btnChooseFile {
@@ -37,7 +37,7 @@
     z-index: 2;
     opacity: 0;
     transition: opacity 0.3s ease;
-    background-color: #ffffff;
+    background-color: #000000;
     border-radius: 50%;
     padding: 10px;
     border: none;
@@ -49,11 +49,11 @@
 }
 
 .form-group label {
-    color: #537b35;
+    color: #000000;
 }
 
 .form-group input {
-    border: 1px solid #c5f2a2;
+    border: 1px solid #000000;
     border-radius: 5px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     padding: 10px;

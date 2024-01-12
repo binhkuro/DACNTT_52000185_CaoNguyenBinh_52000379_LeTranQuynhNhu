@@ -17,7 +17,7 @@
                     <div class="col-md-4 text-center">
                         <div class="image-container">
                             <img src="/uploads/avatars/{{profilePicture}}" alt="Avatar" class="img-fluid rounded-circle" id="profilePicture">
-                            <button class="btn btn-outline-success" id="btnChooseFile"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+                            <button class="btn btn-outline-secondary" id="btnChooseFile"><i class="fa-solid fa-cloud-arrow-up"></i></button>
                         </div>
                     </div>
 
@@ -37,23 +37,33 @@
                             </div>
                             <!-- Họ và tên -->
                             <div class="form-group">
-                                <label for="fullname">Họ và tên:</label>
+                                <label for="fullname">Tên hiển thị:</label>
                                 <div class="input-group">
                                     <input type="text" id="fullname" name="fullname" class="form-control" value="{{fullname}}" readonly>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="editFullnameModalToggle"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-outline-dark" type="button" id="editFullnameModalToggle"><i class="fas fa-edit"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <!-- Địa chỉ -->
                             <div class="form-group">
                                 <label for="address">Địa chỉ:</label>
-                                <input type="text" id="address" name="address" class="form-control" value="{{address}}" readonly>
+                                <div class="input-group">
+                                    <input type="text" id="address" name="address" class="form-control" value="{{address}}" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-dark" type="button" id="editAddressModalToggle"><i class="fas fa-edit"></i></button>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Số điện thoại -->
                             <div class="form-group">
                                 <label for="phoneNumber">Số điện thoại:</label>
-                                <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" value="{{phoneNumber}}" readonly>
+                                <div class="input-group">
+                                    <input type="number" id="phoneNumber" name="phoneNumber" class="form-control" value="{{phoneNumber}}" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-dark" type="button" id="editPhoneNumberModalToggle"><i class="fas fa-edit"></i></button>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Mật khẩu -->
                             <div class="form-group">
@@ -68,8 +78,13 @@
                                 </div>
                             </div>
                         </div>   
-                        <div class="text-center mt-4">
-                            <a href="/change-password1" class="btn btn-primary">Đổi mật khẩu</a>
+                        <div class="row mt-3">
+                            <div class="col text-right pr-2">
+                                <button class="btn btn-secondary" id="updatePasswordModalToggle">Đổi mật khẩu</a>
+                            </div>
+                            <div class="col text-left pl-2">
+                                <button class="btn btn-dark" id="updateProfileModalToggle">Cập nhật</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,23 +100,160 @@
 </form>
 
 
-<!-- Modal họ và tên -->
+<!-- Modal tên hiển thị -->
 <div class="modal fade" id="editFullnameModal" tabindex="-1" aria-labelledby="editFullnameModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editFullnameModalLabel">Cập nhật họ và tên:</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="text" id="newFullname" class="form-control" placeholder="Nhập tên mới">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id="saveFullname">Cập nhật</button>
-            </div>
+            <form id="editFullnameForm" action="/update-fullname" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFullnameModalLabel">Cập nhật tên hiển thị</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="newFullname" name="fullname" class="form-control" placeholder="Nhập tên hiển thị mới" value="{{fullname}}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal địa chỉ -->
+<div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="editAddressForm" action="/update-address" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAddressModalLabel">Cập nhật địa chỉ</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="newAddress" name="address" class="form-control" placeholder="Nhập địa chỉ mới" value="{{address}}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal số điện thoại -->
+<div class="modal fade" id="editPhoneNumberModal" tabindex="-1" aria-labelledby="editPhoneNumberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="editPhoneNumberForm" action="/update-phoneNumber" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPhoneNumberModalLabel">Cập nhật số điện thoại</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="number" id="newPhoneNumber" name="phoneNumber" class="form-control" placeholder="Nhập số điện thoại mới" value="{{phoneNumber}}">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal tổng quát -->
+<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="updateProfileForm" action="/update-profile" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateProfileModalLabel">Cập nhật thông tin cá nhân</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="newFullname">Tên hiển thị:</label>
+                        <input type="text" id="newFullname" name="fullname" class="form-control" placeholder="Tên hiển thị mới" value="{{fullname}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="newAddress">Địa chỉ:</label>
+                        <input type="text" id="newAddress" name="address" class="form-control" placeholder="Địa chỉ mới" value="{{address}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPhoneNumber">Số điện thoại:</label>
+                        <input type="number" id="newPhoneNumber" name="phoneNumber" class="form-control" placeholder="Số điện thoại mới" value="{{phoneNumber}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal đổi mật khẩu -->
+<div class="modal fade" id="updatePasswordModal" tabindex="-1" aria-labelledby="updatePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="updatePasswordForm" action="/change-password3" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePasswordModalLabel">Đổi mật khẩu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="currentPassword">Mật khẩu hiện tại:</label>
+                        <div class="input-group">
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control" placeholder="Mật khẩu hiện tại">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i id="toggleOldPassword" class="fa fa-eye" style="cursor: pointer;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Mật khẩu mới:</label>
+                        <div class="input-group">
+                            <input type="password" id="newPassword" name="newPassword" class="form-control" placeholder="Mật khẩu mới">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i id="toggleNewPassword" class="fa fa-eye" style="cursor: pointer;"></i>
+                                </span>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu mới:</label>
+                        <div class="input-group">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Xác nhận mật khẩu mới">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i id="toggleConfirmPassword" class="fa fa-eye" style="cursor: pointer;"></i>
+                                </span>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-warning">Đổi mật khẩu</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

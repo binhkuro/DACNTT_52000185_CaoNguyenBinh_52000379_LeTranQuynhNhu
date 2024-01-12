@@ -16,12 +16,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const password = document.querySelector('#password');
     
     togglePassword.addEventListener('click', () => {
-        // Check if password is currently visible
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type); // Switches the type attribute
+        password.setAttribute('type', type); 
         
-        // Toggle the eye/eye-slash icon
+        togglePassword.classList.toggle('fa-eye');
         togglePassword.classList.toggle('fa-eye-slash');
+    });
+
+    const toggleOldPassword = document.querySelector('#toggleOldPassword');
+    const currentPassword = document.querySelector('#currentPassword');
+    
+    toggleOldPassword.addEventListener('click', () => {
+        const type = currentPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        currentPassword.setAttribute('type', type);
+        toggleOldPassword.classList.toggle('fa-eye');
+        toggleOldPassword.classList.toggle('fa-eye-slash');
+    });
+
+    const toggleNewPassword = document.querySelector('#toggleNewPassword');
+    const newPassword = document.querySelector('#newPassword');
+    
+    toggleNewPassword.addEventListener('click', () => {
+        const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPassword.setAttribute('type', type);
+        toggleNewPassword.classList.toggle('fa-eye');
+        toggleNewPassword.classList.toggle('fa-eye-slash');
+    });
+
+    const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+    const confirmPassword = document.querySelector('#confirmPassword');
+    
+    toggleConfirmPassword.addEventListener('click', () => {
+        const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPassword.setAttribute('type', type);
+        toggleConfirmPassword.classList.toggle('fa-eye');
+        toggleConfirmPassword.classList.toggle('fa-eye-slash');
     });
 });
 
@@ -38,38 +67,24 @@ $(document).ready(function() {
     $('#editFullnameModalToggle').on('click', function() {
         $('#editFullnameModal').modal('show');
     });
+});
 
-    $('#saveFullname').on('click', function() {
-        var newFullname = $('#newFullname').val();
-        $.ajax({
-            url: '/update-fullname',
-            type: 'post',
-            data: { fullname: newFullname },
-            success: function(response) {
-                $('#fullname').val(response.fullname);
-                $('#editFullnameModal').modal('hide');
-                displayFlashMessage('success', response.message);
-            },
-            error: function(error) {
-                displayFlashMessage('error', error.responseText);
-            }
-        });
+$(document).ready(function() {
+    $('#editAddressModalToggle').on('click', function() {
+        $('#editAddressModal').modal('show');
     });
 });
 
-function displayFlashMessage(type, message) {
-    var flashMessageDiv = $('<div></div>')
-        .addClass('alert')
-        .addClass(type === 'success' ? 'alert-success' : 'alert-danger')
-        .text(message);
+$(document).ready(function() {
+    $('#editPhoneNumberModalToggle').on('click', function() {
+        $('#editPhoneNumberModal').modal('show');
+    });
+});
 
-    $('.alert').remove();
+$('#updateProfileModalToggle').on('click', function() {
+    $('#updateProfileModal').modal('show');
+});
 
-    $(flashMessageDiv).insertAfter('.header-container');
-
-    window.scrollTo(0, 0);
-
-    setTimeout(function() {
-        flashMessageDiv.remove();
-    }, 3000);
-}
+$('#updatePasswordModalToggle').on('click', function() {
+    $('#updatePasswordModal').modal('show');
+});

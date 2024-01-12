@@ -88,19 +88,19 @@ async function registerAccount(req, res) {
 
     // Kiểm tra username (ít nhất 5 kí tự, không chứa kí tự đặc biệt)
     if (!/^[A-Za-z0-9]{5,}$/.test(req.body.username)) {
-        req.flash("error", "Username phải có ít nhất 5 kí tự và không chứa kí tự đặc biệt.");
+        req.flash("error", "Username phải có ít nhất 5 kí tự và không chứa kí tự đặc biệt");
         return res.render("register", { error: req.flash("error"), ...req.body });
     }
 
     // Kiểm tra số điện thoại
     if (!/^\d{10}$/.test(req.body.phoneNumber)) {
-        req.flash("error", "Số điện thoại phải gồm 10 chữ số.");
+        req.flash("error", "Số điện thoại phải gồm 10 chữ số");
         return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
     }
 
     // Kiểm tra mật khẩu
     if (!/(?=.*[A-Z]).{8,16}/.test(req.body.password)) {
-        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa.");
+        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa");
         return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
     }
 
@@ -190,6 +190,7 @@ function loginAccount(req, res) {
                 await Account.updateOne({ email: email }, { $set: { activateStatus: 1 } }, { new: true })
 
                 req.session.username = username;
+                req.session.profilePicture = account.profilePicture;
                 return res.redirect("/")
             }
 
@@ -234,6 +235,64 @@ async function forgotPassword(req, res) {
     }
 }
 
+// Đổi mật khẩu tại header
+async function changePassword(req, res) {
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    const confirmPassword = req.body.confirmPassword;
+    const username = req.session.username; 
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/change-password1');
+    }
+
+    if (!/(?=.*[A-Z]).{8,}/.test(newPassword)) {
+        req.flash("error", "Mật khẩu phải dài ít nhất 8 ký tự và có ít nhất một chữ cái in hoa");
+        return res.redirect('/change-password1');
+    }
+
+    if (newPassword !== confirmPassword) {
+        req.flash("error", "Mật khẩu mới và xác nhận mật khẩu không khớp");
+        return res.redirect('/change-password1');    
+    }
+
+    if (currentPassword === newPassword) {
+        req.flash('error', 'Không được nhập trùng mật khẩu hiện tại và mật khẩu mới');
+        return res.redirect('/change-password1');
+    }
+
+    try {
+        const user = await Account.findOne({ username: username });
+        if (!user) {
+            req.flash("error", "Không tìm thấy tài khoản");
+            return res.redirect('/change-password1');
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            req.flash("error", "Mật khẩu hiện tại không chính xác");
+            return res.redirect('/change-password1');
+        }
+
+        const isOld = await bcrypt.compare(newPassword, user.password);
+        if (isOld) {
+            req.flash('error', 'Mật khẩu mới không được trùng với mật khẩu hiện tại');
+            return res.redirect('/change-password1');
+        }
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await Account.updateOne({ username: username }, { password: hashedNewPassword });
+
+        req.flash("success", "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng về trang đăng nhập");
+        res.render('password-changed', { message: "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng..." });
+    } catch (error) {
+        console.error(error);
+        req.flash("error", "Có lỗi xảy ra trong quá trình đổi mật khẩu");
+        return res.redirect('/change-password1');
+    }    
+}
+
 // Đổi mật khẩu khi quên mật khẩu
 async function changePasswordAfterForgot(req, res) {
     let newPassword = req.body.newPassword;
@@ -241,19 +300,16 @@ async function changePasswordAfterForgot(req, res) {
     let token = req.body.token;
     let hashedEmail = req.body.hashedEmail;
 
-    // Kiểm tra dữ liệu đầu vào
     if (!newPassword || !confirmPassword || !token || !hashedEmail) {
         req.flash("error", "Vui lòng không bỏ trống thông tin");
         return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
     }
 
-    // Kiểm tra mật khẩu mới
     if (!/(?=.*[A-Z]).{8,16}/.test(newPassword)) {
-        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa.");
+        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa");
         return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
     }
 
-    // So sánh mật khẩu và xác nhận mật khẩu
     if (newPassword !== confirmPassword) {
         req.flash("error", "Mật khẩu và xác nhận mật khẩu không khớp");
         return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));    
@@ -281,6 +337,62 @@ async function changePasswordAfterForgot(req, res) {
         console.error(error);
         req.flash("error", "Có lỗi xảy ra, vui lòng thử lại");
         return res.redirect('/change-password2?token=' + encodeURIComponent(token) + '&hashedEmail=' + encodeURIComponent(hashedEmail));
+    }
+}
+
+// Đổi mật khẩu tại profile
+async function changePasswordInProfile(req, res) {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+    const username = req.session.username;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        req.flash('error', 'Vui lòng điền đầy đủ thông tin');
+        return res.redirect('/profile');
+    }
+
+    if (!/(?=.*[A-Z]).{8,16}/.test(newPassword)) {
+        req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa");
+        return res.redirect('/profile');
+    }
+
+    if (newPassword !== confirmPassword) {
+        req.flash('error', 'Mật khẩu mới và mật khẩu xác nhận không khớp');
+        return res.redirect('/profile');
+    }
+
+    if (currentPassword === newPassword) {
+        req.flash('error', 'Không được nhập trùng mật khẩu hiện tại và mật khẩu mới');
+        return res.redirect('/profile');
+    }
+
+    try {
+        const user = await Account.findOne({ username });
+        if (!user) {
+            req.flash('error', 'Người dùng không tồn tại');
+            return res.redirect('/profile');
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            req.flash('error', 'Mật khẩu hiện tại không chính xác');
+            return res.redirect('/profile');
+        }
+
+        const isOld = await bcrypt.compare(newPassword, user.password);
+        if (isOld) {
+            req.flash('error', 'Mật khẩu mới không được trùng với mật khẩu hiện tại');
+            return res.redirect('/profile');
+        }
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await Account.updateOne({ username }, { $set: { password: hashedNewPassword } });
+
+        req.flash("success", "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng về trang đăng nhập");
+        res.render('password-changed', { message: "Mật khẩu đã được cập nhật thành công. Đang chuyển hướng..." });
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Có lỗi xảy ra khi đổi mật khẩu');
+        return res.redirect('/profile');
     }
 }
 
@@ -402,19 +514,26 @@ function changeProfilePicture(req, res) {
             res.redirect('profile');
         })
         .catch(error => {
-            req.flash("error", "Thay đổi ảnh thất bại.")
+            req.flash("error", "Thay đổi ảnh thất bại")
             res.redirect('profile')
         });
     })
 }
 
+// Cập nhật tên hiển thị
 function updateFullname(req, res) {
     const newFullname = req.body.fullname;
     const username = req.session.username;
 
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (newFullname === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/profile');
+    }
+
     if (!username) {
         req.flash('error', 'Người dùng chưa được xác thực');
-        return res.status(401).send({ message: req.flash('error') });
+        return res.redirect('/profile');
     }
 
     Account.findOneAndUpdate(
@@ -425,15 +544,139 @@ function updateFullname(req, res) {
     .then(account => {
         if (!account) {
             req.flash('error', 'Không tìm thấy tài khoản');
-            res.status(404).send({ message: req.flash('error') });
+            return res.redirect('/profile');
         } else {
             req.flash('success', 'Cập nhật họ và tên thành công');
-            res.send({ fullname: account.fullname, message: req.flash('success') });
+            return res.redirect('/profile');
         }
     })
     .catch(error => {
         req.flash('error', 'Có lỗi đã xảy ra');
-        return res.status(500).send({ message: req.flash('error') });
+        return res.redirect('/profile');
+    });
+}
+
+// Cập nhật địa chỉ
+function updateAddress(req, res) {
+    const newAddress = req.body.address;
+    const username = req.session.username;
+
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (newAddress === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/profile');
+    }
+
+    if (!username) {
+        req.flash('error', 'Người dùng chưa được xác thực');
+        return res.redirect('/profile');
+    }
+
+    Account.findOneAndUpdate(
+        { username: username },
+        { $set: { address: newAddress } },
+        { new: true }
+    )
+    .then(account => {
+        if (!account) {
+            req.flash('error', 'Không tìm thấy tài khoản');
+            return res.redirect('/profile');
+        } else {
+            req.flash('success', 'Cập nhật địa chỉ thành công');
+            return res.redirect('/profile');
+        }
+    })
+    .catch(error => {
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.redirect('/profile');
+    });
+}
+
+// Cập nhật số điện thoại
+function updatePhoneNumber(req, res) {
+    const newPhoneNumber = req.body.phoneNumber;
+    const username = req.session.username;
+
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (!/^\d{10}$/.test(newPhoneNumber)) {
+        req.flash("error", "Số điện thoại phải gồm 10 chữ số");
+        return res.redirect('/profile');
+    }
+
+    if (newPhoneNumber === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/profile');
+    }
+
+    if (!username) {
+        req.flash('error', 'Người dùng chưa được xác thực');
+        return res.redirect('/profile');
+    }
+
+    Account.findOneAndUpdate(
+        { username: username },
+        { $set: { phoneNumber: newPhoneNumber } },
+        { new: true }
+    )
+    .then(account => {
+        if (!account) {
+            req.flash('error', 'Không tìm thấy tài khoản');
+            return res.redirect('/profile');
+        } else {
+            req.flash('success', 'Cập nhật số điện thoại thành công');
+            return res.redirect('/profile');
+        }
+    })
+    .catch(error => {
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.redirect('/profile');
+    });
+}
+
+// Cập nhật tổng quát
+function updateProfile(req, res) {
+    const newFullname = req.body.fullname;
+    const newAddress = req.body.address;
+    const newPhoneNumber = req.body.phoneNumber;
+    const username = req.session.username;
+
+    // Kiểm tra tính hợp lệ của dữ liệu
+    if (!/^\d{10}$/.test(newPhoneNumber)) {
+        req.flash("error", "Số điện thoại phải gồm 10 chữ số");
+        return res.redirect('/profile');
+    }
+
+    if (newFullname === "" || newAddress === "" || newPhoneNumber === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect('/profile');
+    }
+
+    if (!username) {
+        req.flash('error', 'Người dùng chưa được xác thực');
+        return res.redirect('/profile');
+    }
+
+    Account.findOneAndUpdate(
+        { username: username },
+        { $set: {
+            fullname : newFullname, 
+            address: newAddress,
+            phoneNumber: newPhoneNumber, 
+        }},
+        { new: true }
+    )
+    .then(account => {
+        if (!account) {
+            req.flash('error', 'Không tìm thấy tài khoản');
+            return res.redirect('/profile');
+        } else {
+            req.flash('success', 'Cập nhật thông tin thành công');
+            return res.redirect('/profile');
+        }
+    })
+    .catch(error => {
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.redirect('/profile');
     });
 }
 
@@ -443,11 +686,16 @@ module.exports = {
     registerAccount,
     loginAccount,
     forgotPassword,
+    changePassword,
     changePasswordAfterForgot,
+    changePasswordInProfile,
     sendEmail,
     emailForgot,
     getProfilePage,
     getProfileByUsername,
     changeProfilePicture,
     updateFullname,
+    updateAddress,
+    updatePhoneNumber,
+    updateProfile,
 };

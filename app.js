@@ -68,14 +68,16 @@ app.get("/forgot-password", (req, res) => {
 app.get("/medical", (req, res) => {
     res.render('medical', {
         title: 'Lịch trình y tế',
-        username: req.session.username
+        username: req.session.username,
+        profilePicture: req.session.profilePicture,
     });
 });
 
 app.get("/schedule", (req, res) => {
     res.render('schedule', {
         title: 'Ghi lịch trình y tế',
-        username: req.session.username
+        username: req.session.username,
+        profilePicture: req.session.profilePicture,
     });
 });
 
@@ -175,8 +177,16 @@ app.post("/forgot-password", (req, res) => {
     accountController.forgotPassword(req, res);
 })
 
+app.post("/change-password1", (req, res) => {
+    accountController.changePassword(req, res);
+});
+
 app.post("/change-password2", (req, res) => {
     accountController.changePasswordAfterForgot(req, res);
+});
+
+app.post("/change-password3", (req, res) => {
+    accountController.changePasswordInProfile(req, res);
 });
 
 app.post("/send-email", (req, res) => {
@@ -195,13 +205,10 @@ app.get('/logout', (req, res) => {
 });
 
 app.get("/change-password1", isAuthenticated, (req, res) => {
-    if (req.session.username) {
-        delete req.session.username;
-    }
-
     res.render('change-password1', { 
         title: "Đổi mật khẩu",
-        username: req.session.username 
+        username: req.session.username,
+        profilePicture: req.session.profilePicture,
     });
 })
 
@@ -226,6 +233,18 @@ app.post("/profile", (req, res) => {
 app.post("/update-fullname", (req, res) => {
     accountController.updateFullname(req, res);
 })
+
+app.post("/update-address", (req, res) => {
+    accountController.updateAddress(req, res);
+})
+
+app.post("/update-phoneNumber", (req, res) => {
+    accountController.updatePhoneNumber(req, res);
+})
+
+app.post("/update-profile", (req, res) => {
+    accountController.updateProfile(req, res);
+});
 
 app.post("/email-forgot", (req, res) => {
     accountController.emailForgot(req, res);
