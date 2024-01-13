@@ -190,11 +190,13 @@ function loginAccount(req, res) {
                 await Account.updateOne({ email: email }, { $set: { activateStatus: 1 } }, { new: true })
 
                 req.session.username = username;
+                req.session.fullname = account.fullname;
                 req.session.profilePicture = account.profilePicture;
                 return res.redirect("/")
             }
 
             req.session.username = username;
+            req.session.fullname = account.fullname;
             req.session.profilePicture = account.profilePicture;
             if (username === "admin")
                 res.redirect("/account-management")

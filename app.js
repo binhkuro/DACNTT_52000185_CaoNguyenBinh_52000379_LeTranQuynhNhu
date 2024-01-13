@@ -55,6 +55,7 @@ app.get("/", (req, res) => {
     res.render('index', {
         title: 'Trang Chủ',
         username: req.session.username,
+        fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
     });
 });
@@ -69,6 +70,7 @@ app.get("/medical", (req, res) => {
     res.render('medical', {
         title: 'Lịch trình y tế',
         username: req.session.username,
+        fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
     });
 });
@@ -77,6 +79,7 @@ app.get("/schedule", (req, res) => {
     res.render('schedule', {
         title: 'Ghi lịch trình y tế',
         username: req.session.username,
+        fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
     });
 });
@@ -208,6 +211,7 @@ app.get("/change-password1", isAuthenticated, (req, res) => {
     res.render('change-password1', { 
         title: "Đổi mật khẩu",
         username: req.session.username,
+        fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
     });
 })
