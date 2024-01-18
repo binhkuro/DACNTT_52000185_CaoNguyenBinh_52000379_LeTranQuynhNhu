@@ -111,7 +111,7 @@ body {
     justify-content: space-between;
     margin: 0 auto;
     max-width: 1200px;
-    /* Đặt chiều rộng tối đa cho container */
+    padding: 45px;
 }
 
 section {
@@ -129,4 +129,8 @@ section img {
     height: auto;
     margin-bottom: 10px;
     /* Thêm khoảng cách giữa icon và tiêu đề */
+}
+
+.service-item {
+    cursor: pointer;
 }

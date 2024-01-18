@@ -1,8 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0b70e;
+    margin: 0;
+    padding: 0;
+}
+
 .card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    background-color: #f6f8f2;
+    background-color: #d8aa18;
 }
 
 .password-container {
@@ -12,8 +19,8 @@
 
 .image-container {
     margin-top: 100px;
-    display: flex; 
-    justify-content: center; 
+    display: flex;
+    justify-content: center;
     align-items: center;
     position: relative;
     height: 250px;
@@ -31,7 +38,7 @@
 
 #btnChooseFile {
     position: absolute;
-    top: 80%; 
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;

@@ -84,6 +84,15 @@ app.get("/schedule", (req, res) => {
     });
 });
 
+app.get("/health", (req, res) => {
+    res.render('health', {
+        title: 'Sức Khỏe',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+    });
+});
+
 app.get("/introduce", (req, res) => {
     res.render('introduce', {
         title: 'Giới thiệu',
@@ -208,7 +217,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get("/change-password1", isAuthenticated, (req, res) => {
-    res.render('change-password1', { 
+    res.render('change-password1', {
         title: "Đổi mật khẩu",
         username: req.session.username,
         fullname: req.session.fullname,
@@ -217,14 +226,14 @@ app.get("/change-password1", isAuthenticated, (req, res) => {
 })
 
 app.get("/profile", (req, res) => {
-    if(!req.session.username)
+    if (!req.session.username)
         return res.redirect("/login");
 
     accountController.getProfilePage(req, res);
 })
 
 app.get("/profileid/:username", (req, res) => {
-    if(!req.session.username)
+    if (!req.session.username)
         return res.redirect("/login");
 
     accountController.getProfileByUsername(req, res);
