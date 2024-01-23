@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
+const petController = require('./controllers/PetController')
 
 // Lấy dữ liệu từ file .env ra
 const PORT = process.env.PORT;
@@ -34,6 +35,9 @@ app.engine('handlebars', hbs.engine({
         eq: (value1, value2, options) => {
             return value1 === value2;
         },
+        inc: (value) => {
+            return parseInt(value) + 1;
+        },
     }
 }))
 app.set('view engine', 'handlebars')
@@ -43,21 +47,8 @@ app.use((req, res, next) => {
     next();
 });
 
-function isAuthenticated(req, res, next) {
-    if (req.session && req.session.username) {
-        return next();
-    } else {
-        res.redirect('/');
-    }
-}
-
 app.get("/", (req, res) => {
-    res.render('index', {
-        title: 'Trang Chủ',
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-    });
+    accountController.getHomePage(req, res);
 });
 
 app.get("/forgot-password", (req, res) => {
@@ -67,30 +58,15 @@ app.get("/forgot-password", (req, res) => {
 });
 
 app.get("/medical", (req, res) => {
-    res.render('medical', {
-        title: 'Lịch trình y tế',
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-    });
+    petController.getMedicalPage(req, res);
 });
 
 app.get("/schedule", (req, res) => {
-    res.render('schedule', {
-        title: 'Ghi lịch trình y tế',
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-    });
+    petController.getSchedulePage(req, res);
 });
 
 app.get("/health", (req, res) => {
-    res.render('health', {
-        title: 'Sức Khỏe',
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-    });
+    petController.getHealthPage(req, res);
 });
 
 app.get("/introduce", (req, res) => {
@@ -216,13 +192,11 @@ app.get('/logout', (req, res) => {
     });
 });
 
-app.get("/change-password1", isAuthenticated, (req, res) => {
-    res.render('change-password1', {
-        title: "Đổi mật khẩu",
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-    });
+app.get("/change-password1", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+
+    accountController.getChangePasswordPage(req, res);
 })
 
 app.get("/profile", (req, res) => {
@@ -264,6 +238,10 @@ app.post("/email-forgot", (req, res) => {
     res.end();
 })
 
+app.post("/schedule", (req, res) => {
+    petController.addSchedule(req, res);
+})
+
 // Middle ware 404 error
 app.use((req, res) => {
     res.status(404)
@@ -281,9 +259,9 @@ app.use((err, req, res, next) => {
 mongoose.connect(CONNECTION_STRING)
     .then(() => {
         accountController.initData();
-        console.log('Database connected');
+        console.log('Đã kết nối cơ sở dữ liệu');
         app.listen(PORT); // Tạo server trên cổng 8080 hoặc PORT từ .env
     })
     .catch((error) => {
-        console.log('Error connecting to database', error);
+        console.log('Kết nối cơ sở dữ liệu thất bại', error);
     });

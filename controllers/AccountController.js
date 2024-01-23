@@ -58,6 +58,15 @@ async function initData() {
     await account2.save()
 }
 
+function getHomePage(req, res) {
+    res.render('index', {
+        title: 'Trang Chủ',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+    });
+}
+
 // Load user lên trang quản lý
 function getAccountManagementPage(req, res) {
     Account.find()
@@ -131,7 +140,7 @@ async function registerAccount(req, res) {
     account.save()
         .then(newAccount => {
             sendEmail(req, res);
-            req.flash("success", "Đăng ký tài khoản thành công. Vui lòng kiểm tra email của bạn.");
+            req.flash("success", "Đăng ký tài khoản thành công. Vui lòng kiểm tra email của bạn");
             res.render("register", { success: req.flash("success") });
         })
         .catch(error => {
@@ -293,6 +302,15 @@ async function changePassword(req, res) {
         req.flash("error", "Có lỗi xảy ra trong quá trình đổi mật khẩu");
         return res.redirect('/change-password1');
     }    
+}
+
+function getChangePasswordPage(req, res) {
+    res.render('change-password1', {
+        title: "Đổi mật khẩu",
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+    });
 }
 
 // Đổi mật khẩu khi quên mật khẩu
@@ -684,7 +702,9 @@ function updateProfile(req, res) {
 
 module.exports = {
     initData,
+    getHomePage,
     getAccountManagementPage,
+    getChangePasswordPage,
     registerAccount,
     loginAccount,
     forgotPassword,
