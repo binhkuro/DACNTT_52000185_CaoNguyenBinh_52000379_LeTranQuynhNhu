@@ -204,3 +204,8 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+.reminder-icon {
+    left: 0;
+    right: 0;
+}

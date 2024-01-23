@@ -1,4 +1,5 @@
 // medical.js
+let selectedDate = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     const monthNames = [
@@ -19,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hàm để tạo và cập nhật lịch
     function updateCalendar(month, year) {
         calendarDaysContainer.innerHTML = ''; // Xóa ngày cũ
-
         // Đặt tiêu đề cho tháng và năm
         monthYearText.textContent = `${monthNames[month]} ${year}`;
 
@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const dayElement = document.createElement('div');
             dayElement.classList.add('calendar-day');
             dayElement.textContent = day;
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            dayElement.setAttribute('data-date', dateString);
             // Nếu là tháng và năm hiện tại, kiểm tra ngày và làm nổi bật ngày hôm nay
             if (day === todayDate && month === todayMonth && year === todayYear) {
                 dayElement.classList.add('today');
@@ -117,3 +119,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+document.getElementById('reminder-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Ngăn không cho form thực hiện submit theo cách thông thường
+
+    // Lấy giá trị ngày tháng từ input và chuyển đến định dạng yyyy-mm-dd
+    var dateTime = document.getElementById('time').value;
+    selectedDate = new Date(dateTime).toISOString().split('T')[0];
+
+    // Thêm biểu tượng nhắc nhở vào lịch
+    addReminderToCalendar(selectedDate);
+
+    // Đóng modal nhắc nhở
+    modalReminder.style.display = "none";
+});
+
+function addReminderToCalendar(date) {
+    // Tìm ngày tương ứng trên lịch
+    const dayElements = document.querySelectorAll('.calendar-day');
+    dayElements.forEach(dayElement => {
+        if (dayElement.getAttribute('data-date') === date) {
+            // Tạo và thêm biểu tượng nhắc nhở
+            const icon = document.createElement('img');
+            icon.src = '/img/reminder.png'; // Cập nhật đường dẫn nếu cần
+            icon.alt = 'Reminder';
+            icon.classList.add('reminder');
+            dayElement.appendChild(icon);
+        }
+    });
+}
