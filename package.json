@@ -30,6 +30,7 @@
         "fs-extra": "^11.2.0",
         "handlebars": "^4.7.8",
         "jsonwebtoken": "^9.0.2",
+        "moment": "^2.30.1",
         "mongoose": "^8.0.3",
         "multiparty": "^4.2.3",
         "nodemailer": "^6.9.7",

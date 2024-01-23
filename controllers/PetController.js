@@ -15,7 +15,7 @@ function getMedicalPage(req, res) {
 }
 
 async function getSchedulePage(req, res) {
-    const schedules = await Schedule.find({}).lean(); 
+    const schedules = await Schedule.find({ username: req.session.username }).lean(); 
 
     res.render('schedule', {
         title: 'Ghi lịch trình y tế',
@@ -53,10 +53,11 @@ async function addSchedule(req, res) {
         req.flash("success", "Lịch trình mới đã được thêm vào hệ thống");
         res.redirect("/schedule");
     } catch (error) {
-        req.flash("error", "Không thể lưu lịch trình vào hệ thống");
+        req.flash("error", "Vui lòng đăng nhập để tiếp tục");
         res.redirect("/schedule");
     }
 }
+
 module.exports = {
     getMedicalPage,
     getSchedulePage,
