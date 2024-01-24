@@ -118,33 +118,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    addNotificationsToCalendar();
 });
 
-document.getElementById('reminder-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Ngăn không cho form thực hiện submit theo cách thông thường
-
-    // Lấy giá trị ngày tháng từ input và chuyển đến định dạng yyyy-mm-dd
-    var dateTime = document.getElementById('time').value;
-    selectedDate = new Date(dateTime).toISOString().split('T')[0];
-
-    // Thêm biểu tượng nhắc nhở vào lịch
-    addReminderToCalendar(selectedDate);
-
-    // Đóng modal nhắc nhở
-    modalReminder.style.display = "none";
-});
+function addNotificationsToCalendar() {
+    const notificationElements = document.querySelectorAll('.notification-date');
+    notificationElements.forEach(element => {
+        const date = element.textContent;
+        const selectedDate = date.split('/')[2] + "-" + date.split('/')[1] + "-" + date.split('/')[0];
+        addReminderToCalendar(selectedDate);
+    });
+}
 
 function addReminderToCalendar(date) {
     // Tìm ngày tương ứng trên lịch
     const dayElements = document.querySelectorAll('.calendar-day');
     dayElements.forEach(dayElement => {
         if (dayElement.getAttribute('data-date') === date) {
-            // Tạo và thêm biểu tượng nhắc nhở
-            const icon = document.createElement('img');
-            icon.src = '/img/reminder.png'; // Cập nhật đường dẫn nếu cần
-            icon.alt = 'Reminder';
-            icon.classList.add('reminder');
-            dayElement.appendChild(icon);
+            // Kiểm tra xem biểu tượng nhắc nhở đã tồn tại chưa
+            const existingIcon = dayElement.querySelector('.reminder');
+            if (!existingIcon) {
+                // Nếu không tồn tại, tạo và thêm biểu tượng nhắc nhở
+                const icon = document.createElement('img');
+                icon.src = '/img/reminder.png';
+                icon.alt = 'Reminder';
+                icon.classList.add('reminder');
+                dayElement.appendChild(icon);
+            }
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+        setTimeout(function() {
+            alert.classList.add('hide');
+        }, 3000);
+    }
+});

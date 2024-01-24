@@ -1,6 +1,14 @@
 <link rel="stylesheet" href="/css/medical.css">
+
+{{#if messages.error}}
+    <div class="alert alert-danger">{{messages.error}}</div>
+{{/if}}
+
+{{#if messages.success}}
+    <div class="alert alert-success">{{messages.success}}</div>
+{{/if}}
+
 <div class="medical-container">
-    <form action="/medical" method="post"></form>
     <!-- Container cho nút và lịch -->
     <div class="content-container">
         <div class="buttons-container">
@@ -35,30 +43,36 @@
                 <div>Sat</div>
             </div>
             <div class="calendar-days">
-                <!-- Dữ liệu ngày sẽ được thêm vào đây -->
+
             </div>
         </div>
     </div>
 </div>
 
+<div id="notificationDates" style="display:none;">
+    {{#each notifications}}
+        <span class="notification-date">{{this.date}}</span>
+    {{/each}}
+</div>
+
 <!-- Modal Reminder -->
 <div id="reminderModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form id="reminder-form" action="/reminder-form" method="post">
-        <div class="form-field">
-            <label for="time">Nhập thời gian:</label>
-            <input type="datetime-local" class="form-control" id="time" name="time" placeholder="VD: dd/mm/yyyy" value="{{time}}">
-        </div>
-        <div class="form-field">
-            <label for="event">Nhập tên sự kiện:</label>
-            <input type="text" class="form-control" id="event" name="event" placeholder="Nhập sự kiện cần nhắc nhở." value="{{event}}">
-        </div>
-        <div class="form-field">
-            <input type="submit" value="Tạo Nhắc Nhở">
-        </div>
-    </form>
-  </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="reminder" action="/reminder" method="post">
+            <div class="form-field">
+                <label for="date">Nhập ngày:</label>
+                <input type="date" class="form-control" id="date" name="date" placeholder="VD: dd/mm/yyyy" value="{{date}}">
+            </div>
+            <div class="form-field">
+                <label for="event">Nhập tên sự kiện:</label>
+                <input type="text" class="form-control" id="event" name="event" placeholder="Nhập sự kiện cần nhắc nhở." value="{{event}}">
+            </div>
+            <div class="form-field">
+                <input type="submit" value="Tạo Nhắc Nhở">
+            </div>
+        </form>
+    </div>
 </div>
 
 <script src="/js/medical.js"></script>

@@ -58,14 +58,23 @@ app.get("/forgot-password", (req, res) => {
 });
 
 app.get("/medical", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+    
     petController.getMedicalPage(req, res);
 });
 
 app.get("/schedule", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+
     petController.getSchedulePage(req, res);
 });
 
 app.get("/health", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+
     petController.getHealthPage(req, res);
 });
 
@@ -244,6 +253,10 @@ app.post("/health", (req, res) => {
 
 app.post("/schedule", (req, res) => {
     petController.addSchedule(req, res);
+})
+
+app.post("/reminder", (req, res) => {
+    petController.addNotification(req, res);
 })
 
 // Middle ware 404 error
