@@ -1,3 +1,4 @@
+let Pet = require("../models/pet");
 let Schedule = require("../models/schedule");
 
 function formatDate(inputDate) {
@@ -26,13 +27,43 @@ async function getSchedulePage(req, res) {
     });
 }
 
-function getHealthPage(req, res) {
+async function getHealthPage(req, res) {
+    const pets = await Pet.find({ username: req.session.username }).lean(); 
+
     res.render('health', {
         title: 'Sức Khỏe',
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
+        pets: pets
     });
+}
+
+async function addPet(req, res) {
+    if (req.body.name === "" || req.body.age === "" || req.body.type === "" || req.body.species === "" || req.body.gender === "" || req.body.color === "" || req.body.special === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect("/health");
+    }
+
+    let pet = new Pet({
+        name: req.body.name,
+        age: req.body.age,
+        type: req.body.type,
+        species: req.body.species,
+        gender: req.body.gender,
+        color: req.body.color,
+        special: req.body.special,
+        username: req.session.username
+    });
+
+    try {
+        await pet.save();
+        req.flash("success", "Thú cưng của bạn đã được thêm vào hệ thống");
+        res.redirect("/health");
+    } catch (error) {
+        req.flash("error", "Vui lòng đăng nhập để tiếp tục");
+        res.redirect("/health");
+    }
 }
 
 async function addSchedule(req, res) {
@@ -62,5 +93,6 @@ module.exports = {
     getMedicalPage,
     getSchedulePage,
     getHealthPage,
+    addPet,
     addSchedule,
 };

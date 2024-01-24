@@ -1,4 +1,13 @@
 <link rel="stylesheet" href="/css/health.css">
+
+{{#if messages.error}}
+    <div class="alert alert-danger">{{messages.error}}</div>
+{{/if}}
+
+{{#if messages.success}}
+    <div class="alert alert-success">{{messages.success}}</div>
+{{/if}}
+
 <div class="health-container">
     <form action="/health" method="post"></form>
     <div class="content-container">
@@ -14,55 +23,65 @@
             </div>
             <div class="table">
                 <div>STT</div>
-                <div class="text">Thú cưng của bạn</div>
+                <div>Thú cưng của bạn</div>
             </div>
             <div class="data">
-                <!-- Dữ liệu sẽ được thêm vào đây -->
+                {{#each pets}}
+                    <div>{{inc @index}}</div>
+                    <div>{{name}}</div>
+                {{/each}}
             </div>
         </div>
     </div>
 </div>
 <div id="healthModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form id="health-form">
-        <div class="form-field">
-            <label for="name">Tên thú cưng:</label>
-            <input type="text" class="form-control" id="time" name="name" placeholder="VD: Lulu" value="{{name}}">
-        </div>
-        <div class="form-field">
-            <label for="type">Loài:</label>
-            <select class="form-control" id="type" name="type">
-                <option value="" disabled selected hidden>Chọn loài</option>
-                <option value="Chó">Chó</option>
-                <option value="Mèo">Mèo</option>
-            </select>
-        </div>
-		<div class="form-field">
-            <label for="species">Chủng loại:</label>
-            <input type="text" class="form-control" id="species" name="species" placeholder="VD: Chó Bergie" value="{{species}}">
-        </div>
-        <div class="form-field">
-            <label for="gender">Giới tính:</label>
-            <select class="form-control" id="gender" name="gender">
-                <option value="" disabled selected hidden>Chọn giới tính</option>
-                <option value="Đực">Đực</option>
-                <option value="Cái">Cái</option>
-            </select>
-        </div>
-        <div class="form-field">
-            <label for="color">Màu lông:</label>
-            <input type="text" class="form-control" id="color" name="color" placeholder="VD: Vàng" value="{{color}}">
-        </div>
-        <div class="form-field">
-            <label for="special">Đặc điểm nhận dạng đặc biệt</label>
-            <input type="text" class="form-control" id="special" name="special" placeholder="VD: Mặt có mụt ruồi màu đen bên trái dưới mũi" value="{{result}}">
-        </div>
-        <div class="form-field">
-            <input type="submit" value="HOÀN THÀNH">
-        </div>
-    </form>
-  </div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="health-form" action="/health" method="post">
+            <div class="form-field">
+                <label for="name">Tên thú cưng:</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="VD: Lulu" value="{{name}}">
+            </div>
+            <div class="form-field">
+                <label for="age">Tuổi thú cưng:</label>
+                <input type="number" class="form-control" id="age" name="age" placeholder="VD: 3" value="{{age}}">
+            </div>
+            <div class="form-field">
+                <label for="type">Loài:</label>
+                <select class="form-control" id="type" name="type">
+                    <option value="" disabled selected hidden>Chọn loài</option>
+                    <option value="Chó">Chó</option>
+                    <option value="Mèo">Mèo</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="species">Chủng loại:</label>
+                <input type="text" class="form-control" id="species" name="species" placeholder="VD: Chó Bergie" value="{{species}}">
+            </div>
+            <div class="form-field">
+                <label for="gender">Giới tính:</label>
+                <div>
+                    <input type="radio" id="male" name="gender" value="Đực">
+                    <label for="male">Đực</label>
+                </div>
+                <div>
+                    <input type="radio" id="female" name="gender" value="Cái">
+                    <label for="female">Cái</label>
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="color">Màu lông:</label>
+                <input type="text" class="form-control" id="color" name="color" placeholder="VD: Vàng" value="{{color}}">
+            </div>
+            <div class="form-field">
+                <label for="special">Đặc điểm nhận dạng đặc biệt</label>
+                <input type="text" class="form-control" id="special" name="special" placeholder="VD: Mặt có mụt ruồi màu đen bên trái dưới mũi" value="{{special}}">
+            </div>
+            <div class="form-field">
+                <input type="submit" value="HOÀN THÀNH">
+            </div>
+        </form>
+    </div>
 </div>
 <script src="/js/health.js"></script>
 <div class="background-image-container">

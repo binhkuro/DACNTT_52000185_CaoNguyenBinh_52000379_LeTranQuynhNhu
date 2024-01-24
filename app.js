@@ -238,6 +238,10 @@ app.post("/email-forgot", (req, res) => {
     res.end();
 })
 
+app.post("/health", (req, res) => {
+    petController.addPet(req, res);
+})
+
 app.post("/schedule", (req, res) => {
     petController.addSchedule(req, res);
 })
