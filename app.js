@@ -7,41 +7,68 @@ const session = require('express-session'); // session
 const flash = require('connect-flash'); // flash message
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const http = require('http');
+const socketIo = require('socket.io');
+const { generateEnvironmentData, getEnvironmentData } = require('./environmentSimulation');
+const { adjustSensorData } = require('./sensorSimulation');
+const { simulateDevices } = require('./deviceSimulation');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
 const petController = require('./controllers/PetController')
 
 // Lấy dữ liệu từ file .env ra
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const CONNECTION_STRING = process.env.CONNECTION_STRING;
 const COOKIE_SIGN = process.env.COOKIE_SIGN;
 
 // Cấu hình các package đã import
-let app = express()
-app.use(express.static(__dirname + '/public')) // truy cập thư mục public để sử dụng img, css, js,...
-app.use(express.json()); // lấy dữ liệu từ request dưới dạng JSON
-app.use(express.urlencoded({ extended: true })); // lấy dữ liệu từ request dưới dạng url-encoded
-app.use(cookieParser(COOKIE_SIGN)); // cookie
-app.use(session({ // session
+let app = express();
+app.use(express.static(__dirname + '/public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(COOKIE_SIGN));
+app.use(session({
     secret: COOKIE_SIGN,
     resave: true,
     saveUninitialized: true,
 }));
-app.use(flash()) // flash message
+app.use(flash());
 app.engine('handlebars', hbs.engine({
     defaultLayout: 'main',
     helpers: {
-        eq: (value1, value2, options) => {
-            return value1 === value2;
-        },
-        inc: (value) => {
-            return parseInt(value) + 1;
-        },
+        eq: (value1, value2, options) => value1 === value2,
+        inc: (value) => parseInt(value) + 1,
     }
-}))
+}));
 app.set('view engine', 'handlebars')
 
+// Khởi tạo server HTTP và Socket.io
+const server = http.createServer(app);
+const io = socketIo(server);
+
+// Thiết lập kết nối Socket.io
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    // Cập nhật giá trị ngẫu nhiên môi trường mỗi phút
+    generateEnvironmentData(); // Khởi tạo giá trị đầu tiên ngay lập tức
+    setInterval(() => {
+        generateEnvironmentData(); // Sau đó cập nhật mỗi phút
+    }, 60000);
+    let data = getEnvironmentData();
+    // Cập nhật và gửi dữ liệu cảm biến theo trạng thái thiết bị mỗi giây
+    setInterval(() => {
+        let environmentData = data; // Lấy giá trị môi trường ngẫu nhiên mới
+        let deviceStatus = simulateDevices(environmentData); // Xác định trạng thái thiết bị dựa trên environmentData
+        let sensorData = adjustSensorData(data, deviceStatus);
+
+        socket.emit('sensorData', sensorData);
+        socket.emit('deviceStatus', deviceStatus);
+    }, 1000);
+});
+
+// Định nghĩa các route
 app.use((req, res, next) => {
     res.locals.messages = req.flash();
     next();
@@ -67,6 +94,10 @@ app.get("/schedule", (req, res) => {
 
 app.get("/health", (req, res) => {
     petController.getHealthPage(req, res);
+});
+
+app.get('/environment', (req, res) => {
+    res.render('environment');
 });
 
 app.get("/introduce", (req, res) => {
@@ -259,13 +290,14 @@ app.use((err, req, res, next) => {
     res.render('500', { layout: null })
 })
 
-// Kết nối tới database ()
+// Kết nối tới MongoDB và khởi động server
 mongoose.connect(CONNECTION_STRING)
     .then(() => {
-        accountController.initData();
         console.log('Đã kết nối cơ sở dữ liệu');
-        app.listen(PORT); // Tạo server trên cổng 8080 hoặc PORT từ .env
+        server.listen(PORT, () => {
+            console.log(`Server đang chạy trên cổng ${PORT}`);
+        });
     })
     .catch((error) => {
-        console.log('Kết nối cơ sở dữ liệu thất bại', error);
+        console.error('Kết nối cơ sở dữ liệu thất bại', error);
     });

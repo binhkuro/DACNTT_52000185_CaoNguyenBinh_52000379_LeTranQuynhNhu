@@ -132,19 +132,19 @@ document.getElementById('reminder-form').addEventListener('submit', function(eve
 
     // Đóng modal nhắc nhở
     modalReminder.style.display = "none";
-});
 
-function addReminderToCalendar(date) {
-    // Tìm ngày tương ứng trên lịch
-    const dayElements = document.querySelectorAll('.calendar-day');
-    dayElements.forEach(dayElement => {
-        if (dayElement.getAttribute('data-date') === date) {
-            // Tạo và thêm biểu tượng nhắc nhở
-            const icon = document.createElement('img');
-            icon.src = '/img/reminder.png'; // Cập nhật đường dẫn nếu cần
-            icon.alt = 'Reminder';
-            icon.classList.add('reminder');
-            dayElement.appendChild(icon);
-        }
-    });
-}
+    function addReminderToCalendar(date) {
+        // Tìm ngày tương ứng trên lịch
+        const dayElements = document.querySelectorAll('.calendar-day');
+        dayElements.forEach(dayElement => {
+            if (dayElement.getAttribute('data-date') === date) {
+                // Tạo và thêm biểu tượng nhắc nhở
+                const icon = document.createElement('img');
+                icon.src = '/img/reminder.png';
+                icon.alt = 'Reminder';
+                icon.classList.add('reminder');
+                dayElement.appendChild(icon);
+            }
+        });
+    }
+});
