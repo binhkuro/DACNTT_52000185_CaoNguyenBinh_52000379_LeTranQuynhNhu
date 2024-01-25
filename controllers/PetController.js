@@ -1,17 +1,21 @@
 let Pet = require("../models/pet");
 let Schedule = require("../models/schedule");
+let Notification = require("../models/notification")
 
 function formatDate(inputDate) {
     const parts = inputDate.split('-');
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-function getMedicalPage(req, res) {
+async function getMedicalPage(req, res) {
+    const notifications = await Notification.find({ username: req.session.username }).lean();
+
     res.render('medical', {
         title: 'Lịch trình y tế',
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
+        notifications: notifications,
     });
 }
 
@@ -61,16 +65,19 @@ async function addPet(req, res) {
         req.flash("success", "Thú cưng của bạn đã được thêm vào hệ thống");
         res.redirect("/health");
     } catch (error) {
-        req.flash("error", "Vui lòng đăng nhập để tiếp tục");
+        req.flash("error", "Không thêm được thú cưng");
         res.redirect("/health");
     }
 }
 
 async function addSchedule(req, res) {
-    formatedTime = formatDate(req.body.time);
+    if (req.body.time === "" || req.body.activity === "" || req.body.purpose === "" || req.body.contact === "" || req.body.note === "" || req.body.result === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect("/schedule");
+    }
 
     let schedule = new Schedule({
-        time: formatedTime,
+        time: formatDate(req.body.time),
         activity: req.body.activity,
         purpose: req.body.purpose,
         contact: req.body.contact,
@@ -84,8 +91,30 @@ async function addSchedule(req, res) {
         req.flash("success", "Lịch trình mới đã được thêm vào hệ thống");
         res.redirect("/schedule");
     } catch (error) {
-        req.flash("error", "Vui lòng đăng nhập để tiếp tục");
+        req.flash("error", "Không thể thêm mới lịch trình");
         res.redirect("/schedule");
+    }
+}
+
+async function addNotification(req, res) {
+    if (req.body.date === "" || req.body.event === "") {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect("/medical");
+    }
+
+    let newNotification = new Notification({
+        date: formatDate(req.body.date),
+        event: req.body.event,
+        username: req.session.username
+    });
+
+    try {
+        await newNotification.save();
+        req.flash("success", "Nhắc nhở đã được thêm vào hệ thống");
+        res.redirect('/medical');
+    } catch (error) {
+        req.flash("error", "Không thể thêm nhắc nhở vào hệ thống");
+        res.redirect('/medical');
     }
 }
 
@@ -95,4 +124,5 @@ module.exports = {
     getHealthPage,
     addPet,
     addSchedule,
+    addNotification,
 };
