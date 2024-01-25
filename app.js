@@ -79,9 +79,7 @@ app.get("/health", (req, res) => {
 });
 
 app.get("/introduce", (req, res) => {
-    res.render('introduce', {
-        title: 'Giới thiệu',
-    });
+    accountController.getIntroducePage(req, res);
 });
 
 app.get("/register", (req, res) => {

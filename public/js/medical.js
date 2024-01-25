@@ -2,6 +2,8 @@
 let selectedDate = null;
 
 document.addEventListener('DOMContentLoaded', function() {
+    let previousSelectedDay = null;
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -55,6 +57,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             calendarDaysContainer.appendChild(dayElement);
         }
+
+        const dayElements = document.querySelectorAll('.calendar-day');
+        dayElements.forEach(dayElement => {
+            dayElement.addEventListener('click', function() {
+                const selectedDate = dayElement.getAttribute('data-date');
+                displayNotifications(selectedDate);
+            });
+        });
     }
 
     // Hàm để di chuyển lịch về ngày hiện tại
@@ -73,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             currentYear--;
         }
         updateCalendar(currentMonth, currentYear);
+        addNotificationsToCalendar();
     });
 
     // Sự kiện khi nhấp vào nút tháng tiếp theo
@@ -83,16 +94,21 @@ document.addEventListener('DOMContentLoaded', function() {
             currentYear++;
         }
         updateCalendar(currentMonth, currentYear);
+        addNotificationsToCalendar();
     });
 
     // Thêm sự kiện cho nút Today
     const todayButton = document.querySelector('.today-button');
     if (todayButton) {
-        todayButton.addEventListener('click', goToToday);
+        todayButton.addEventListener('click', function() {
+            goToToday();
+            addNotificationsToCalendar();
+        });
     }
 
     // Khởi tạo lịch với tháng hiện tại và năm
     updateCalendar(currentMonth, currentYear);
+    addNotificationsToCalendar();
 
     // Sự kiện khi nhấp vào nút Ghi lịch trình
     var ghiLichTrinhButton = document.getElementById("schedule-button");
@@ -120,6 +136,66 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     addNotificationsToCalendar();
+
+    function displayNotifications(date) {
+        const notificationBoard = document.getElementById('notificationBoard');
+        const notificationBoardContent = document.querySelector('.notification-board-content');
+        const selectedDateElement = document.getElementById('selectedDate');
+        notificationBoard.style.display = 'block'; // Hiển thị bảng thông báo
+        notificationBoardContent.innerHTML = ''; // Xóa nội dung cũ
+        selectedDate = date.split("-")[2] + "/" + date.split("-")[1] + "/" + date.split("-")[0]; 
+        selectedDateElement.textContent = `${selectedDate}`;
+
+        if (previousSelectedDay) {
+            previousSelectedDay.classList.remove('selected-day');
+        }
+
+        // Gán lớp CSS selected-day cho ngày được chọn và lưu trữ ngày này
+        const dayElement = document.querySelector(`.calendar-day[data-date="${date}"]`);
+        dayElement.classList.add('selected-day');
+        previousSelectedDay = dayElement;
+    
+        // Lọc và hiển thị các event tương ứng với ngày đã chọn
+        const notificationDates = document.querySelectorAll('.notification-date');
+        const notificationEvents = document.querySelectorAll('.notification-event');
+        const eventsList = [];
+        for (let i = 0; i < notificationDates.length; i++) {
+            if (notificationDates[i].textContent === selectedDate) {
+                eventsList.push(notificationEvents[i].textContent);
+            }
+        }
+    
+        if (eventsList.length > 1) {
+            const eventsListElement = document.createElement('ol');
+            eventsList.forEach(event => {
+                const eventItem = document.createElement('li');
+                eventItem.textContent = event;
+                eventItem.style.paddingLeft = '20px';
+                eventsListElement.appendChild(eventItem);
+            });
+            notificationBoardContent.appendChild(eventsListElement);
+        } else if (eventsList.length === 1) {
+            const eventItem = document.createElement('div');
+            eventItem.textContent = eventsList[0];
+            eventItem.style.textAlign = 'center';
+            notificationBoardContent.appendChild(eventItem);
+        }
+
+        // Đóng bảng thông báo khi nhấp vào nút đóng
+        const closeBtn = document.querySelector('.notification-board-close');
+        closeBtn.addEventListener('click', function() {
+            notificationBoard.style.display = 'none';
+        });
+    }
+    
+    // Thêm sự kiện cho các ngày trên lịch
+    const dayElements = document.querySelectorAll('.calendar-day');
+    dayElements.forEach(dayElement => {
+        dayElement.addEventListener('click', function() {
+            const selectedDate = dayElement.getAttribute('data-date');
+            displayNotifications(selectedDate);
+        });
+    });
 });
 
 function addNotificationsToCalendar() {

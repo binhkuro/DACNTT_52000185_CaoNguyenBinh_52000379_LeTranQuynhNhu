@@ -49,9 +49,26 @@
     </div>
 </div>
 
-<div id="notificationDates" style="display:none;">
+<!-- Bảng Thông Báo -->
+<div id="notificationBoard" class="notification-board">
+    <div class="notification-board-header">
+        <span class="notification-board-title">Nhắc nhở ngày <span id="selectedDate" class="notification-board-date"></span></span>
+        <span class="notification-board-close">&times;</span>
+    </div>
+    <div class="notification-board-content">
+        <!-- Nội dung thông báo sẽ được thêm vào đây bằng JavaScript -->
+    </div>
+</div>
+
+<div id="notificationDates">
     {{#each notifications}}
         <span class="notification-date">{{this.date}}</span>
+    {{/each}}
+</div>
+
+<div id="notificationEvents">
+    {{#each notifications}}
+        <span class="notification-event">{{this.event}}</span>
     {{/each}}
 </div>
 

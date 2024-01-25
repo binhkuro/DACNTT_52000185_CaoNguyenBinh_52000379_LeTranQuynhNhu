@@ -67,6 +67,15 @@ function getHomePage(req, res) {
     });
 }
 
+function getIntroducePage(req, res) {
+    res.render('introduce', {
+        title: 'Giới thiệu',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+    });
+}
+
 // Load user lên trang quản lý
 function getAccountManagementPage(req, res) {
     Account.find()
@@ -703,6 +712,7 @@ function updateProfile(req, res) {
 module.exports = {
     initData,
     getHomePage,
+    getIntroducePage,
     getAccountManagementPage,
     getChangePasswordPage,
     registerAccount,
