@@ -179,6 +179,12 @@ document.addEventListener('DOMContentLoaded', function() {
             eventItem.textContent = eventsList[0];
             eventItem.style.textAlign = 'center';
             notificationBoardContent.appendChild(eventItem);
+        } else if (eventsList.length === 0) {
+            // Nếu không có sự kiện nào, hiển thị thông báo không có nhắc nhở
+            const noEventMessage = document.createElement('div');
+            noEventMessage.textContent = "Hiện không có nhắc nhở nào";
+            noEventMessage.style.textAlign = 'center';
+            notificationBoardContent.appendChild(noEventMessage);
         }
 
         // Đóng bảng thông báo khi nhấp vào nút đóng
