@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/css/environment.css">
+<div class="environment-container">
+    <form action="/environment" method="post"></form>
+    <div class="sensor-display">
+        <div class="temperature">
+            Nhiệt độ: <span id="temperature"></span>°C
+        </div>
+        <div class="humidity">
+            Độ ẩm: <span id="humidity"></span>%
+        </div>
+    </div>
+    <div class="device-status">
+            <h4>Trạng Thái Thiết Bị</h4>
+            <p>Air Conditioner Status: <span id="airConditionerStatus"></span></p>
+            <p>Heater: <span id="heaterStatus"></span></p>
+            <p>Humidifier Status: <span id="humidifierStatus"></span></p>
+            <p>Dehumidifier Status: <span id="dehumidifierStatus"></span></p>
+    </div>
+</div>
+
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/environment.js"></script>
