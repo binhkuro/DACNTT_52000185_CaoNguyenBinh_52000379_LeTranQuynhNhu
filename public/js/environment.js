@@ -1,8 +1,8 @@
 const socket = io();
 
 socket.on('sensorData', (data) => {
-    document.getElementById('temperature').innerText = data.temperature.toFixed(2);
-    document.getElementById('humidity').innerText = data.humidity.toFixed(2);
+    document.getElementById('temperature').innerText = Math.round(data.temperature) + ' °C';
+    document.getElementById('humidity').innerText = Math.round(data.humidity) + ' %';
 
     updateTemperatureColor(data.temperature);
     updateHumidityColor(data.humidity);
