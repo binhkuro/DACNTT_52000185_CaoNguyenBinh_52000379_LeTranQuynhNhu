@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0b70e;
+    margin: 0;
+    padding: 0;
+}
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.background-image {
+    width: 800px;
+}

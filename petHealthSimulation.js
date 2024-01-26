@@ -1,26 +1,19 @@
-function generateActivityData() {
-    // Giả sử rằng '100' là số bước đi tối đa mà thú cưng có thể thực hiện trong 1 giây
-    return Math.floor(Math.random() * 100);
-}
-
-function generateHeartRateData() {
-    // Giả sử rằng nhịp tim bình thường của thú cưng là từ 60 đến 120 nhịp/phút
-    return Math.floor(Math.random() * (120 - 60 + 1) + 60);
-}
-
-function generateBodyTemperatureData() {
-    // Nhiệt độ cơ thể bình thường cho chó và mèo là khoảng từ 38 đến 39.2 độ C
-    return (Math.random() * (39.2 - 38) + 38).toFixed(2);
-}
-
-function generateHumidityData() {
-    // Giả sử độ ẩm lý tưởng cho lông và da của thú cưng là từ 30% đến 70%
-    return Math.floor(Math.random() * (70 - 30 + 1) + 30);
-}
-
-module.exports = {
-    generateActivityData,
-    generateHeartRateData,
-    generateBodyTemperatureData,
-    generateHumidityData
+let petHealthData = {
+    activity: 0,
+    heartRate: 0,
+    bodyTemperature: 0,
+    humidity: 0
 };
+
+function generatePetHealthData() {
+    petHealthData.activity = Math.random() * 100; // Số bước đi tối đa trong 1 giây (có thể là số thập phân)
+    petHealthData.heartRate = Math.random() * (120 - 60) + 60; // Nhịp tim từ 60 đến 120 nhịp/phút (có thể là số thập phân)
+    petHealthData.bodyTemperature = Math.random() * (39.2 - 38) + 38; // Nhiệt độ cơ thể từ 38 đến 39.2 độ C
+    petHealthData.humidity = Math.random() * (70 - 30) + 30; // Độ ẩm từ 30% đến 70%
+}
+
+function getPetHealthData() {
+    return petHealthData;
+}
+
+module.exports = { generatePetHealthData, getPetHealthData };

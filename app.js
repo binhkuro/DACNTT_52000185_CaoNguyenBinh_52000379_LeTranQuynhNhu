@@ -12,12 +12,7 @@ const socketIo = require('socket.io');
 const { generateEnvironmentData, getEnvironmentData } = require('./environmentSimulation');
 const { adjustSensorData } = require('./sensorSimulation');
 const { simulateDevices } = require('./deviceSimulation');
-const {
-    generateActivityData,
-    generateHeartRateData,
-    generateBodyTemperatureData,
-    generateHumidityData
-} = require('./petHealthSimulation');
+const { generatePetHealthData, getPetHealthData } = require('./petHealthSimulation');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
@@ -75,18 +70,10 @@ io.on('connection', (socket) => {
 
     // Cập nhật thông tin sức khỏe thú cưng
     setInterval(() => {
-        let activityData = generateActivityData();
-        let heartRateData = generateHeartRateData();
-        let bodyTemperatureData = generateBodyTemperatureData();
-        let humidityData = generateHumidityData();
+        generatePetHealthData(); // Tạo dữ liệu mới
+        let petHealth = getPetHealthData(); // Lấy dữ liệu mới
 
-        socket.emit('petHealth', {
-            activity: activityData,
-            heartRate: heartRateData,
-            temperaturePet: bodyTemperatureData,
-            humidityPet: humidityData
-        });
-
+        socket.emit('petHealth', petHealth); // Gửi dữ liệu mới
     }, 1000);
 });
 

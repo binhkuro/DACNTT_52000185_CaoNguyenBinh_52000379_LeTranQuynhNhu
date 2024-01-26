@@ -1,8 +1,9 @@
 const socket = io();
 
 socket.on('petHealth', (data) => {
-    document.getElementById('temperaturePet').innerText = data.temperaturePet.toFixed(2);
-    document.getElementById('humidityPet').innerText = data.humidityPet.toFixed(2);
-    document.getElementById('heartRate').innerText = data.heartRate;
-    document.getElementById('activity').innerText = data.activity;
+    // Cập nhật các phần tử HTML với dữ liệu mới
+    document.getElementById('temperaturePet').innerText = data.bodyTemperature.toFixed(2) + ' °C'; // Giả sử định dạng dữ liệu là số thập phân
+    document.getElementById('humidityPet').innerText = data.humidity.toFixed(2) + ' %'; // Giả sử định dạng dữ liệu là số thập phân
+    document.getElementById('heartRate').innerText = data.heartRate.toFixed(0) + ' bpm'; // Làm tròn đến số nguyên gần nhất
+    document.getElementById('activity').innerText = data.activity.toFixed(0); // Làm tròn đến số nguyên gần nhất
 });
