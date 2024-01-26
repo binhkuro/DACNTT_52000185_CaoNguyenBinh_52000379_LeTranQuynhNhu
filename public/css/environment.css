@@ -43,15 +43,11 @@ body {
 .temperature span,
 .humidity span {
     display: flex;
-    /* Sử dụng flexbox để căn giữa nội dung */
     align-items: center;
-    /* Căn giữa nội dung theo chiều dọc */
     justify-content: center;
-    /* Căn giữa nội dung theo chiều ngang */
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-size: 3em;
-    /* Tăng kích thước font của số nhiệt độ */
 }
 
 .sensor-display p {
