@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/petDetail.css">
+<div class="petDetail-container">
+    <form action="/petDetail" method="post"></form>
+    <div class="sensor-display">
+        <h1>Thông Tin Sức Khỏe Thú Cưng</h1>
+        <div class="temperature">
+            Nhiệt độ: <span id="temperaturePet"></span>°C
+        </div>
+        <div class="humidity">
+            Độ ẩm: <span id="humidityPet"></span>%
+        </div>
+        <div class="heartRate">
+            Nhịp tim: <span id="heartRate"></span>%
+        </div>
+        <div class="activity">
+            Hoạt động: <span id="activity"></span>%
+        </div>
+    </div>
+    <div class="healthData">
+            <h3>Cảnh Báo Sức Khỏe</h3>
+    </div>
+</div>
+
+<div class="background-image-container">
+    <img src="/img/background.png" alt="Image" class="background-image">
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/petDetail.js"></script>

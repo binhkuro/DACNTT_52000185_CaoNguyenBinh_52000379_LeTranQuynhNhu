@@ -1,5 +1,5 @@
 // sensorSimulation.js
-
+// Cảm biến môi trường
 function adjustSensorData(sensorData, deviceStatus) {
     if (deviceStatus.airConditioner === 'on') {
         sensorData.temperature -= 1; // Giảm nhiệt độ nếu máy lạnh bật

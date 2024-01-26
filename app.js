@@ -12,6 +12,12 @@ const socketIo = require('socket.io');
 const { generateEnvironmentData, getEnvironmentData } = require('./environmentSimulation');
 const { adjustSensorData } = require('./sensorSimulation');
 const { simulateDevices } = require('./deviceSimulation');
+const {
+    generateActivityData,
+    generateHeartRateData,
+    generateBodyTemperatureData,
+    generateHumidityData
+} = require('./petHealthSimulation');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
@@ -66,6 +72,22 @@ io.on('connection', (socket) => {
         socket.emit('sensorData', sensorData);
         socket.emit('deviceStatus', deviceStatus);
     }, 1000);
+
+    // Cập nhật thông tin sức khỏe thú cưng
+    setInterval(() => {
+        let activityData = generateActivityData();
+        let heartRateData = generateHeartRateData();
+        let bodyTemperatureData = generateBodyTemperatureData();
+        let humidityData = generateHumidityData();
+
+        socket.emit('petHealth', {
+            activity: activityData,
+            heartRate: heartRateData,
+            temperaturePet: bodyTemperatureData,
+            humidityPet: humidityData
+        });
+
+    }, 1000);
 });
 
 // Định nghĩa các route
@@ -87,7 +109,7 @@ app.get("/forgot-password", (req, res) => {
 app.get("/medical", (req, res) => {
     if (!req.session.username)
         return res.redirect("/login");
-    
+
     petController.getMedicalPage(req, res);
 });
 
@@ -103,6 +125,10 @@ app.get("/health", (req, res) => {
         return res.redirect("/login");
 
     petController.getHealthPage(req, res);
+});
+
+app.get('/petDetail', (req, res) => {
+    res.render('petDetail');
 });
 
 app.get('/environment', (req, res) => {
