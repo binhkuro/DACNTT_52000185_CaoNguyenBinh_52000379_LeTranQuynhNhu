@@ -301,6 +301,10 @@ app.post("/reminder", (req, res) => {
     petController.addNotification(req, res);
 })
 
+app.post("/remove-notification", (req, res) => {
+    petController.removeNotification(req, res);
+})
+
 // Middle ware 404 error
 app.use((req, res) => {
     res.status(404)
@@ -317,6 +321,7 @@ app.use((err, req, res, next) => {
 // Kết nối tới MongoDB và khởi động server
 mongoose.connect(CONNECTION_STRING)
     .then(() => {
+        accountController.initData();
         console.log('Đã kết nối cơ sở dữ liệu');
         server.listen(PORT, () => {
             console.log(`Server đang chạy trên cổng ${PORT}`);

@@ -247,6 +247,10 @@ body {
     padding: 10px;
 }
 
+#notificationIds {
+    display: none;
+}
+
 #notificationDates {
     display: none;
 }

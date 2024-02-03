@@ -60,6 +60,12 @@
     </div>
 </div>
 
+<div id="notificationIds">
+    {{#each notifications}}
+        <span class="notification-id">{{this.notificationId}}</span>
+    {{/each}}
+</div>
+
 <div id="notificationDates">
     {{#each notifications}}
         <span class="notification-date">{{this.date}}</span>

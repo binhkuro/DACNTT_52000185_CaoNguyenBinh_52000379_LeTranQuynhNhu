@@ -156,37 +156,124 @@ document.addEventListener('DOMContentLoaded', function() {
         previousSelectedDay = dayElement;
     
         // Lọc và hiển thị các event tương ứng với ngày đã chọn
+        const notificationIds = document.querySelectorAll('.notification-id');
         const notificationDates = document.querySelectorAll('.notification-date');
         const notificationEvents = document.querySelectorAll('.notification-event');
         const eventsList = [];
+        
         for (let i = 0; i < notificationDates.length; i++) {
             if (notificationDates[i].textContent === selectedDate) {
-                eventsList.push(notificationEvents[i].textContent);
+                const event = notificationEvents[i].textContent;
+                const id = notificationIds[i].textContent;
+                eventsList.push({ event, id });
             }
         }
-    
+        
         if (eventsList.length > 1) {
             const eventsListElement = document.createElement('ol');
-            eventsList.forEach(event => {
+        
+            eventsList.forEach((item, index) => {
                 const eventItem = document.createElement('li');
-                eventItem.textContent = event;
-                eventItem.style.paddingLeft = '20px';
+                eventItem.textContent = `${item.event}`;
+                eventItem.style.position = 'relative';
+        
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'x';
+                deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+                deleteButton.style.position = 'absolute';
+                deleteButton.style.right = '0';
+                deleteButton.style.marginRight = '5px';
+
+                const editButton = document.createElement('button');
+                editButton.textContent = 'edit';
+                editButton.classList.add('btn', 'btn-sm', 'btn-warning');
+                editButton.style.position = 'absolute';
+                editButton.style.right = '20px';
+                editButton.style.marginRight = '5px';
+        
+                deleteButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const eventId = item.id;
+                    fetch('/remove-notification', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ notificationId: eventId })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Đường truyền mạng không ổn định');
+                        }
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Có lỗi đã xảy ra!', error);
+                    });
+                });
+        
+                eventItem.appendChild(deleteButton);
+                eventItem.appendChild(editButton);
                 eventsListElement.appendChild(eventItem);
+        
+                // Tăng khoảng cách giữa hai dòng (trừ dòng cuối cùng)
+                if (index < eventsList.length - 1) {
+                    eventItem.style.marginBottom = '10px';
+                }
             });
+        
             notificationBoardContent.appendChild(eventsListElement);
         } else if (eventsList.length === 1) {
             const eventItem = document.createElement('div');
-            eventItem.textContent = eventsList[0];
+            eventItem.textContent = eventsList[0].event;
             eventItem.style.textAlign = 'center';
+            eventItem.style.position = 'relative';
+        
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'x';
+            deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+            deleteButton.style.position = 'absolute';
+            deleteButton.style.right = '0';
+            deleteButton.style.marginRight = '5px';
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'edit';
+            editButton.classList.add('btn', 'btn-sm', 'btn-warning');
+            editButton.style.position = 'absolute';
+            editButton.style.right = '20px';
+            editButton.style.marginRight = '5px';
+        
+            deleteButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                const eventId = eventsList[0].id;
+                fetch('/remove-notification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ notificationId: eventId })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
+            });            
+        
+            eventItem.appendChild(deleteButton);
+            eventItem.appendChild(editButton);
             notificationBoardContent.appendChild(eventItem);
-        } else if (eventsList.length === 0) {
-            // Nếu không có sự kiện nào, hiển thị thông báo không có nhắc nhở
+        } else {
             const noEventMessage = document.createElement('div');
             noEventMessage.textContent = "Hiện không có nhắc nhở nào";
             noEventMessage.style.textAlign = 'center';
             notificationBoardContent.appendChild(noEventMessage);
         }
-
+        
         // Đóng bảng thông báo khi nhấp vào nút đóng
         const closeBtn = document.querySelector('.notification-board-close');
         closeBtn.addEventListener('click', function() {

@@ -102,7 +102,11 @@ async function addNotification(req, res) {
         return res.redirect("/medical");
     }
 
+    let currentDate = new Date();
+    let generateId = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+
     let newNotification = new Notification({
+        notificationId: generateId,
         date: formatDate(req.body.date),
         event: req.body.event,
         username: req.session.username
@@ -118,6 +122,23 @@ async function addNotification(req, res) {
     }
 }
 
+async function removeNotification(req, res) {
+    try {
+        let id = req.body.notificationId;
+        const deletedNotification = await Notification.findOneAndDelete({ notificationId: id });
+        if (deletedNotification) {
+            req.flash("success", "Xoá nhắc nhở thành công");
+            res.redirect('/medical');
+        } else {
+            req.flash("error", "Không thể xóa nhắc nhở. Nhắc nhở không tồn tại.");
+            res.redirect('/medical');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa nhắc nhở thất bại");
+        res.redirect('/medical');
+    }
+}
+
 module.exports = {
     getMedicalPage,
     getSchedulePage,
@@ -125,4 +146,5 @@ module.exports = {
     addPet,
     addSchedule,
     addNotification,
+    removeNotification,
 };
