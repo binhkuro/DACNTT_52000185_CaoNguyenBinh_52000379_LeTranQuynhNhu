@@ -94,3 +94,14 @@ body {
 .icon-image {
     width: 50px;
 }
+
+.status-image {
+    float: right;
+}
+
+.iconImage {
+    width: 50px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}

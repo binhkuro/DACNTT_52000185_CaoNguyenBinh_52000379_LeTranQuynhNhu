@@ -9,11 +9,17 @@ socket.on('sensorData', (data) => {
 });
 
 socket.on('deviceStatus', (status) => {
-    document.getElementById('airConditionerStatus').innerText = status.airConditioner;
-    document.getElementById('heaterStatus').innerText = status.heater;
-    document.getElementById('humidifierStatus').innerText = status.humidifier;
-    document.getElementById('dehumidifierStatus').innerText = status.dehumidifier;
+    updateDeviceStatusImage('airConditionerStatus', status.airConditioner);
+    updateDeviceStatusImage('heaterStatus', status.heater);
+    updateDeviceStatusImage('humidifierStatus', status.humidifier);
+    updateDeviceStatusImage('dehumidifierStatus', status.dehumidifier);
 });
+
+
+function updateDeviceStatusImage(elementId, status) {
+    var imageSrc = status === 'on' ? '/img/on.png' : '/img/off.png';
+    document.getElementById(elementId).src = imageSrc;
+}
 
 function updateTemperatureColor(temperature) {
     var tempValue = parseFloat(temperature);

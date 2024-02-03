@@ -3,20 +3,23 @@
     <form action="/environment" method="post"></form>
     <div class="sensor-display">
         <div class="temperature">
-            Nhiệt độ: <span id="temperature"></span>
+            <img src="/img/temperature-icon.png" alt="Temperature Icon" class="iconImage"> 
+            <span id="temperature"></span>
         </div>
         <div class="humidity">
-            Độ ẩm: <span id="humidity"></span>
+            <img src="/img/humidity-icon.png" alt="Humidity Icon" class="iconImage"> 
+            <span id="humidity"></span>
         </div>
     </div>
+
     <div class="device-status">
-            <div class="icon">
-                <img src="/img/home.png" alt="ImageIcon" class="icon-image">
-            </div>
-            <p>Air Conditioner Status: <span id="airConditionerStatus"></span></p>
-            <p>Heater: <span id="heaterStatus"></span></p>
-            <p>Humidifier Status: <span id="humidifierStatus"></span></p>
-            <p>Dehumidifier Status: <span id="dehumidifierStatus"></span></p>
+        <div class="icon">
+            <img src="/img/home.png" alt="ImageIcon" class="icon-image">
+        </div>
+        <p>Máy lạnh: <img id="airConditionerStatus" class="status-image" alt="Air Conditioner Status"></p>
+        <p>Máy sưởi: <img id="heaterStatus" class="status-image" alt="Heater Status"></p>
+        <p>Máy làm ẩm: <img id="humidifierStatus" class="status-image" alt="Humidifier Status"></p>
+        <p>Máy hút ẩm: <img id="dehumidifierStatus" class="status-image" alt="Dehumidifier Status"></p>
     </div>
 </div>
 
