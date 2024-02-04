@@ -98,6 +98,25 @@
     </div>
 </div>
 
+<!-- Modal Update -->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="update" action="/update-reminder" method="post">
+            <div class="form-field">
+                <input type="notificationId" class="form-control" id="notificationId" name="notificationId" value="{{notificationId}}" hidden> 
+            </div>
+            <div class="form-field">
+                <label for="newEvent">Nhập ghi chú mới:</label>
+                <input type="newEvent" class="form-control" id="newEvent" name="newEvent" placeholder="VD: Cho Lulu ăn" value="{{newEvent}}">
+            </div>
+            <div class="form-field">
+                <input type="submit" value="Thay Đổi Nhắc Nhở">
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="/js/medical.js"></script>
 <div class="background-image-container">
     <img src="/img/background.png" alt="Image" class="background-image">

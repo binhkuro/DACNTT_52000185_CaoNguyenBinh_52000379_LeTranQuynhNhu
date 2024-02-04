@@ -122,6 +122,31 @@ async function addNotification(req, res) {
     }
 }
 
+async function editNotification(req, res) {
+    try {        
+        const notificationId = req.body.notificationId;
+        const newEvent = req.body.newEvent;
+
+        // Tìm và cập nhật thông báo
+        const editedNotification = await Notification.findOneAndUpdate(
+            { notificationId: notificationId },
+            { event: newEvent },
+            { new: true }
+        );
+        
+        if (editedNotification) {
+            req.flash("success", "Cập nhật nhắc nhở thành công");
+            res.redirect('/medical');
+        } else {
+            req.flash("error", "Không thể cập nhật nhắc nhở. Nhắc nhở không tồn tại.");
+            res.redirect('/medical');
+        }
+    } catch (error) {
+        req.flash("error", "Cập nhật nhắc nhở thất bại");
+        res.redirect('/medical');
+    }
+}
+
 async function removeNotification(req, res) {
     try {
         let id = req.body.notificationId;
@@ -146,5 +171,6 @@ module.exports = {
     addPet,
     addSchedule,
     addNotification,
+    editNotification,
     removeNotification,
 };

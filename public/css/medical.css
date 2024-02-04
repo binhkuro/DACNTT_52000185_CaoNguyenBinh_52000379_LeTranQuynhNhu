@@ -168,7 +168,8 @@ body {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 60%;
+    max-width: 500px;
     animation-name: animatetop;
     animation-duration: 0.4s;
     position: relative;    
@@ -208,7 +209,7 @@ body {
 .notification-board {
     display: none;
     position: fixed;
-    right: 35px;
+    right: 100px;
     top: 165px;
     width: 300px;
     background-color: #fff;
@@ -222,7 +223,7 @@ body {
 
 @keyframes animateRight {
     from {right: -300px; opacity: 0;}
-    to {right: 35px; opacity: 1;} 
+    to {right: 100px; opacity: 1;} 
 }
 
 .notification-board-header {

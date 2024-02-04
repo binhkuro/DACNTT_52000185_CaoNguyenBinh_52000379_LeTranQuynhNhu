@@ -301,6 +301,10 @@ app.post("/reminder", (req, res) => {
     petController.addNotification(req, res);
 })
 
+app.post("/update-reminder", (req, res) => {
+    petController.editNotification(req, res);
+})
+
 app.post("/remove-notification", (req, res) => {
     petController.removeNotification(req, res);
 })

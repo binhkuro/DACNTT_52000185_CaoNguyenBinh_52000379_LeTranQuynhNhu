@@ -190,6 +190,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 editButton.style.position = 'absolute';
                 editButton.style.right = '20px';
                 editButton.style.marginRight = '5px';
+
+                var modalUpdate = document.getElementById("updateModal");
+                var spanClose = modalUpdate.querySelector(".close");
+                
+                editButton.addEventListener('click', function() {
+                    const notificationId = item.id;
+                    const event = item.event;
+                    document.getElementById('notificationId').value = notificationId;
+                    document.getElementById('newEvent').value = event;
+                    modalUpdate.style.display = "block";
+                    spanClose.onclick = function() {
+                        modalUpdate.style.display = "none";
+                    };
+                    window.onclick = function(event) {
+                        if (event.target == modalUpdate) {
+                            modalUpdate.style.display = "none";
+                        }
+                    };
+                });
         
                 deleteButton.addEventListener('click', function(event) {
                     event.preventDefault();
@@ -242,6 +261,25 @@ document.addEventListener('DOMContentLoaded', function() {
             editButton.style.position = 'absolute';
             editButton.style.right = '20px';
             editButton.style.marginRight = '5px';
+
+            var modalUpdate = document.getElementById("updateModal");
+            var spanClose = modalUpdate.querySelector(".close");
+            
+            editButton.addEventListener('click', function() {
+                const notificationId = eventsList[0].id;
+                const event = eventsList[0].event;
+                document.getElementById('notificationId').value = notificationId;
+                document.getElementById('newEvent').value = event;
+                modalUpdate.style.display = "block";
+                spanClose.onclick = function() {
+                    modalUpdate.style.display = "none";
+                };
+                window.onclick = function(event) {
+                    if (event.target == modalUpdate) {
+                        modalUpdate.style.display = "none";
+                    }
+                };
+            });
         
             deleteButton.addEventListener('click', function(event) {
                 event.preventDefault();
