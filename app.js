@@ -268,6 +268,10 @@ app.post("/profile", (req, res) => {
     accountController.changeProfilePicture(req, res);
 })
 
+app.post("/remove-profilePicture", (req, res) => {
+    accountController.removeProfilePicture(req, res);
+})
+
 app.post("/update-fullname", (req, res) => {
     accountController.updateFullname(req, res);
 })

@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 // Khai báo các thuộc tính cho model
 let notificationSchema = new Schema({
     notificationId: {
-        type: Number,
+        type: String,
         required: true
     },
     date: {

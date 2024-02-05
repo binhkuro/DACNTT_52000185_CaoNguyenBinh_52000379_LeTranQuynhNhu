@@ -549,6 +549,33 @@ function changeProfilePicture(req, res) {
     })
 }
 
+// Gỡ ảnh đại diện
+function removeProfilePicture(req, res) {
+    const username = req.session.username;
+    const defaultPicture = "default-avatar.png";
+
+    Account.findOneAndUpdate(
+        { username: username },
+        { $set: { profilePicture: defaultPicture } },
+        { new: true }
+    )
+    .then(account => {
+        if (!account) {
+            req.flash('error', 'Không tìm thấy tài khoản');
+            return res.redirect('/profile');
+        } else {
+            req.session.profilePicture = defaultPicture;
+            req.flash('success', 'Ảnh đại diện đã được gỡ');
+            return res.redirect('/profile');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.redirect('/profile');
+    });
+}
+
 // Cập nhật tên hiển thị
 function updateFullname(req, res) {
     const newFullname = req.body.fullname;
@@ -726,6 +753,7 @@ module.exports = {
     getProfilePage,
     getProfileByUsername,
     changeProfilePicture,
+    removeProfilePicture,
     updateFullname,
     updateAddress,
     updatePhoneNumber,

@@ -11,6 +11,14 @@ file.addEventListener("change", () => {
     submit.click();
 })
 
+document.addEventListener("DOMContentLoaded", function() {
+    var profilePicture = document.getElementById("profilePicture");
+    if (profilePicture.src.endsWith("default-avatar.png")) {
+        var btnRemovePicture = document.getElementById("btnRemovePicture");
+        btnRemovePicture.style.display = "none";
+    }
+});
+
 document.addEventListener('DOMContentLoaded', (event) => {
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
