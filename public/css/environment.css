@@ -48,15 +48,6 @@ body {
     font-size: 3em;
 }
 
-.sensor-display p {
-    background: #f7f7f7;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    color: #333;
-}
-
 .device-status {
     flex: 1;
 }

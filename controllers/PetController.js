@@ -1,6 +1,9 @@
 let Pet = require("../models/pet");
 let Schedule = require("../models/schedule");
 let Notification = require("../models/notification")
+let multiparty = require('multiparty') // upload file
+let fsx = require('fs-extra'); // upload file
+const path = require('path');
 
 function formatDate(inputDate) {
     const parts = inputDate.split('-');
@@ -32,42 +35,102 @@ async function getSchedulePage(req, res) {
 }
 
 async function getHealthPage(req, res) {
-    const pets = await Pet.find({ username: req.session.username }).lean(); 
+    const { page = 1, limit = 3, type, search } = req.query;
 
-    res.render('health', {
-        title: 'Sức Khỏe',
-        username: req.session.username,
-        fullname: req.session.fullname,
-        profilePicture: req.session.profilePicture,
-        pets: pets
-    });
+    let query = { username: req.session.username };
+    if (type) {
+        query.type = type;
+    }
+    if (search) {
+        query.name = { $regex: search, $options: 'i' };
+    }
+
+    try {
+        const pets = await Pet.find(query)
+            .limit(limit * 1)
+            .skip((page - 1) * limit)
+            .lean();
+
+        const count = await Pet.countDocuments(query);
+        const totalPages = Math.ceil(count / limit);
+
+        const currentPage = parseInt(page);
+        const firstPage = currentPage > 2 ? 1 : null;
+        const previousPage = currentPage > 1 ? currentPage - 1 : null;
+        const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+        const finalPage = (totalPages > 2 && currentPage < (totalPages - 1)) ? totalPages : null;
+
+        res.render('health', {
+            title: 'Sức Khỏe',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
+            pets,
+            totalPages,
+            firstPage,
+            currentPage,
+            previousPage,
+            finalPage,
+            nextPage,
+            type,
+            search
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server error");
+    }
 }
 
 async function addPet(req, res) {
-    if (req.body.name === "" || req.body.age === "" || req.body.type === "" || req.body.species === "" || req.body.gender === "" || req.body.color === "" || req.body.special === "") {
-        req.flash("error", "Vui lòng không bỏ trống thông tin");
-        return res.redirect("/health");
-    }
+    let form = new multiparty.Form();
 
-    let pet = new Pet({
-        name: req.body.name,
-        age: req.body.age,
-        type: req.body.type,
-        species: req.body.species,
-        gender: req.body.gender,
-        color: req.body.color,
-        special: req.body.special,
-        username: req.session.username
+    form.parse(req, async (error, fields, files) => {
+        if (error) {
+            req.flash("error", "Lỗi khi tải lên hình ảnh");
+            return res.redirect("/health");
+        }
+        
+        // Kiểm tra các trường thông tin cơ bản
+        let { name, age, type, species, gender, color, special } = fields;
+        if (!name || !age || !type || !species || !gender || !color || !special) {
+            req.flash("error", "Vui lòng không bỏ trống thông tin");
+            return res.redirect("/health");
+        }
+        
+        // Xử lý file hình ảnh
+        if (files.petPicture && files.petPicture.length > 0) {
+            let petPictureFile = files.petPicture[0];
+            // Tạo đường dẫn lưu trữ
+            let destPath = path.join(__dirname, '../public/uploads/', petPictureFile.originalFilename);
+            try {
+                // Sao chép file vào đường dẫn mới
+                await fsx.copy(petPictureFile.path, destPath);
+                
+                // Lưu trữ thú cưng mới
+                let pet = new Pet({
+                    name: name[0],
+                    age: age[0],
+                    type: type[0],
+                    species: species[0],
+                    gender: gender[0],
+                    color: color[0],
+                    special: special[0],
+                    username: req.session.username,
+                    petPicture: '/uploads/' + petPictureFile.originalFilename // Lưu đường dẫn tương đối để truy cập qua web
+                });
+
+                await pet.save();
+                req.flash("success", "Thú cưng của bạn đã được thêm vào hệ thống");
+                res.redirect("/health");
+            } catch (fsError) {
+                req.flash("error", "Không thể lưu hình ảnh");
+                res.redirect("/health");
+            }
+        } else {
+            req.flash("error", "Vui lòng tải lên hình ảnh cho thú cưng");
+            return res.redirect("/health");
+        }
     });
-
-    try {
-        await pet.save();
-        req.flash("success", "Thú cưng của bạn đã được thêm vào hệ thống");
-        res.redirect("/health");
-    } catch (error) {
-        req.flash("error", "Không thêm được thú cưng");
-        res.redirect("/health");
-    }
 }
 
 async function addSchedule(req, res) {

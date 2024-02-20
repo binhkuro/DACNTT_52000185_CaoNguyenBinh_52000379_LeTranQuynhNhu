@@ -8,6 +8,7 @@ let petSchema = new Schema({
         type: String, 
         required: true 
     },
+    petPicture: String,
     age: Number,
     type: String,
     species: String,

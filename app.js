@@ -40,6 +40,8 @@ app.engine('handlebars', hbs.engine({
     helpers: {
         eq: (value1, value2, options) => value1 === value2,
         inc: (value) => parseInt(value) + 1,
+        ifEquals: (value1, value2, options) => (value1 === value2) ? options.fn(this) : options.inverse(this),
+        gt: (a, b) => a > b,
     }
 }));
 app.set('view engine', 'handlebars')

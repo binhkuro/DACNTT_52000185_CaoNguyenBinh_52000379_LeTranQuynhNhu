@@ -9,80 +9,145 @@
 {{/if}}
 
 <div class="health-container">
-    <form action="/health" method="post"></form>
     <div class="content-container">
         <div class="table-container">
             <div class="table-header">
-                <h2>Danh Sách Thú Cưng</h2>
+            <h2 class="mr-5">Danh Sách Thú Cưng</h2>
                 <div class="add-button-container">
                     <button class="add-button">
                         <img src="img/add.png" alt="Add Icon" />
                         Thêm thú cưng
                     </button>
                 </div>
+                <form action="/health" method="get" class="form-inline">
+                    <div class="form-group mr-2">
+                        <select name="type" class="form-control">
+                            <option value="">Tất cả</option>
+                            <option value="Chó" {{#ifEquals type "Chó"}}selected{{/ifEquals}}>Chó</option>
+                            <option value="Mèo" {{#ifEquals type "Mèo"}}selected{{/ifEquals}}>Mèo</option>
+                        </select>
+                    </div>
+                    <div class="form-group mr-2">
+                        <input type="text" name="search" class="form-control" placeholder="Tên thú cưng..." value="{{search}}">
+                    </div>
+                    <button type="submit" class="btn btn-warning "><i class="fas fa-search"></i></button>
+                </form>
             </div>
             <div class="table">
-                <div>STT</div>
-                <div>Thú cưng của bạn</div>
+                <div class="container">
+                    <div class="row">
+                        {{#each pets}}
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{this.name}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
             </div>
-            <div class="data">
-                {{#each pets}}
-                    <div>{{inc @index}}</div>
-                    <div>{{name}}</div>
-                {{/each}}
+            <div>
+                {{#if totalPages}}
+                    <ul class="pagination justify-content-center">
+                        {{#if firstPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/health?page={{firstPage}}&limit=3&type={{type}}&search={{search}}">Trang đầu</a></li>
+                        {{/if}}
+                        {{#if previousPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/health?page={{previousPage}}&limit=3&type={{type}}&search={{search}}">Trước</a></li>
+                        {{/if}}
+                        {{#each pages}}
+                            <li class="page-item {{#ifEquals ../currentPage this}}active{{/ifEquals}}"><a class="page-link" href="/health?page={{this}}&limit=3&type={{../type}}&search={{../search}}">{{this}}</a></li>
+                        {{/each}}
+                        {{#if nextPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/health?page={{nextPage}}&limit=3&type={{type}}&search={{search}}">Tiếp theo</a></li>
+                        {{/if}}
+                        {{#if finalPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/health?page={{finalPage}}&limit=3&type={{type}}&search={{search}}">Trang cuối</a></li>
+                        {{/if}}
+                    </ul>
+                {{/if}}
             </div>
         </div>
     </div>
 </div>
+
 <div id="healthModal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="health-form" action="/health" method="post">
-            <div class="form-field">
-                <label for="name">Tên thú cưng:</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="VD: Lulu" value="{{name}}">
-            </div>
-            <div class="form-field">
-                <label for="age">Tuổi thú cưng:</label>
-                <input type="number" class="form-control" id="age" name="age" placeholder="VD: 3" value="{{age}}">
-            </div>
-            <div class="form-field">
-                <label for="type">Loài:</label>
-                <select class="form-control" id="type" name="type">
-                    <option value="" disabled selected hidden>Chọn loài</option>
-                    <option value="Chó">Chó</option>
-                    <option value="Mèo">Mèo</option>
-                </select>
-            </div>
-            <div class="form-field">
-                <label for="species">Chủng loại:</label>
-                <input type="text" class="form-control" id="species" name="species" placeholder="VD: Chó Bergie" value="{{species}}">
-            </div>
-            <div class="form-field">
-                <label for="gender">Giới tính:</label>
-                <div>
-                    <input type="radio" id="male" name="gender" value="Đực">
-                    <label for="male">Đực</label>
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title w-100 text-center">THÊM THÚ CƯNG</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form action="/health" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label for="petName">Tên thú cưng:</label>
+                        <input type="text" class="form-control" placeholder="VD: Lulu" id="name" name="name">
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label for="petType">Loài:</label>
+                        <select name="type" class="custom-select" id="type">
+                            <option value="Chó">Chó</option>
+                            <option value="Mèo">Mèo</option>
+                        </select>        
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label for="petAge">Tuổi:</label>
+                        <input type="number" class="form-control" id="age" name="age" min="0" placeholder="VD: 3">
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label>Giới tính:</label>
+                        <div class="d-flex">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="male" name="gender" class="custom-control-input" value="Đực">
+                                <label class="custom-control-label" for="male">Đực</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="female" name="gender" class="custom-control-input" value="Cái">
+                                <label class="custom-control-label" for="female">Cái</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label for="species">Chủng loại:</label>
+                        <input type="text" class="form-control" id="species" name="species" placeholder="VD: Chó Bergie">
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label for="color">Màu lông:</label>
+                        <input type="text" class="form-control" id="color" name="color" placeholder="VD: Vàng">
+                    </div>
+
+                    <div class="form-group col-md-6 col-12">
+                        <label for="special">Đặc điểm nhận dạng đặc biệt:</label>
+                        <input type="text" class="form-control" id="special" name="special" placeholder="VD: Mặt có mụt ruồi màu đen bên trái dưới mũi">
+                    </div>
+
+                    <!-- Hình ảnh thú cưng từ trường Chọn ảnh -->
+                    <div class="form-group col-md-6 col-12">
+                        <label for="petPicture">Hình ảnh thú cưng:</label>
+                        <input type="file" class="form-control" id="petPicture" name="petPicture">
+                    </div>
                 </div>
-                <div>
-                    <input type="radio" id="female" name="gender" value="Cái">
-                    <label for="female">Cái</label>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-outline-success" value="Thêm Thú Cưng">
                 </div>
-            </div>
-            <div class="form-field">
-                <label for="color">Màu lông:</label>
-                <input type="text" class="form-control" id="color" name="color" placeholder="VD: Vàng" value="{{color}}">
-            </div>
-            <div class="form-field">
-                <label for="special">Đặc điểm nhận dạng đặc biệt</label>
-                <input type="text" class="form-control" id="special" name="special" placeholder="VD: Mặt có mụt ruồi màu đen bên trái dưới mũi" value="{{special}}">
-            </div>
-            <div class="form-field">
-                <input type="submit" value="HOÀN THÀNH">
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 <script src="/js/health.js"></script>
 <div class="background-image-container">
     <img src="/img/background.png" alt="Image" class="background-image">

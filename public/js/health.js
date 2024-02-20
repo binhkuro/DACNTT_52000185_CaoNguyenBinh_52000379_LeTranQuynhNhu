@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // MODAL HEALTH
     var btnHealth = document.querySelector(".add-button");
     var modalHealth = document.getElementById("healthModal");
     var spanClose = modalHealth.getElementsByClassName("close")[0];
@@ -14,6 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const selectType = document.querySelector('select[name="type"]');
+    selectType.addEventListener('change', function() {
+        // Gửi biểu mẫu tự động khi loại thú cưng được thay đổi
+        this.form.submit();
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function() {
