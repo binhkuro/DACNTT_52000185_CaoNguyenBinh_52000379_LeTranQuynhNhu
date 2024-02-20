@@ -1,3 +1,4 @@
+// Giả lập nhiệt độ cảm biến từ môi trường
 let randomEnvironment = {
     temperature: 0,
     humidity: 0

@@ -1,4 +1,5 @@
 // deviceSimulation.js
+// Bật tắt thiết bị trong nhà theo nhiệt độ môi trường
 function simulateDevices(sensorData) {
     return {
         airConditioner: sensorData.temperature > 24 ? 'on' : 'off',

@@ -13,6 +13,7 @@ const { generateEnvironmentData, getEnvironmentData } = require('./environmentSi
 const { adjustSensorData } = require('./sensorSimulation');
 const { simulateDevices } = require('./deviceSimulation');
 const { generatePetHealthData, getPetHealthData } = require('./petHealthSimulation');
+const { adjustPetEnvironment } = require('./sensorPetSimulation');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
@@ -52,12 +53,20 @@ const io = socketIo(server);
 io.on('connection', (socket) => {
     console.log('A user connected');
 
-    // Cập nhật giá trị ngẫu nhiên môi trường mỗi phút
+    // Cập nhật giá trị ngẫu nhiên mỗi phút
+    // Dữ liệu môi trường
     generateEnvironmentData(); // Khởi tạo giá trị đầu tiên ngay lập tức
     setInterval(() => {
         generateEnvironmentData(); // Sau đó cập nhật mỗi phút
     }, 60000);
     let data = getEnvironmentData();
+    // Dữ liệu sức khỏe
+    generatePetHealthData(); // Khởi tạo giá trị đầu tiên ngay lập tức
+    setInterval(() => {
+        generatePetHealthData(); // Sau đó cập nhật mỗi phút
+    }, 60000);
+    let healthData = getPetHealthData();
+
     // Cập nhật và gửi dữ liệu cảm biến theo trạng thái thiết bị mỗi giây
     setInterval(() => {
         let environmentData = data; // Lấy giá trị môi trường ngẫu nhiên mới
@@ -68,10 +77,11 @@ io.on('connection', (socket) => {
         socket.emit('deviceStatus', deviceStatus);
     }, 1000);
 
-    // Cập nhật thông tin sức khỏe thú cưng
+    // Cập nhật và gửi dữ liệu cảm biến theo nhiệt độ môi trường mỗi giây
     setInterval(() => {
-        generatePetHealthData(); // Tạo dữ liệu mới
-        let petHealth = getPetHealthData(); // Lấy dữ liệu mới
+        let environmentData = data;
+        let petHealthData = healthData;
+        let petHealth = adjustPetEnvironment(environmentData, petHealthData); // Lấy dữ liệu sức khỏe thú cưng mới
 
         socket.emit('petHealth', petHealth); // Gửi dữ liệu mới
     }, 1000);
