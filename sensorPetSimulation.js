@@ -1,24 +1,47 @@
-// Cảm biến gắn trên vòng cổ thú cưng
-function analyzePetHealth(data) {
-    let healthIssues = [];
+// Điều chỉnh chỉ số sức khỏe theo nhiệt độ môi trường
 
-    if (data.activity < 0) {
-        healthIssues.push('Thú cưng có thể đang cảm thấy mệt mỏi hoặc không khỏe.');
+function adjustPetEnvironment(environmentData, petHealth) {
+    if (environmentData.temperature < 22) {
+        if (petHealth.bodyTemperature < 37) {
+            petHealth.bodyTemperature -= 0.5;
+        } else if (petHealth.bodyTemperature > 39) {
+            petHealth.bodyTemperature -= 0.2;
+        } else {
+            petHealth.bodyTemperature -= 0.1
+        }
+    } else if (environmentData.temperature > 24) {
+        if (petHealth.bodyTemperature < 37) {
+            petHealth.bodyTemperature += 0.5;
+        } else if (petHealth.bodyTemperature > 39) {
+            petHealth.bodyTemperature += 0.2;
+        } else {
+            petHealth.bodyTemperature += 0.1
+        }
+    } else {
+        petHealth.bodyTemperature = petHealth.bodyTemperature;
     }
 
-    if (data.heartRate > 120 || data.heartRate < 60) {
-        healthIssues.push('Có vấn đề với nhịp tim, cần theo dõi thêm.');
+    if (environmentData.humidity < 40) {
+        if (petHealth.humidity < 40) {
+            petHealth.humidity += 5;
+        } else if (petHealth.humidity > 60) {
+            petHealth.humidity += 2;
+        } else {
+            petHealth.humidity += 1
+        }
+    } else if (environmentData.temperature > 60) {
+        if (petHealth.humidity < 40) {
+            petHealth.humidity -= 5;
+        } else if (petHealth.humidity > 60) {
+            petHealth.humidity -= 2;
+        } else {
+            petHealth.humidity -= 1
+        }
+    } else {
+        petHealth.humidity = petHealth.humidity;
     }
 
-    if (data.bodyTemperature > 39.2 || data.bodyTemperature < 38) {
-        healthIssues.push('Nhiệt độ cơ thể không bình thường, cần chú ý.');
-    }
-
-    if (data.humidity < 30 || data.humidity > 70) {
-        healthIssues.push('Độ ẩm không lý tưởng cho da và lông của thú cưng.');
-    }
-
-    return healthIssues.length > 0 ? healthIssues : ['Thú cưng khỏe mạnh.'];
+    return petHealth;
 }
 
-module.exports = { analyzePetHealth };
+module.exports = { adjustPetEnvironment };
