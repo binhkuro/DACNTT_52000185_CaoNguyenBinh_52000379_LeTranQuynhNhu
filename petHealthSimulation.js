@@ -6,11 +6,18 @@ let petHealthData = {
     humidity: 0
 };
 
-function generatePetHealthData() {
-    petHealthData.activity = Math.random() * 100; // Số bước đi tối đa trong 1 giây (có thể là số thập phân)
-    petHealthData.heartRate = Math.random() * (120 - 60) + 60; // Nhịp tim từ 60 đến 120 nhịp/phút (có thể là số thập phân)
-    petHealthData.bodyTemperature = Math.random() * (41 - 35) + 35;
-    petHealthData.humidity = Math.random() * (70 - 30) + 30; // Độ ẩm từ 30% đến 70%
+function generatePetHealthData(type) {
+    if (type === 'Chó') {
+        petHealthData.activity = Math.random() * 5000;
+        petHealthData.heartRate = Math.random() * (130 - 60) + 60;
+        petHealthData.bodyTemperature = Math.random() * (40 - 36) + 36;
+        petHealthData.humidity = Math.random() * (70 - 30) + 30;
+    } else if (type === 'Mèo') {
+        petHealthData.activity = Math.random() * 500;
+        petHealthData.heartRate = Math.random() * (230 - 110) + 110;
+        petHealthData.bodyTemperature = Math.random() * (40 - 37) + 37;
+        petHealthData.humidity = Math.random() * (70 - 30) + 30;
+    }
 }
 
 function getPetHealthData() {

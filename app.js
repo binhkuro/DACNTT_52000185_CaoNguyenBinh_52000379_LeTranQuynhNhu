@@ -134,11 +134,22 @@ app.get('/petDetail/:petId', async(req, res) => {
         if (!pet) {
             return res.status(404).send('Thú cưng không tồn tại');
         }
-        res.render('petDetail', { pet: pet });
+
+        // Tạo dữ liệu sức khỏe dựa trên loại thú cưng
+        generatePetHealthData(pet.type);
+        let petHealth = getPetHealthData();
+        let environmentData = getEnvironmentData();
+
+        // Điều chỉnh dữ liệu sức khỏe dựa trên môi trường
+        petHealth = adjustPetEnvironment(environmentData, petHealth);
+
+        // Gửi dữ liệu tới client thông qua socket hoặc render trực tiếp ra view
+        res.render('petDetail', { pet: pet, petHealth: petHealth });
     } catch (error) {
         res.status(500).send('Lỗi server');
     }
 });
+
 
 app.get('/petDetail', (req, res) => {
     res.render('petDetail');
