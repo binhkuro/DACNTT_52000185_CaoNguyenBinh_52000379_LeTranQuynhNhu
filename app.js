@@ -14,6 +14,7 @@ const { adjustSensorData } = require('./sensorSimulation');
 const { simulateDevices } = require('./deviceSimulation');
 const { generatePetHealthData, getPetHealthData } = require('./petHealthSimulation');
 const { adjustPetEnvironment } = require('./sensorPetSimulation');
+const Pet = require('./models/pet.js');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
@@ -124,6 +125,19 @@ app.get("/health", (req, res) => {
         return res.redirect("/login");
 
     petController.getHealthPage(req, res);
+});
+
+app.get('/petDetail/:petId', async(req, res) => {
+    try {
+        const petId = req.params.petId;
+        const pet = await Pet.findOne({ petId: petId });
+        if (!pet) {
+            return res.status(404).send('Thú cưng không tồn tại');
+        }
+        res.render('petDetail', { pet: pet });
+    } catch (error) {
+        res.status(500).send('Lỗi server');
+    }
 });
 
 app.get('/petDetail', (req, res) => {

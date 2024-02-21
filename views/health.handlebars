@@ -38,15 +38,14 @@
                     <div class="row">
                         {{#each pets}}
                             <div class="col-md-4 mb-4">
-                                <div class="card">
-                                    <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
-                                    <div class="card-body" hidden>
-                                        <h5 class="card-title">{{this.petId}}</h5>
+                                <a href="/petDetail/{{this.petId}}">
+                                    <div class="card">
+                                        <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{this.name}}</h5>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{this.name}}</h5>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         {{/each}}
                     </div>
