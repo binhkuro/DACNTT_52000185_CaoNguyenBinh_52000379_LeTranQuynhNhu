@@ -38,6 +38,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+const deleteButtons = document.querySelectorAll('.delete-button');
+
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        console.log('Nút thùng rác được nhấp!');
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function() {
     const selectType = document.querySelector('select[name="type"]');
     selectType.addEventListener('change', function() {
