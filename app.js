@@ -48,35 +48,54 @@ app.engine('handlebars', hbs.engine({
 }));
 app.set('view engine', 'handlebars')
 
+let petType = '';
+app.get('/petDetail/:petId', async(req, res) => {
+    try {
+        const petId = req.params.petId;
+        const pet = await Pet.findOne({ petId: petId });
+        if (!pet) {
+            return res.status(404).send('Thú cưng không tồn tại');
+        }
+
+        petType = pet.type; // Lưu trữ dữ liệu type
+
+        generatePetHealthData(petType);
+        let petHealth = getPetHealthData();
+        let environmentData = getEnvironmentData();
+
+        petHealth = adjustPetEnvironment(environmentData, petHealth, petType);
+
+        res.render('petDetail', { pet: pet, petHealth: petHealth });
+    } catch (error) {
+        res.status(500).send('Lỗi server');
+    }
+});
+
 // Khởi tạo server HTTP và Socket.io
 const server = http.createServer(app);
 const io = socketIo(server);
 
 // Thiết lập kết nối Socket.io
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
     console.log('A user connected');
 
-    type = "Mèo";
     // Cập nhật giá trị ngẫu nhiên mỗi phút
     // Dữ liệu môi trường
     generateEnvironmentData(); // Khởi tạo giá trị đầu tiên ngay lập tức
     setInterval(() => {
         generateEnvironmentData(); // Sau đó cập nhật mỗi phút
     }, 60000);
-    let data = getEnvironmentData();
     // Dữ liệu sức khỏe
-
-    generatePetHealthData(type);
-    setInterval(async () => {
-        generatePetHealthData(type)
-    }, 60000); 
-    let healthData = getPetHealthData();
+    generatePetHealthData(petType); // Khởi tạo giá trị đầu tiên ngay lập tức
+    setInterval(() => {
+        generatePetHealthData(petType); // Sau đó cập nhật mỗi phút
+    }, 60000);
 
     // Cập nhật và gửi dữ liệu cảm biến theo trạng thái thiết bị mỗi giây
     setInterval(() => {
-        let environmentData = data; // Lấy giá trị môi trường ngẫu nhiên mới
+        let environmentData = getEnvironmentData(); // Lấy giá trị môi trường ngẫu nhiên mới
         let deviceStatus = simulateDevices(environmentData); // Xác định trạng thái thiết bị dựa trên environmentData
-        let sensorData = adjustSensorData(data, deviceStatus);
+        let sensorData = adjustSensorData(environmentData, deviceStatus);
 
         socket.emit('sensorData', sensorData);
         socket.emit('deviceStatus', deviceStatus);
@@ -84,9 +103,9 @@ io.on('connection', async (socket) => {
 
     // Cập nhật và gửi dữ liệu cảm biến theo nhiệt độ môi trường mỗi giây
     setInterval(() => {
-        let environmentData = data;
-        let petHealthData = healthData;
-        let petHealth = adjustPetEnvironment(environmentData, petHealthData, type);
+        let environmentData = getEnvironmentData();
+        let petHealthData = getPetHealthData();
+        let petHealth = adjustPetEnvironment(environmentData, petHealthData, petType); // Lấy dữ liệu sức khỏe thú cưng mới
 
         socket.emit('petHealth', petHealth); // Gửi dữ liệu mới
     }, 1000);
@@ -128,31 +147,6 @@ app.get("/health", (req, res) => {
 
     petController.getHealthPage(req, res);
 });
-
-app.get('/petDetail/:petId', async(req, res) => {
-    try {
-        const petId = req.params.petId;
-        const pet = await Pet.findOne({ petId: petId });
-        if (!pet) {
-            return res.status(404).send('Thú cưng không tồn tại');
-        }
-
-        // Tạo dữ liệu sức khỏe dựa trên loại thú cưng
-        generatePetHealthData(pet.type);
-        let type = pet.type;
-        let petHealth = getPetHealthData();
-        let environmentData = getEnvironmentData();
-
-        // Điều chỉnh dữ liệu sức khỏe dựa trên môi trường
-        petHealth = adjustPetEnvironment(environmentData, petHealth, type);
-
-        // Gửi dữ liệu tới client thông qua socket hoặc render trực tiếp ra view
-        res.render('petDetail', { pet: pet, petHealth: petHealth });
-    } catch (error) {
-        res.status(500).send('Lỗi server');
-    }
-});
-
 
 app.get('/petDetail', (req, res) => {
     res.render('petDetail');

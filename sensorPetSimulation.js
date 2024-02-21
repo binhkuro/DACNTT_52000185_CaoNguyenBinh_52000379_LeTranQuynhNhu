@@ -19,7 +19,9 @@ function adjustPetEnvironment(environmentData, petHealth, type) {
         }
 
         if (petHealth.activity > 2000) {
-            petHealth.heartRate += 1;
+            if (petHealth.heartRate < 121) {
+                petHealth.heartRate += 1;
+            }
         }
     } else if (type === "Mèo") {
         if (environmentData.temperature < 10) {
@@ -35,7 +37,9 @@ function adjustPetEnvironment(environmentData, petHealth, type) {
         }
 
         if (petHealth.activity > 300) {
-            petHealth.heartRate += 1;
+            if (petHealth.heartRate < 221) {
+                petHealth.heartRate += 1;
+            }
         }
     }
     return petHealth;
