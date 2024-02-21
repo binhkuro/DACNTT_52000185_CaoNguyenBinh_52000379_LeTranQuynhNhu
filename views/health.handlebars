@@ -38,22 +38,25 @@
                     <div class="row">
                         {{#each pets}}
                             <div class="col-md-4 mb-4">
-                                <a href="/petDetail/{{this.petId}}">
-                                    <div class="card">
-                                        <div class="position-relative">
-                                            <button class="delete-button btn btn-danger position-absolute top-0 end-0" aria-label="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
-                                        </div>
-                                        <div class="card-body" hidden>
-                                            <h5 class="card-title">{{this.petId}}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{this.name}}</h5>
-                                        </div>
+                            <a href="/petDetail/{{this.petId}}">
+                                <div class="card">
+                                    <div class="position-relative">
+                                        <button class="delete-button btn btn-danger position-absolute top-0 end-0" aria-label="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
                                     </div>
-                                </a>
+                                    <div class="card-body" hidden>
+                                        <h5 class="card-title">{{this.petId}}</h5>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-between"> <!-- Thêm class 'd-flex justify-content-between' -->
+                                        <h5 class="card-title">{{this.name}}</h5>
+                                        <a href="/profile-pet/{{this.petId}}" class="btn btn-secondary">
+                                            <i class="fa fa-info-circle"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
                             </div>
                         {{/each}}
                     </div>

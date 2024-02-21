@@ -53,9 +53,10 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 // Thiết lập kết nối Socket.io
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log('A user connected');
 
+    type = "Mèo";
     // Cập nhật giá trị ngẫu nhiên mỗi phút
     // Dữ liệu môi trường
     generateEnvironmentData(); // Khởi tạo giá trị đầu tiên ngay lập tức
@@ -64,10 +65,11 @@ io.on('connection', (socket) => {
     }, 60000);
     let data = getEnvironmentData();
     // Dữ liệu sức khỏe
-    generatePetHealthData(); // Khởi tạo giá trị đầu tiên ngay lập tức
-    setInterval(() => {
-        generatePetHealthData(); // Sau đó cập nhật mỗi phút
-    }, 60000);
+
+    generatePetHealthData(type);
+    setInterval(async () => {
+        generatePetHealthData(type)
+    }, 60000); 
     let healthData = getPetHealthData();
 
     // Cập nhật và gửi dữ liệu cảm biến theo trạng thái thiết bị mỗi giây
@@ -84,7 +86,7 @@ io.on('connection', (socket) => {
     setInterval(() => {
         let environmentData = data;
         let petHealthData = healthData;
-        let petHealth = adjustPetEnvironment(environmentData, petHealthData); // Lấy dữ liệu sức khỏe thú cưng mới
+        let petHealth = adjustPetEnvironment(environmentData, petHealthData, type);
 
         socket.emit('petHealth', petHealth); // Gửi dữ liệu mới
     }, 1000);
@@ -137,11 +139,12 @@ app.get('/petDetail/:petId', async(req, res) => {
 
         // Tạo dữ liệu sức khỏe dựa trên loại thú cưng
         generatePetHealthData(pet.type);
+        let type = pet.type;
         let petHealth = getPetHealthData();
         let environmentData = getEnvironmentData();
 
         // Điều chỉnh dữ liệu sức khỏe dựa trên môi trường
-        petHealth = adjustPetEnvironment(environmentData, petHealth);
+        petHealth = adjustPetEnvironment(environmentData, petHealth, type);
 
         // Gửi dữ liệu tới client thông qua socket hoặc render trực tiếp ra view
         res.render('petDetail', { pet: pet, petHealth: petHealth });
