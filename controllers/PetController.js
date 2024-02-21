@@ -106,7 +106,7 @@ async function addPet(req, res) {
         if (files.petPicture && files.petPicture.length > 0) {
             let petPictureFile = files.petPicture[0];
             // Tạo đường dẫn lưu trữ
-            let destPath = path.join(__dirname, '../public/uploads/', petPictureFile.originalFilename);
+            let destPath = path.join(__dirname, '../public/uploads/pets/' + req.session.username + "/", petPictureFile.originalFilename);
             try {
                 // Sao chép file vào đường dẫn mới
                 await fsx.copy(petPictureFile.path, destPath);
@@ -125,7 +125,7 @@ async function addPet(req, res) {
                     color: color[0],
                     special: special[0],
                     username: req.session.username,
-                    petPicture: '/uploads/' + petPictureFile.originalFilename // Lưu đường dẫn tương đối để truy cập qua web
+                    petPicture: '/uploads/pets/' + req.session.username  + '/' + petPictureFile.originalFilename // Lưu đường dẫn tương đối để truy cập qua web
                 });
 
                 await pet.save();
@@ -140,6 +140,27 @@ async function addPet(req, res) {
             return res.redirect("/health");
         }
     });
+}
+
+async function removePet(req, res) {
+    try {
+        const petId = req.body.petId;
+        const deletedPet = await Pet.findOneAndDelete({ petId: petId });
+        if (deletedPet) {
+            if (deletedPet.petPicture) {
+                const imagePath = path.join(__dirname, '../public', deletedPet.petPicture);
+                await fsx.unlink(imagePath);
+            }
+            req.flash("success", "Xóa thú cưng thành công");
+            res.redirect('/health');
+        } else {
+            req.flash("error", "Không thể xóa thú cưng. Thú cưng không tồn tại.");
+            res.redirect('/health');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa thú cưng thất bại");
+        res.redirect('/health');
+    }
 }
 
 async function addSchedule(req, res) {
@@ -241,6 +262,7 @@ module.exports = {
     getSchedulePage,
     getHealthPage,
     addPet,
+    removePet,
     addSchedule,
     addNotification,
     editNotification,

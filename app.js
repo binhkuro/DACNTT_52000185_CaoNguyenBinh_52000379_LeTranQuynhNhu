@@ -309,6 +309,10 @@ app.post("/health", (req, res) => {
     petController.addPet(req, res);
 })
 
+app.post("/remove-pet", (req, res) => {
+    petController.removePet(req, res);
+})
+
 app.post("/schedule", (req, res) => {
     petController.addSchedule(req, res);
 })

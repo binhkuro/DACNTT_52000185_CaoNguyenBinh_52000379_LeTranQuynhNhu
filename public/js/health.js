@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     var btnHealth = document.querySelector(".add-button");
     var modalHealth = document.getElementById("healthModal");
-    var spanClose = modalHealth.getElementsByClassName("close")[0];
+    var spanClose1 = modalHealth.querySelector(".close");
     btnHealth.onclick = function() {
         modalHealth.style.display = "block";
-        spanClose.onclick = function() {
+        spanClose1.onclick = function() {
             modalHealth.style.display = "none";
         }
         window.onclick = function(event) {
@@ -13,12 +13,34 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+
+    document.querySelectorAll(".delete-button").forEach(function(btnDelete) {
+        btnDelete.addEventListener('click', function() {
+            var card = this.closest('.card'); // Tìm card gần nhất
+            var petId = card.querySelector('.card-body[hidden] .card-title').innerText.trim();
+            document.getElementById('modalPetId').value = petId;
+
+            var modalDelete = document.getElementById("deleteModal");
+            modalDelete.style.display = "block"; 
+
+            var spanClose2 = modalDelete.querySelector(".close");
+            spanClose2.onclick = function() {
+                modalDelete.style.display = "none";
+            }
+        });
+    });
+
+    window.onclick = function(event) {
+        var modalDelete = document.getElementById("deleteModal");
+        if (event.target == modalDelete) {
+            modalDelete.style.display = "none";
+        }
+    }
 });
 
 document.addEventListener("DOMContentLoaded", function() {
     const selectType = document.querySelector('select[name="type"]');
     selectType.addEventListener('change', function() {
-        // Gửi biểu mẫu tự động khi loại thú cưng được thay đổi
         this.form.submit();
     });
 });

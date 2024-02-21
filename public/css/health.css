@@ -71,14 +71,16 @@ body {
     width: 372px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    border: 2px solid;
+    border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    border-image-slice: 1;
 }
 
 .card-img-top {
@@ -229,6 +231,20 @@ body {
     background-color: #555;
 }
 
+.delete-button {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card:hover .delete-button {
+    display: block;
+    transform: scale(1.0);
+    opacity: 0.8;
+}
 .close {
     color: #aaa;
     float: right;

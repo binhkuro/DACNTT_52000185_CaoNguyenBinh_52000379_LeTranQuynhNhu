@@ -39,7 +39,12 @@
                         {{#each pets}}
                             <div class="col-md-4 mb-4">
                                 <div class="card">
-                                    <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
+                                    <div class="position-relative">
+                                        <button class="delete-button btn btn-danger position-absolute top-0 end-0" aria-label="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <img src="{{this.petPicture}}" class="card-img-top" alt="Pet">
+                                    </div>
                                     <div class="card-body" hidden>
                                         <h5 class="card-title">{{this.petId}}</h5>
                                     </div>
@@ -152,6 +157,31 @@
                     <input type="submit" class="btn btn-outline-success" value="Thêm Thú Cưng">
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-lg">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title w-100 text-center justify-content-center align-items-center">XÓA THÚ CƯNG</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="/remove-pet" method="post">
+                    <input type="hidden" name="petId" id="modalPetId" value="">
+                    <div class="form-group d-flex justify-content-center align-items-center">
+                        Bạn có chắc chắn xóa thú cưng này không?
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <input type="submit" class="btn btn-outline-danger" value="Xóa Thú Cưng">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
