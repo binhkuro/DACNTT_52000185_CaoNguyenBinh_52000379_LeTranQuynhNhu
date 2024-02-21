@@ -4,6 +4,10 @@ mongoose.Promise = global.Promise;
 let Schema = mongoose.Schema;
 
 let petSchema = new Schema({
+    petId: {
+        type: String,
+        required: true
+    },
     name: { 
         type: String, 
         required: true 

@@ -53,6 +53,10 @@ async function getHealthPage(req, res) {
 
         const count = await Pet.countDocuments(query);
         const totalPages = Math.ceil(count / limit);
+        const pages = [];
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+        }
 
         const currentPage = parseInt(page);
         const firstPage = currentPage > 2 ? 1 : null;
@@ -69,6 +73,7 @@ async function getHealthPage(req, res) {
             totalPages,
             firstPage,
             currentPage,
+            pages,
             previousPage,
             finalPage,
             nextPage,
@@ -106,8 +111,12 @@ async function addPet(req, res) {
                 // Sao chép file vào đường dẫn mới
                 await fsx.copy(petPictureFile.path, destPath);
                 
+                const currentDate = new Date();
+                let generateId = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+                
                 // Lưu trữ thú cưng mới
                 let pet = new Pet({
+                    petId: generateId,
                     name: name[0],
                     age: age[0],
                     type: type[0],
