@@ -7,3 +7,13 @@ socket.on('petHealth', (data) => {
     document.getElementById('heartRate').innerText = data.heartRate.toFixed(0) + ' bpm'; // Làm tròn đến số nguyên gần nhất
     document.getElementById('activity').innerText = data.activity.toFixed(0); // Làm tròn đến số nguyên gần nhất
 });
+
+socket.on('note', (notes) => {
+    const warningsElement = document.getElementById('healthWarnings');
+    warningsElement.innerHTML = ''; // Xóa cảnh báo cũ
+    notes.forEach(note => {
+        const li = document.createElement('li');
+        li.innerText = note;
+        warningsElement.appendChild(li);
+    });
+});

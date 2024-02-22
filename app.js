@@ -14,6 +14,7 @@ const { adjustSensorData } = require('./sensorSimulation');
 const { simulateDevices } = require('./deviceSimulation');
 const { generatePetHealthData, getPetHealthData } = require('./petHealthSimulation');
 const { adjustPetEnvironment } = require('./sensorPetSimulation');
+const { analyzePetHealth } = require('./detailHealthSimulation');
 const Pet = require('./models/pet.js');
 
 // Import các module controller
@@ -109,6 +110,14 @@ io.on('connection', (socket) => {
 
         socket.emit('petHealth', petHealth); // Gửi dữ liệu mới
     }, 1000);
+
+    setInterval(() => {
+        let petHealth = getPetHealthData();
+        let healthWarnings = analyzePetHealth(petHealth, petType); // Lấy dữ liệu sức khỏe thú cưng mới
+
+        socket.emit('note', healthWarnings); // Gửi cảnh báo sức khỏe
+    }, 1000);
+
 });
 
 // Định nghĩa các route
