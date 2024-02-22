@@ -113,9 +113,9 @@ io.on('connection', (socket) => {
 
     setInterval(() => {
         let petHealth = getPetHealthData();
-        let healthWarnings = analyzePetHealth(petHealth, petType); // Lấy dữ liệu sức khỏe thú cưng mới
+        let healthWarnings = analyzePetHealth(petHealth, petType);
 
-        socket.emit('note', healthWarnings); // Gửi cảnh báo sức khỏe
+        socket.emit('note', healthWarnings); // healthWarnings bao gồm cả warning và suggestion
     }, 1000);
 
 });

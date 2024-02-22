@@ -52,3 +52,8 @@ body {
     justify-content: center;
     font-size: 3em;
 }
+
+.clickable-warning {
+    cursor: pointer;
+    /* Thêm bất kỳ styles nào khác để làm nổi bật chúng như có thể nhấp được */
+}

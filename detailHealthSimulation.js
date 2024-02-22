@@ -2,39 +2,93 @@
 function analyzePetHealth(data, type) {
     let healthIssues = [];
     if (type === "Chó") {
-        if (data.activity < 0) {
-            healthIssues.push('Thú cưng có thể đang cảm thấy mệt mỏi hoặc không khỏe.');
+        if (data.heartRate < 60) {
+            healthIssues.push({
+                warning: 'Có vấn đề với nhịp tim, cần theo dõi thêm.',
+                suggestion: 'Đề xuất.'
+            });
         }
 
-        if (data.heartRate > 120 || data.heartRate < 70) {
-            healthIssues.push('Có vấn đề với nhịp tim, cần theo dõi thêm.');
+        if (data.heartRate > 120) {
+            healthIssues.push({
+                warning: 'Có vấn đề với nhịp tim, cần theo dõi thêm.',
+                suggestion: 'Đề xuất.'
+            });
         }
 
-        if (data.bodyTemperature > 39 || data.bodyTemperature < 37) {
-            healthIssues.push('Nhiệt độ cơ thể không bình thường, cần chú ý.');
+        if (data.bodyTemperature < 38.3) {
+            healthIssues.push({
+                warning: 'Nhiệt độ cơ thể thấp, cần giữ ấm.',
+                suggestion: 'Đề xuất.'
+            });
         }
 
-        if (data.humidity < 40 || data.humidity > 60) {
-            healthIssues.push('Độ ẩm không lý tưởng cho da và lông của thú cưng.');
-        }
-    } else if (type === "Mèo") {
-        if (data.activity < 0) {
-            healthIssues.push('Thú cưng có thể đang cảm thấy mệt mỏi hoặc không khỏe.');
-        }
-
-        if (data.heartRate > 220 || data.heartRate < 100) {
-            healthIssues.push('Có vấn đề với nhịp tim, cần theo dõi thêm.');
+        if (data.bodyTemperature > 39.2) {
+            healthIssues.push({
+                warning: 'Nhiệt độ cơ thể cao, có thể cần làm mát.',
+                suggestion: 'Đề xuất.'
+            });
         }
 
-        if (data.bodyTemperature > 38 || data.bodyTemperature < 37) {
-            healthIssues.push('Nhiệt độ cơ thể không bình thường, cần chú ý.');
+        if (data.humidity < 40) {
+            healthIssues.push({
+                warning: 'Độ ẩm cơ thể thấp, cần tăng độ ẩm môi trường.',
+                suggestion: 'Đề xuất.'
+            });
         }
 
-        if (data.humidity < 40 || data.humidity > 60) {
-            healthIssues.push('Độ ẩm không lý tưởng cho da và lông của thú cưng.');
+        if (data.humidity > 60) {
+            healthIssues.push({
+                warning: 'Độ ẩm môi trường, cần giảm độ ẩm môi trường.',
+                suggestion: 'Đề xuất.'
+            });
         }
     }
-    return healthIssues.length > 0 ? healthIssues : ['Thú cưng khỏe mạnh.'];
+
+    if (type === "Mèo") {
+        if (data.heartRate < 140) {
+            healthIssues.push({
+                warning: 'Có vấn đề với nhịp tim, cần theo dõi thêm.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+
+        if (data.heartRate > 220) {
+            healthIssues.push({
+                warning: 'Có vấn đề với nhịp tim, cần theo dõi thêm.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+
+        if (data.bodyTemperature < 38) {
+            healthIssues.push({
+                warning: 'Nhiệt độ cơ thể thấp, cần giữ ấm.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+
+        if (data.bodyTemperature > 39.2) {
+            healthIssues.push({
+                warning: 'Nhiệt độ cơ thể cao, có thể cần làm mát.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+
+        if (data.humidity < 40) {
+            healthIssues.push({
+                warning: 'Độ ẩm cơ thể thấp, cần tăng độ ẩm môi trường.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+
+        if (data.humidity > 60) {
+            healthIssues.push({
+                warning: 'Độ ẩm môi trường, cần giảm độ ẩm môi trường.',
+                suggestion: 'Đề xuất.'
+            });
+        }
+    }
+    return healthIssues.length > 0 ? healthIssues : [{ warning: 'Thú cưng khỏe mạnh.', suggestion: '' }];
 }
 
 module.exports = { analyzePetHealth };

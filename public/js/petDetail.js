@@ -8,12 +8,27 @@ socket.on('petHealth', (data) => {
     document.getElementById('activity').innerText = data.activity.toFixed(0); // Làm tròn đến số nguyên gần nhất
 });
 
-socket.on('note', (notes) => {
+socket.on('note', (healthIssues) => {
     const warningsElement = document.getElementById('healthWarnings');
-    warningsElement.innerHTML = ''; // Xóa cảnh báo cũ
-    notes.forEach(note => {
+    warningsElement.innerHTML = ''; // Clear existing warnings
+
+    healthIssues.forEach(issue => {
         const li = document.createElement('li');
-        li.innerText = note;
+        li.innerText = issue.warning; // Display warning text
+        li.classList.add('clickable-warning'); // Add class for styling if necessary
+        li.addEventListener('click', () => {
+            // Update modal content with the specific suggestion for this issue
+            document.getElementById('modalContent').innerText = issue.suggestion;
+            // Open the modal
+            var modalInstance = M.Modal.getInstance(document.getElementById('healthModal'));
+            modalInstance.open();
+        });
         warningsElement.appendChild(li);
     });
+});
+
+// Gọi hàm khởi tạo modal sau khi tải trang
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    M.Modal.init(elems);
 });
