@@ -55,5 +55,44 @@ body {
 
 .clickable-warning {
     cursor: pointer;
-    /* Thêm bất kỳ styles nào khác để làm nổi bật chúng như có thể nhấp được */
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 35px;
+    /* Điều chỉnh kích thước của biểu tượng 'x' */
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Cập nhật modal-content để loại bỏ transform nếu không cần thiết */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* Điều chỉnh margin để đúng với vị trí bạn muốn */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Bỏ đi thuộc tính transform nếu không cần thiết */
 }
