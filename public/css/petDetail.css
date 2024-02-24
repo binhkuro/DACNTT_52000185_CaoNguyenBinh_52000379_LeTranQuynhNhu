@@ -59,10 +59,12 @@ body {
 
 .close {
     color: #aaaaaa;
-    float: right;
+    float: left;
     font-size: 35px;
-    /* Điều chỉnh kích thước của biểu tượng 'x' */
     font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .close:hover,
@@ -89,10 +91,11 @@ body {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
-    /* Điều chỉnh margin để đúng với vị trí bạn muốn */
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    /* Bỏ đi thuộc tính transform nếu không cần thiết */
+    position: relative;
+    top: 35%;
+    transform: translateY(-50%);
 }

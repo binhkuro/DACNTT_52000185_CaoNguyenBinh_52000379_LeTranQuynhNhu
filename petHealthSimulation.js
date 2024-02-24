@@ -6,12 +6,18 @@ let petHealthData = {
     humidity: 0
 };
 
-function generatePetHealthData(type) {
+function generatePetHealthData(data, type) {
     if (type === 'Chó') {
         petHealthData.activity = Math.random() * 5000;
+        if (data.humidity > 60) {
+            petHealthData.humidity = Math.random() * (70 - 60) + 60;
+        } else if (data.humidity < 40) {
+            petHealthData.humidity = Math.random() * (40 - 30) + 40;
+        } else {
+            petHealthData.humidity = Math.random() * (60 - 40) + 40;
+        }
         petHealthData.heartRate = Math.random() * (130 - 60) + 60;
         petHealthData.bodyTemperature = Math.random() * (40 - 36) + 36;
-        petHealthData.humidity = Math.random() * (70 - 30) + 30;
     } else if (type === 'Mèo') {
         petHealthData.activity = Math.random() * 500;
         petHealthData.heartRate = Math.random() * (230 - 110) + 110;

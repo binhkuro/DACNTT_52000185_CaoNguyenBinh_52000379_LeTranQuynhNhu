@@ -82,14 +82,14 @@ io.on('connection', (socket) => {
 
     // Cập nhật giá trị ngẫu nhiên mỗi phút
     // Dữ liệu môi trường
-    generateEnvironmentData(); // Khởi tạo giá trị đầu tiên ngay lập tức
+    generateEnvironmentData();
     setInterval(() => {
-        generateEnvironmentData(); // Sau đó cập nhật mỗi phút
+        generateEnvironmentData();
     }, 60000);
     // Dữ liệu sức khỏe
-    generatePetHealthData(petType); // Khởi tạo giá trị đầu tiên ngay lập tức
+    generatePetHealthData(getEnvironmentData(), petType);
     setInterval(() => {
-        generatePetHealthData(petType); // Sau đó cập nhật mỗi phút
+        generatePetHealthData(getEnvironmentData(), petType);
     }, 60000);
 
     // Cập nhật và gửi dữ liệu cảm biến theo trạng thái thiết bị mỗi giây
