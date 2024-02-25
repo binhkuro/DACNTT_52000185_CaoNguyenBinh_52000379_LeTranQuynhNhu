@@ -54,6 +54,7 @@ body {
     justify-content: space-between;
 }
 
+
 /* .table div {
     font-weight: bold;
     width: 14.28%;
@@ -78,7 +79,7 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     border: 2px solid;
-    border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    border-image: black;
     border-image-slice: 1;
 }
 
@@ -89,7 +90,7 @@ body {
 }
 
 .card-body {
-    padding: 15px; 
+    padding: 15px;
 }
 
 .card-title {
@@ -102,12 +103,12 @@ body {
 .pagination {
     display: flex;
     justify-content: center;
-    list-style-type: none; 
-    padding: 0; 
+    list-style-type: none;
+    padding: 0;
 }
 
 .page-link-yellow {
-    color: rgb(0, 0, 0); 
+    color: rgb(0, 0, 0);
 }
 
 .page-link-yellow:hover {
@@ -244,6 +245,7 @@ body {
     transform: scale(1.0);
     opacity: 0.8;
 }
+
 .close {
     color: #aaa;
     float: right;

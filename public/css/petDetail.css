@@ -35,6 +35,7 @@ body {
 .humidity,
 .heartRate,
 .activity {
+    background-color: white;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 250px;
@@ -74,9 +75,6 @@ body {
     cursor: pointer;
 }
 
-
-/* Cập nhật modal-content để loại bỏ transform nếu không cần thiết */
-
 .modal {
     display: none;
     position: fixed;
@@ -98,4 +96,11 @@ body {
     position: relative;
     top: 35%;
     transform: translateY(-50%);
+}
+
+.sensor-icon {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 10px auto;
 }
