@@ -48,14 +48,14 @@ function analyzePetHealth(data, type) {
     if (type === "Mèo") {
         if (data.heartRate < 140) {
             healthIssues.push({
-                warning: 'Có vấn đề với nhịp tim của mèo, cần theo dõi thêm. Xem thêm...',
+                warning: 'Nhịp tim của mèo thấp, cần theo dõi thêm. Xem thêm...',
                 suggestion: ''
             });
         }
 
         if (data.heartRate > 220) {
             healthIssues.push({
-                warning: 'Có vấn đề với nhịp tim của mèo, cần theo dõi thêm. Xem thêm...',
+                warning: 'Nhịp tim của mèo cao, cần theo dõi thêm. Xem thêm...',
                 suggestion: ''
             });
         }
