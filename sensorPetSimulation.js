@@ -11,9 +11,9 @@ function adjustPetEnvironment(environmentData, petHealth, type) {
         }
 
         if (environmentData.humidity < 40) {
-            petHealth.humidity -= 1;
-        } else if (environmentData.temperature > 60) {
-            petHealth.humidity += 1
+            petHealth.humidity += 5;
+        } else if (environmentData.humidity > 60) {
+            petHealth.humidity -= 1
         } else {
             petHealth.humidity = petHealth.humidity;
         }

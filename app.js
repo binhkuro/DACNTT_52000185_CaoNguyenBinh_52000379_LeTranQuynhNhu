@@ -66,7 +66,13 @@ app.get('/petDetail/:petId', async(req, res) => {
 
         petHealth = adjustPetEnvironment(environmentData, petHealth, petType);
 
-        res.render('petDetail', { pet: pet, petHealth: petHealth });
+        res.render('petDetail', {
+            pet: pet,
+            petHealth: petHealth,
+            username: req.session.username,
+            profilePicture: req.session.profilePicture,
+            fullname: req.session.fullname
+        });
     } catch (error) {
         res.status(500).send('Lỗi server');
     }
