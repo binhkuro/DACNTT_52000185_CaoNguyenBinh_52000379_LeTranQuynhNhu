@@ -79,10 +79,11 @@
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
                         <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr {{{isActivateAccount activateStatus}}}>
+                    <tr>
                         <th>Ảnh đại diện</th>
                         <th>Email</th>
                         <th>Username</th>
@@ -90,11 +91,12 @@
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
                         <th>Trạng thái</th>
+                        <th>Thao tác</th>
                     </tr>
                 </tfoot>
                 <tbody>
                     {{#each accounts}}
-                        <tr>
+                        <tr {{{isActivateAccount activateStatus}}}>
                             <td><img src="/uploads/avatars/{{profilePicture}}" class="old avatar-small"></td>
                             <td>{{email}}</td>
                             <td>{{username}}</td>
@@ -102,6 +104,12 @@
                             <td>{{phoneNumber}}</td>
                             <td>{{address}}</td>
                             <td>{{#getLockedStatus email lockedStatus}}{{/getLockedStatus}}</td>
+                            <td class="button-cell">
+                                <div style="display: flex;">
+                                    <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
+                                    <a href="/profileid/{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
+                                </div>
+                            </td>
                         </tr>
                     {{/each}} 
                 </tbody>
@@ -109,3 +117,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/home-admin.js"></script>

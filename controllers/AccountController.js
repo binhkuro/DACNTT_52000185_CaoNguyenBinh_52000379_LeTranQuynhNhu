@@ -51,7 +51,7 @@ async function initData() {
         phoneNumber: "0853094094",
         address: "160/8A, chợ Láng Tròn, Thị Xã Giá Rai, tỉnh Bạc Liêu",
         profilePicture: "default-avatar.png",
-        activateStatus: 1,
+        activateStatus: 0,
         lockedStatus: 0
     });
 
@@ -477,28 +477,6 @@ function getProfilePage(req, res) {
     })
 }
 
-// Load profile user theo username tại trang quản lí
-function getProfileByUsername(req, res) {
-    Account.findOne({
-        username: req.params.username,
-    })
-    .then(account => {
-        let options = {
-            layout: "admin",
-            email: account.email, 
-            username: account.username,
-            fullname: account.fullname, 
-            phoneNumber: account.phoneNumber,
-            address: account.address,
-            profilePicture: account.profilePicture, 
-            success: req.flash("success"), 
-            error: req.flash("error")
-        };
-
-        res.render("profileid", options)
-    })
-}
-
 // Cập nhật avatar
 function changeProfilePicture(req, res) {
     let form = new multiparty.Form()
@@ -736,6 +714,35 @@ function updateProfile(req, res) {
     });
 }
 
+function lockUser(req, res) {
+    Account.findOne({
+        email: req.body.email,
+    })
+    .then(async account => {
+        let updatedField;
+
+        if(account.lockedStatus === 0) {
+            updatedField = {
+                $set: {
+                    lockedStatus: 1
+                }
+            }
+        }
+        else {
+            updatedField = {
+                $set: {
+                    lockedStatus: 0
+                }
+            }
+        }
+
+        await Account.updateOne({email: req.body.email}, updatedField, { new: true })
+        .then(updatedAccount => {
+            res.end();
+        })
+    })
+}
+
 module.exports = {
     initData,
     getHomePage,
@@ -751,11 +758,11 @@ module.exports = {
     sendEmail,
     emailForgot,
     getProfilePage,
-    getProfileByUsername,
     changeProfilePicture,
     removeProfilePicture,
     updateFullname,
     updateAddress,
     updatePhoneNumber,
     updateProfile,
+    lockUser,
 };

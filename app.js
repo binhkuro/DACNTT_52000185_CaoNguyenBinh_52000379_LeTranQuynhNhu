@@ -330,10 +330,10 @@ app.get("/profile", (req, res) => {
 })
 
 app.get("/profileid/:username", (req, res) => {
-    if (!req.session.username)
-        return res.redirect("/login");
+    // if(!req.session.email || req.session.email !== "admin@gmail.com")
+    //     return res.redirect("/login");
 
-    accountController.getProfileByUsername(req, res);
+    adminController.getProfileByUsername(req, res);
 })
 
 app.post("/profile", (req, res) => {
@@ -390,12 +390,15 @@ app.post("/remove-notification", (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
-    // if (!req.session.username)
+    // if(!req.session.email || req.session.email !== "admin@gmail.com")
     //     return res.redirect("/login");
 
     adminController.getAdminHomePage(req, res);
 })
 
+app.put("/lock-user", (req, res) => {
+    accountController.lockUser(req, res);
+})
 
 // Middle ware 404 error
 app.use((req, res) => {
