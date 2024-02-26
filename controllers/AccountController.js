@@ -11,7 +11,7 @@ async function initData() {
     // Trước khi khởi tạo dữ liệu mẫu thì ta cần xóa các dữ liệu hiện có
     await Account.deleteMany()
 
-    const hashedPasswordAdmin = await bcrypt.hash("A12345678", 10);
+    const hashedPasswordAdmin = await bcrypt.hash("A123456789", 10);
     // Tài khoản admin
     let account = new Account({
         email: "admin@gmail.com",
@@ -217,7 +217,7 @@ function loginAccount(req, res) {
             req.session.fullname = account.fullname;
             req.session.profilePicture = account.profilePicture;
             if (username === "admin")
-                res.redirect("/account-management")
+                res.redirect("/admin")
             else
                 res.redirect("/")
         })

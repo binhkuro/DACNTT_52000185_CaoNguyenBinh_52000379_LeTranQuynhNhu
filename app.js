@@ -19,6 +19,7 @@ const Pet = require('./models/pet.js');
 
 // Import các module controller
 const accountController = require('./controllers/AccountController')
+const adminController = require('./controllers/AdminController')
 const petController = require('./controllers/PetController')
 
 // Lấy dữ liệu từ file .env ra
@@ -365,6 +366,14 @@ app.post("/update-reminder", (req, res) => {
 app.post("/remove-notification", (req, res) => {
     petController.removeNotification(req, res);
 })
+
+app.get("/admin", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+
+    adminController.getAdminHomePage(req, res);
+})
+
 
 // Middle ware 404 error
 app.use((req, res) => {
