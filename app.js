@@ -368,8 +368,8 @@ app.post("/remove-notification", (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
-    if (!req.session.username)
-        return res.redirect("/login");
+    // if (!req.session.username)
+    //     return res.redirect("/login");
 
     adminController.getAdminHomePage(req, res);
 })
