@@ -42,6 +42,28 @@ app.use(flash());
 app.engine('handlebars', hbs.engine({
     defaultLayout: 'main',
     helpers: {
+        getLockedStatus: (email, lockedStatus) => {
+            if(lockedStatus - 0 === 1)
+                return `
+                <button class="btn btn-danger" onclick="lockUser('${email}')">
+                    <i class="fa-solid fa-lock"></i>          
+                </button>
+            `;
+
+            return `
+                    <button class="btn btn-success" onclick="lockUser('${email}')">
+                        <i class="fa-solid fa-lock-open"></i>          
+                    </button>
+                `;
+        },
+
+        isActivateAccount: (activateStatus) => {
+            if(activateStatus === 0)
+                return 'class="bg-warning"';
+            else
+                return "";
+        },
+
         eq: (value1, value2, options) => value1 === value2,
         inc: (value) => parseInt(value) + 1,
         ifEquals: (value1, value2, options) => (value1 === value2) ? options.fn(this) : options.inverse(this),

@@ -1,8 +1,8 @@
 let Account = require("../models/account");
 
 async function getAdminHomePage(req, res) {
-    let accounts = await Account.find({ username: { $ne: "admin" } }).exec();
-    
+    let accounts = await Account.find({ username: { $ne: "admin" } }).lean().exec();
+
     res.render('admin', {
         title: 'Trang chủ quản lý',
         username: req.session.username,
