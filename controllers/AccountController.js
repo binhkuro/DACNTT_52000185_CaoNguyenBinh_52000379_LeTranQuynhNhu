@@ -51,7 +51,7 @@ async function initData() {
         phoneNumber: "0853094094",
         address: "160/8A, chợ Láng Tròn, Thị Xã Giá Rai, tỉnh Bạc Liêu",
         profilePicture: "default-avatar.png",
-        activateStatus: 0,
+        activateStatus: 1,
         lockedStatus: 0
     });
 
@@ -192,7 +192,7 @@ function loginAccount(req, res) {
 
             if (account.lockedStatus === 1) {
                 req.flash("error", "Tài khoản của bạn đã bị khóa.")
-                return res.render("login", { error: req.flash("error") })
+                return res.redirect('login')
             }
 
             let email = account.email;
@@ -202,7 +202,7 @@ function loginAccount(req, res) {
                 // Người dùng KHÔNG truy cập trang login thông qua đường link trong email
                 if (!req.body.token || !bcrypt.compareSync(email, req.body.hashedEmail)) {
                     req.flash("error", "Vui lòng nhấn vào đường link được gửi đến email của bạn.")
-                    return res.render("login", { error: req.flash("error"), username: username })
+                    return res.redirect('login')
                 }
 
                 await Account.updateOne({ email: email }, { $set: { activateStatus: 1 } }, { new: true })
@@ -716,7 +716,7 @@ function updateProfile(req, res) {
 
 function lockUser(req, res) {
     Account.findOne({
-        email: req.body.email,
+        username: req.body.username,
     })
     .then(async account => {
         let updatedField;
@@ -736,7 +736,7 @@ function lockUser(req, res) {
             }
         }
 
-        await Account.updateOne({email: req.body.email}, updatedField, { new: true })
+        await Account.updateOne({username: req.body.username}, updatedField, { new: true })
         .then(updatedAccount => {
             res.end();
         })

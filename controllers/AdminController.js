@@ -15,7 +15,7 @@ async function getAdminHomePage(req, res) {
 
 function lockUser(req, res) {
     Account.findOne({
-        email: req.body.email,
+        username: req.body.username,
     })
     .then(async account => {
         let updatedField;
@@ -35,28 +35,30 @@ function lockUser(req, res) {
             }
         }
 
-        await Account.updateOne({email: req.body.email}, updatedField, { new: true })
+        await Account.updateOne({username: req.body.username}, updatedField, { new: true })
         .then(updatedAccount => {
             res.end();
         })
     })
 }
 
-function getProfileByUsername(req, res) {
+async function getProfileByUsername(req, res) {
     Account.findOne({
         username: req.params.username,
     })
     .then(account => {
         let options = {
-            layout: "admin",
+            layout: 'admin',
+            title: 'Trang thông tin người dùng',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
             email: account.email, 
             username: account.username,
             fullname: account.fullname, 
             phoneNumber: account.phoneNumber,
             address: account.address,
             profilePicture: account.profilePicture, 
-            success: req.flash("success"), 
-            error: req.flash("error")
         };
 
         res.render("profileid", options)

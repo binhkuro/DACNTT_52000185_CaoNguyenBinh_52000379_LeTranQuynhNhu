@@ -11152,24 +11152,24 @@ body {
 .datatable-table > tfoot > tr > th,
 .datatable-table > thead > tr > td,
 .datatable-table > thead > tr > th {
-  vertical-align: top;
+  vertical-align: center;
   padding: 0.5rem 0.5rem;
 }
 
 .datatable-table > thead > tr > th {
-  vertical-align: bottom;
-  text-align: left;
+  vertical-align: center;
+  text-align: center;
   border-bottom: none;
 }
 
 .datatable-table > tfoot > tr > th {
-  vertical-align: bottom;
-  text-align: left;
+  vertical-align: center;
+  text-align: center;
 }
 
 .datatable-table th {
-  vertical-align: bottom;
-  text-align: left;
+  vertical-align: center;
+  text-align: center;
 }
 
 .datatable-table th a {

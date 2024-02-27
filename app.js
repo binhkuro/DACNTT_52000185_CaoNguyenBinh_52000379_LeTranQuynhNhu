@@ -42,16 +42,16 @@ app.use(flash());
 app.engine('handlebars', hbs.engine({
     defaultLayout: 'main',
     helpers: {
-        getLockedStatus: (email, lockedStatus) => {
+        getLockedStatus: (username, lockedStatus) => {
             if(lockedStatus - 0 === 1)
                 return `
-                <button class="btn btn-danger" onclick="lockUser('${email}')">
+                <button class="btn btn-danger" onclick="lockUser('${username}')">
                     <i class="fa-solid fa-lock"></i>          
                 </button>
             `;
 
             return `
-                    <button class="btn btn-success" onclick="lockUser('${email}')">
+                    <button class="btn btn-success" onclick="lockUser('${username}')">
                         <i class="fa-solid fa-lock-open"></i>          
                     </button>
                 `;
@@ -59,9 +59,9 @@ app.engine('handlebars', hbs.engine({
 
         isActivateAccount: (activateStatus) => {
             if(activateStatus === 0)
-                return 'class="bg-warning"';
+                return '<i class="fa-solid fa-circle text-danger"></i>';
             else
-                return "";
+                return '<i class="fa-solid fa-circle text-success"></i>';
         },
 
         eq: (value1, value2, options) => value1 === value2,
@@ -329,9 +329,9 @@ app.get("/profile", (req, res) => {
     accountController.getProfilePage(req, res);
 })
 
-app.get("/profileid/:username", (req, res) => {
-    // if(!req.session.email || req.session.email !== "admin@gmail.com")
-    //     return res.redirect("/login");
+app.get("/admin:profileid::username", (req, res) => {
+    if(req.session.username !== "admin")
+        return res.redirect("/login");
 
     adminController.getProfileByUsername(req, res);
 })
@@ -390,8 +390,8 @@ app.post("/remove-notification", (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
-    // if(!req.session.email || req.session.email !== "admin@gmail.com")
-    //     return res.redirect("/login");
+    if(req.session.username !== "admin")
+        return res.redirect("/login");
 
     adminController.getAdminHomePage(req, res);
 })
