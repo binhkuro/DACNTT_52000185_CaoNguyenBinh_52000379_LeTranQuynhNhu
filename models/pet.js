@@ -8,9 +8,9 @@ let petSchema = new Schema({
         type: String,
         required: true
     },
-    name: { 
-        type: String, 
-        required: true 
+    name: {
+        type: String,
+        required: true
     },
     petPicture: String,
     age: Number,
