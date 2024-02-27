@@ -1,33 +1,65 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Biểu đồ số lượng người dùng
-    var ctxUser = document.getElementById('myAreaChart').getContext('2d');
-    var myAreaChart = new Chart(ctxUser, {
-        type: 'line', // Loại biểu đồ
+    var petDataPerUser = {
+        "Người Dùng 1": 2,
+        "Người Dùng 2": 3,
+        "Người Dùng 3": 1
+    };
+
+    var dogCatComparisonData = {
+        "Chó": dogCount,
+        "Mèo": catCount
+    };
+
+    // Biểu đồ số lượng thú cưng theo người dùng
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var myChart1 = new Chart(ctx1, {
+        type: 'bar',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Các nhãn trục X
+            labels: Object.keys(petDataPerUser),
             datasets: [{
-                label: 'Người Dùng',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                data: [0, 10, 5, 2, 20, 30, 45], // Dữ liệu biểu đồ
+                label: 'Số lượng thú cưng',
+                data: Object.values(petDataPerUser),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
             }]
         },
-        options: {}
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
 
-    // Biểu đồ số lượng thú cưng
-    var ctxPet = document.getElementById('myBarChart').getContext('2d');
-    var myBarChart = new Chart(ctxPet, {
-        type: 'bar', // Loại biểu đồ
+    // Biểu đồ so sánh số lượng chó, mèo
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+        type: 'pie',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'], // Các nhãn trục X
+            labels: Object.keys(dogCatComparisonData),
             datasets: [{
-                label: 'Thú Cưng',
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                data: [5, 15, 10, 30, 20, 40, 60], // Dữ liệu biểu đồ
+                label: 'Số lượng',
+                data: Object.values(dogCatComparisonData),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
             }]
-        },
-        options: {}
+        }
     });
 });

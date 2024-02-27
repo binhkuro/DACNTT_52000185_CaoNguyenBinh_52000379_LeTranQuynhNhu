@@ -6,6 +6,8 @@ let Schedule = require("../models/schedule");
 async function getAdminHomePage(req, res) {
     const accountCount = await Account.countDocuments().exec();
     const petCount = await Pet.countDocuments().exec();
+    const dogCount = await Pet.countDocuments({ type: 'Chó' }).exec();
+    const catCount = await Pet.countDocuments({ type: 'Mèo' }).exec();
     const notificationCount = await Notification.countDocuments().exec();
     const scheduleCount = await Schedule.countDocuments().exec();
 
@@ -16,6 +18,8 @@ async function getAdminHomePage(req, res) {
         profilePicture: req.session.profilePicture,
         accountCount: accountCount,
         petCount: petCount,
+        dogCount: dogCount,
+        catCount: catCount,
         notificationCount: notificationCount,
         scheduleCount: scheduleCount,
         layout: 'admin',
