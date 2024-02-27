@@ -1,11 +1,23 @@
 let Account = require("../models/account");
+let Pet = require("../models/pet");
+let Notification = require("../models/notification");
+let Schedule = require("../models/schedule");
 
 async function getAdminHomePage(req, res) {
+    const accountCount = await Account.countDocuments().exec();
+    const petCount = await Pet.countDocuments().exec();
+    const notificationCount = await Notification.countDocuments().exec();
+    const scheduleCount = await Schedule.countDocuments().exec();
+
     res.render('home-admin', {
         title: 'Trang chủ quản lý',
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
+        accountCount: accountCount,
+        petCount: petCount,
+        notificationCount: notificationCount,
+        scheduleCount: scheduleCount,
         layout: 'admin',
     });
 }
