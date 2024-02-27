@@ -64,6 +64,13 @@ app.engine('handlebars', hbs.engine({
                 return '<i class="fa-solid fa-circle text-success"></i>';
         },
 
+        isDogOrCat: (type) => {
+            if (type == 'Chó')
+                return '<img src="img/dog-icon.png" alt="Dog"/>';
+            else
+                return '<img src="img/cat-icon.png" alt="Dog"/>';
+        },
+
         eq: (value1, value2, options) => value1 === value2,
         inc: (value) => parseInt(value) + 1,
         ifEquals: (value1, value2, options) => (value1 === value2) ? options.fn(this) : options.inverse(this),
@@ -405,6 +412,13 @@ app.get("/account-management", (req, res) => {
         return res.redirect("/login");
 
     adminController.getAccountManagementPage(req, res);
+})
+
+app.get("/pet-management", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getPetManagementPage(req, res);
 })
 
 // Middle ware 404 error

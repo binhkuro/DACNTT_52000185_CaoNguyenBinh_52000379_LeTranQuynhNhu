@@ -1,4 +1,5 @@
 let Account = require("../models/account");
+let Pet = require("../models/pet");
 
 async function getAdminHomePage(req, res) {
     res.render('home-admin', {
@@ -19,6 +20,19 @@ async function getAccountManagementPage(req, res) {
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
         accounts: accounts,
+        layout: 'admin',
+    });
+}
+
+async function getPetManagementPage(req, res) {
+    let pets = await Pet.find().lean().exec();
+
+    res.render('pet-management', {
+        title: 'Quản lý thú cưng',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+        pets: pets,
         layout: 'admin',
     });
 }
@@ -79,4 +93,5 @@ module.exports = {
     lockUser,
     getProfileByUsername,
     getAccountManagementPage,
+    getPetManagementPage,
 };

@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="/css/pet-management.css">
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Quản lý người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Quản lý người dùng</li>
+    </ol>
+
+    <!-- Bảng danh sách thú cưng -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách thú cưng
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Người dùng</th>
+                        <th>Ảnh thú cưng</th>
+                        <th>Loại</th>
+                        <th>Id thú cưng</th>
+                        <th>Tên thú cưng</th>
+                        <th>Tuổi</th>
+                        <th>Loài</th>
+                        <th>Giới tính</th>
+                        <th>Màu</th>
+                        <th>Đặc biệt</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Người dùng</th>
+                        <th>Ảnh thú cưng</th>
+                        <th>Loại</th>
+                        <th>Id thú cưng</th>
+                        <th>Tên thú cưng</th>
+                        <th>Tuổi</th>
+                        <th>Loài</th>
+                        <th>Giới tính</th>
+                        <th>Màu</th>
+                        <th>Đặc biệt</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#each pets}}
+                        <tr>
+                            <td>{{username}}</td>
+                            <td><img src="{{petPicture}}" class="old avatar-small"></td>
+                            <td>{{#isDogOrCat type}}{{/isDogOrCat}}</td>
+                            <td>{{petId}}</td>
+                            <td>{{name}}</td>
+                            <td>{{age}}</td>
+                            <td>{{species}}</td>
+                            <td>{{gender}}</td>
+                            <td>{{color}}</td>
+                            <td>{{special}}</td>
+                            <td class="button-cell">
+                                <div style="display: flex;">
+                                    <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
+                                    <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/pet-management.js"></script>
