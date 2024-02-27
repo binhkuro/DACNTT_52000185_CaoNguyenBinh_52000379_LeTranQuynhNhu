@@ -43,7 +43,7 @@ app.engine('handlebars', hbs.engine({
     defaultLayout: 'main',
     helpers: {
         getLockedStatus: (username, lockedStatus) => {
-            if(lockedStatus - 0 === 1)
+            if (lockedStatus - 0 === 1)
                 return `
                 <button class="btn btn-danger" onclick="lockUser('${username}')">
                     <i class="fa-solid fa-lock"></i>          
@@ -58,7 +58,7 @@ app.engine('handlebars', hbs.engine({
         },
 
         isActivateAccount: (activateStatus) => {
-            if(activateStatus === 0)
+            if (activateStatus === 0)
                 return '<i class="fa-solid fa-circle text-danger"></i>';
             else
                 return '<i class="fa-solid fa-circle text-success"></i>';
@@ -330,7 +330,7 @@ app.get("/profile", (req, res) => {
 })
 
 app.get("/admin:profileid::username", (req, res) => {
-    if(req.session.username !== "admin")
+    if (req.session.username !== "admin")
         return res.redirect("/login");
 
     adminController.getProfileByUsername(req, res);
@@ -390,7 +390,7 @@ app.post("/remove-notification", (req, res) => {
 })
 
 app.get("/admin", (req, res) => {
-    if(req.session.username !== "admin")
+    if (req.session.username !== "admin")
         return res.redirect("/login");
 
     adminController.getAdminHomePage(req, res);
@@ -398,6 +398,13 @@ app.get("/admin", (req, res) => {
 
 app.put("/lock-user", (req, res) => {
     accountController.lockUser(req, res);
+})
+
+app.get("/account-management", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getAccountManagementPage(req, res);
 })
 
 // Middle ware 404 error
