@@ -2,6 +2,7 @@ let Account = require("../models/account");
 let Pet = require("../models/pet");
 let Notification = require("../models/notification");
 let Schedule = require("../models/schedule");
+let mailController = require('./MailController')
 
 async function getAdminHomePage(req, res) {
     const accountCount = await Account.countDocuments().exec();
@@ -103,10 +104,21 @@ async function getProfileByUsername(req, res) {
         })
 }
 
+async function sendMail(req, res) {
+    let username = req.body.username;
+    const account = await Account.findOne({ username: username }).exec();
+    let mail = account.email;
+    let name = req.body.name;
+    let subject = `Sức khỏe của ${name} của bạn đang có vấn đề`;
+    let content = `<a href=${process.env.APP_URL}/login> Vui lòng đăng nhập vào để kiểm tra ${name} của bạn</a>`;
+    mailController.sendMail(mail, subject, content);
+}
+
 module.exports = {
     getAdminHomePage,
     lockUser,
     getProfileByUsername,
     getAccountManagementPage,
     getPetManagementPage,
+    sendMail,
 };

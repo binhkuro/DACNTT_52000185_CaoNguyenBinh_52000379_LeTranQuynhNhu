@@ -1,21 +1,9 @@
-function lockUser(username) {
-    fetch("/lock-user", {
-            method: "put",
-            body: JSON.stringify({
-                username: username
-            }),
-            headers: {
-                'Content-type': "application/json"
-            }
-        })
-        .then(() => location.reload())
-}
-
-function sendEmail(email) {
-    fetch("/send-email", {
+function sendMail(username, name) {
+    fetch("/send-mail", {
             method: "post",
             body: new URLSearchParams({
-                'email': email
+                'username': username,
+                'name': name
             })
         })
         .then(() => showCustomToast("Gửi email thành công", "Thông báo"))

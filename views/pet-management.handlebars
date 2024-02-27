@@ -54,12 +54,12 @@
                             <td>{{name}}</td>
                             <td>{{age}}</td>
                             <td>{{species}}</td>
-                            <td>{{gender}}</td>
+                            <td>{{#isMaleOrFemale gender}}{{/isMaleOrFemale}}</td>
                             <td>{{color}}</td>
                             <td>{{special}}</td>
                             <td class="button-cell">
                                 <div style="display: flex;">
-                                    <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
+                                    <button class="btn btn-primary" onclick="sendMail('{{username}}', '{{name}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
                                 </div>
                             </td>
