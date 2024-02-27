@@ -63,63 +63,6 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Danh sách người dùng
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Ảnh đại diện</th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Họ và tên</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Được cấp quyền</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>Ảnh đại diện</th>
-                        <th>Email</th>
-                        <th>Username</th>
-                        <th>Họ và tên</th>
-                        <th>Số điện thoại</th>
-                        <th>Địa chỉ</th>
-                        <th>Được cấp quyền</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    {{#each accounts}}
-                        <tr>
-                            <td><img src="/uploads/avatars/{{profilePicture}}" class="old avatar-small"></td>
-                            <td>{{email}}</td>
-                            <td>{{username}}</td>
-                            <td>{{fullname}}</td>
-                            <td>{{phoneNumber}}</td>
-                            <td>{{address}}</td>
-                            <td>{{#isActivateAccount activateStatus}}{{/isActivateAccount}}</td>
-                            <td>{{#getLockedStatus username lockedStatus}}{{/getLockedStatus}}</td>
-                            <td class="button-cell">
-                                <div style="display: flex;">
-                                    <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
-                                    <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
-                                </div>
-                            </td>
-                        </tr>
-                    {{/each}} 
-                </tbody>
-            </table>
-            <div id="toast-container" class="toast-container"></div>
-        </div>
-    </div>
 </div>
 
 <script src="/js/home-admin.js"></script>
