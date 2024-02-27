@@ -200,6 +200,13 @@ app.get("/health", (req, res) => {
     petController.getHealthPage(req, res);
 });
 
+app.get("/profile-pet::petId", (req, res) => {
+    if (!req.session.username)
+        return res.redirect("/login");
+
+    petController.getPetProfileByPetId(req, res);
+})
+
 app.get('/petDetail', (req, res) => {
     res.render('petDetail');
 });
@@ -402,6 +409,10 @@ app.post("/update-reminder", (req, res) => {
 app.post("/remove-notification", (req, res) => {
     petController.removeNotification(req, res);
 })
+
+app.post("/profile-pet::petId", (req, res) => {
+    petController.changePetPicture(req, res);
+});
 
 app.get("/admin", (req, res) => {
     if (req.session.username !== "admin")

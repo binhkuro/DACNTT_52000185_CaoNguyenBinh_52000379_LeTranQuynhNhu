@@ -86,6 +86,42 @@ async function getHealthPage(req, res) {
     }
 }
 
+async function getPetProfileByPetId(req, res) {
+    try {
+        const pet = await Pet.findOne({
+            petId: req.params.petId,
+        });
+
+        // Kiểm tra xem pet có tồn tại không
+        if (!pet) {
+            req.flash("error", "Thú cưng không tồn tại");
+            return res.redirect('/health');
+        }
+
+        let options = {
+            title: 'Trang thông tin chi tiết của thú cưng',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
+            petId: pet.petId,
+            name: pet.name,
+            petPicture: pet.petPicture,
+            age: pet.age,
+            type: pet.type,
+            species: pet.species,
+            gender: pet.gender,
+            color: pet.color,
+            special: pet.special,
+        };
+
+        res.render("pet-profile", options);
+    } catch (error) {
+        console.error(error);
+        req.flash("error", "Lỗi khi tải trang thông tin thú cưng");
+        res.redirect('/health');
+    }
+}
+
 async function addPet(req, res) {
     let form = new multiparty.Form();
 
@@ -257,14 +293,68 @@ async function removeNotification(req, res) {
     }
 }
 
+async function changePetPicture(req, res) {
+    let petId = req.params.petId;
+    const currentDate = new Date();
+    let generateId = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    let form = new multiparty.Form()
+
+    form.parse(req, (error, data, files) => {
+        if (error) {
+            req.flash("error", "Thay đổi ảnh thất bại")
+            return res.redirect(`/profile-pet:${petId}`);
+        }
+        
+        let file = files.file[0];
+        
+        // Validate file
+        if(file.size > 1048576) {
+            req.flash("error", "Không chấp nhận ảnh có kích thước lớn hơn 1MB")
+            return res.redirect(`/profile-pet:${petId}`);
+        }
+
+        // Đổi tên file là username + extension
+        let newFileName = generateId + path.extname(file.originalFilename);
+
+        // Lưu file đã được upload vào server
+        let tempPath = file.path;
+        let savePath = path.join(__dirname, "../public/uploads/pets/" + req.session.username + "/", newFileName);
+
+        fsx.copy(tempPath, savePath, (err) => {
+            if (err) {
+                req.flash("error", "Thay đổi ảnh thất bại")
+                return res.redirect(`/profile-pet:${petId}`);
+            }
+        });
+
+        // Cập nhật lại giá trị của petPicture trong database    
+        Pet.updateOne({ petId: petId }, { $set: { petPicture: newFileName }}, { new: true })
+        .then(updatedPet => {
+            if (!updatedPet) {
+                req.flash("error", "Thay đổi ảnh thất bại");
+            } else {
+                req.session.petPicture = newFileName;
+                req.flash("success", "Thay đổi ảnh thành công");
+            }
+            res.redirect(`/profile-pet:${petId}`);
+        })
+        .catch(error => {
+            req.flash("error", "Thay đổi ảnh thất bại")
+            res.redirect(`/profile-pet:${petId}`);
+        });
+    })
+}
+
 module.exports = {
     getMedicalPage,
     getSchedulePage,
     getHealthPage,
+    getPetProfileByPetId,
     addPet,
     removePet,
     addSchedule,
     addNotification,
     editNotification,
     removeNotification,
+    changePetPicture,
 };
