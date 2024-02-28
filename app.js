@@ -454,6 +454,13 @@ app.get("/admin:pet-profileid-:petId", (req, res) => {
     adminController.getPetProfileByPetId(req, res);
 })
 
+app.get("/notification-management", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getNotificationManagementPage(req, res);
+})
+
 app.post("/send-mail", (req, res) => {
     adminController.sendMail(req, res);
     res.end();
