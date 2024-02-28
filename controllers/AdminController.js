@@ -84,6 +84,32 @@ async function getPetManagementPage(req, res) {
     });
 }
 
+async function getNotificationManagementPage(req, res) {
+    let notifications = await Notification.find().lean().exec();
+
+    res.render('notification-management', {
+        title: 'Quản lý nhắc nhở',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+        pets: pets,
+        layout: 'admin',
+    });
+}
+
+async function getScheduleManagementPage(req, res) {
+    let schedules = await Schedule.find().lean().exec();
+
+    res.render('schedule-management', {
+        title: 'Quản lý lịch trình y tế',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+        pets: pets,
+        layout: 'admin',
+    });
+}
+
 function lockUser(req, res) {
     Account.findOne({
             username: req.body.username,
@@ -151,5 +177,6 @@ module.exports = {
     getProfileByUsername,
     getAccountManagementPage,
     getPetManagementPage,
+    getNotificationManagementPage,
     sendMail,
 };
