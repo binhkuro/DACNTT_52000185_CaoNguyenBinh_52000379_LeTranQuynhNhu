@@ -92,7 +92,7 @@ async function getNotificationManagementPage(req, res) {
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
-        pets: pets,
+        notifications: notifications,
         layout: 'admin',
     });
 }
