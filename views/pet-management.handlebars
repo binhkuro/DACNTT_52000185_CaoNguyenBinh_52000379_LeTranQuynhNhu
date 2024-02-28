@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/pet-management.css">
 
 <div class="container-fluid px-4">
-    <h4 class="mt-4">Quản lý người dùng</h4>
+    <h4 class="mt-4">Quản lý thú cưng</h4>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
@@ -43,7 +43,7 @@
                     {{#each pets}}
                         <tr>
                             <td>{{username}}</td>
-                            <td><img src="{{petPicture}}" class="old avatar-small"></td>
+                            <td><img src="/uploads/pets/{{username}}/{{petPicture}}" class="old avatar-small"></td>
                             <td>{{#isDogOrCat type}}{{/isDogOrCat}}</td>
                             <td>{{petId}}</td>
                             <td>{{name}}</td>
@@ -55,7 +55,7 @@
                             <td class="button-cell">
                                 <div style="display: flex;">
                                     <button class="btn btn-primary" onclick="sendMail('{{username}}', '{{name}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
-                                    <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href="/admin:pet-profileid-{{petId}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
                                 </div>
                             </td>
                         </tr>

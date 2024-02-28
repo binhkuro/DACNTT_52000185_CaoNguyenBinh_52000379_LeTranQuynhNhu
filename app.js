@@ -354,13 +354,6 @@ app.get("/profile", (req, res) => {
     accountController.getProfilePage(req, res);
 })
 
-app.get("/admin:profileid::username", (req, res) => {
-    if (req.session.username !== "admin")
-        return res.redirect("/login");
-
-    adminController.getProfileByUsername(req, res);
-})
-
 app.post("/profile", (req, res) => {
     accountController.changeProfilePicture(req, res);
 })
@@ -392,6 +385,10 @@ app.post("/email-forgot", (req, res) => {
 
 app.post("/health", (req, res) => {
     petController.addPet(req, res);
+})
+
+app.post("/update-pet-profile::petId", (req, res) => {
+    petController.updatePetProfile(req, res);
 })
 
 app.post("/remove-pet", (req, res) => {
@@ -441,6 +438,20 @@ app.get("/pet-management", (req, res) => {
         return res.redirect("/login");
 
     adminController.getPetManagementPage(req, res);
+})
+
+app.get("/admin:profileid::username", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getProfileByUsername(req, res);
+})
+
+app.get("/admin:pet-profileid-:petId", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getPetProfileByPetId(req, res);
 })
 
 app.post("/send-mail", (req, res) => {

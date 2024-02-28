@@ -140,25 +140,52 @@ function lockUser(req, res) {
 
 async function getProfileByUsername(req, res) {
     Account.findOne({
-            username: req.params.username,
-        })
-        .then(account => {
-            let options = {
-                layout: 'admin',
-                title: 'Trang thông tin người dùng',
-                username: req.session.username,
-                fullname: req.session.fullname,
-                profilePicture: req.session.profilePicture,
-                email: account.email,
-                username: account.username,
-                fullname: account.fullname,
-                phoneNumber: account.phoneNumber,
-                address: account.address,
-                profilePicture: account.profilePicture,
-            };
+        username: req.params.username,
+    })
+    .then(account => {
+        let options = {
+            layout: 'admin',
+            title: 'Trang thông tin người dùng',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
+            email: account.email,
+            username: account.username,
+            fullname: account.fullname,
+            phoneNumber: account.phoneNumber,
+            address: account.address,
+            profilePicture: account.profilePicture,
+        };
 
-            res.render("profileid", options)
-        })
+        res.render("profileid", options);
+    })
+}
+
+async function getPetProfileByPetId(req, res) {
+    Pet.findOne({
+        petId: req.params.petId,
+    })
+    .then(pet => {
+        let options = {
+            layout: 'admin',
+            title: 'Trang thông tin thú cưng',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
+            petId: pet.petId,
+            name: pet.name,
+            petPicture: pet.petPicture,
+            age: pet.age,
+            type: pet.type,
+            species: pet.species,
+            gender: pet.gender,
+            color: pet.color,
+            special: pet.special,
+            petUsername: pet.username,
+        };
+        
+        res.render("pet-profileid", options)
+    })
 }
 
 async function sendMail(req, res) {
@@ -175,6 +202,7 @@ module.exports = {
     getAdminHomePage,
     lockUser,
     getProfileByUsername,
+    getPetProfileByPetId,
     getAccountManagementPage,
     getPetManagementPage,
     getNotificationManagementPage,

@@ -161,7 +161,7 @@ async function addPet(req, res) {
                     color: color[0],
                     special: special[0],
                     username: req.session.username,
-                    petPicture: '/uploads/pets/' + req.session.username  + '/' + petPictureFile.originalFilename // Lưu đường dẫn tương đối để truy cập qua web
+                    petPicture: petPictureFile.originalFilename
                 });
 
                 await pet.save();
@@ -178,15 +178,55 @@ async function addPet(req, res) {
     });
 }
 
+function updatePetProfile(req, res) {
+    const id = req.params.petId;
+    const petId = req.body.petId;
+    const newName = req.body.name;
+    const newAge = req.body.age;
+    const newType = req.body.type;
+    const newSpecies = req.body.species;
+    const newGender = req.body.gender;
+    const newColor = req.body.color;
+    const newSpecial = req.body.special;
+    
+    if (!newName || !newAge || !newType || !newSpecies || !newGender || !newColor) {
+        req.flash("error", "Vui lòng không bỏ trống thông tin cần thiết");
+        return res.redirect(`/profile-pet:${id}`);
+    }
+
+    Pet.findOneAndUpdate(
+        { petId: petId },
+        { $set: {
+            name: newName,
+            age: newAge,
+            type: newType,
+            species: newSpecies,
+            gender: newGender,
+            color: newColor,
+            special: newSpecial
+        }},
+        { new: true }
+    )
+    .then(pet => {
+        if (!pet) {
+            req.flash('error', 'Không tìm thấy thú cưng');
+            return res.redirect(`/profile-pet:${id}`);
+        } else {
+            req.flash('success', 'Cập nhật thông tin thú cưng thành công');
+            return res.redirect(`/profile-pet:${id}`);
+        }
+    })
+    .catch(error => {
+        req.flash('error', 'Có lỗi đã xảy ra');
+        return res.redirect(`/profile-pet:${id}`);
+    });
+}
+
 async function removePet(req, res) {
     try {
         const petId = req.body.petId;
         const deletedPet = await Pet.findOneAndDelete({ petId: petId });
         if (deletedPet) {
-            if (deletedPet.petPicture) {
-                const imagePath = path.join(__dirname, '../public', deletedPet.petPicture);
-                await fsx.unlink(imagePath);
-            }
             req.flash("success", "Xóa thú cưng thành công");
             res.redirect('/health');
         } else {
@@ -351,6 +391,7 @@ module.exports = {
     getHealthPage,
     getPetProfileByPetId,
     addPet,
+    updatePetProfile,
     removePet,
     addSchedule,
     addNotification,

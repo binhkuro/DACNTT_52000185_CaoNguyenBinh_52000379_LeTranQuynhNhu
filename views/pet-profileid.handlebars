@@ -1,0 +1,69 @@
+<link rel="stylesheet" href="/css/pet-profileid.css">
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Thông tin chi tiết của thú cưng</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-paw"></i>
+            Chi tiết thú cưng
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Phần hình ảnh thú cưng -->
+                <div class="col-md-4 text-center">
+                    <div class="image-container">
+                        <img src="/uploads/pets/{{petUsername}}/{{petPicture}}" alt="Avatar" class="img-fluid rounded-circle" id="petPicture">
+                    </div>
+                </div>
+                <!-- Phần thông tin chi tiết thú cưng -->
+                <div class="col-md-8">
+                    <form id="petProfileForm">
+                        <div class="mb-3">
+                            <label for="name">Tên thú cưng:</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{name}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age">Tuổi:</label>
+                            <input type="number" id="age" name="age" class="form-control" value="{{age}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type">Loài:</label>
+                            <select name="type" class="form-select" id="type" disabled>
+                                <option value="{{type}}" selected>{{type}}</option>
+                                <option value="Chó">Chó</option>
+                                <option value="Mèo">Mèo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="species">Loại:</label>
+                            <input type="text" id="species" name="species" class="form-control" value="{{species}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label>Giới tính:</label>
+                            <div class="d-flex">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="male" name="gender" value="Đực" {{#ifEquals gender 'Đực'}}checked{{/ifEquals}} disabled>
+                                    <label class="form-check-label" for="male">Đực</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="female" name="gender" value="Cái" {{#ifEquals gender 'Cái'}}checked{{/ifEquals}} disabled>
+                                    <label class="form-check-label" for="female">Cái</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="color">Màu lông:</label>
+                            <input type="text" id="color" name="color" class="form-control" value="{{color}}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="special">Đặc biệt:</label>
+                            <input type="text" id="special" name="special" class="form-control" value="{{special}}" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/pet-profileid.js"></script>
