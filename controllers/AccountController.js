@@ -20,7 +20,7 @@ async function initData() {
         fullname: "Administrator",
         phoneNumber: "0942563747",
         address: "142, Thống Nhất, khóm 01, phường 05, thành phố Bạc Liêu",
-        profilePicture: "default-avatar.png",
+        profilePicture: "admin.png",
         activateStatus: 1,
         lockedStatus: 0
     });

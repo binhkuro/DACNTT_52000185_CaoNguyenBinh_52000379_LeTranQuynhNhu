@@ -11,52 +11,52 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>Người dùng</th>
+                        <th>ID</th>
+                        <th>Tên</th>
                         <th>Ảnh thú cưng</th>
-                        <th>Loài</th>
-                        <th>Id thú cưng</th>
-                        <th>Tên thú cưng</th>
                         <th>Tuổi</th>
                         <th>Loại</th>
+                        <th>Loài</th>
                         <th>Giới tính</th>
-                        <th>Màu</th>
-                        <th>Đặc biệt</th>
+                        <th>Màu sắc</th>
+                        <th>Đặc điểm đặc biệt</th>
+                        <th>Chủ sở hữu</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Người dùng</th>
+                        <th>ID</th>
+                        <th>Tên</th>
                         <th>Ảnh thú cưng</th>
-                        <th>Loài</th>
-                        <th>Id thú cưng</th>
-                        <th>Tên thú cưng</th>
                         <th>Tuổi</th>
                         <th>Loại</th>
+                        <th>Loài</th>
                         <th>Giới tính</th>
-                        <th>Màu</th>
-                        <th>Đặc biệt</th>
+                        <th>Màu sắc</th>
+                        <th>Đặc điểm đặc biệt</th>
+                        <th>Chủ sở hữu</th>
                         <th>Thao tác</th>
                     </tr>
                 </tfoot>
                 <tbody>
                     {{#each pets}}
                         <tr>
-                            <td>{{username}}</td>
-                            <td><img src="/uploads/pets/{{username}}/{{petPicture}}" class="old avatar-small"></td>
-                            <td>{{#isDogOrCat type}}{{/isDogOrCat}}</td>
                             <td>{{petId}}</td>
                             <td>{{name}}</td>
+                            <td><img src="/uploads/pets/{{username}}/{{petPicture}}" class="old avatar-small"></td>
                             <td>{{age}}</td>
+                            <td>{{type}}</td>
                             <td>{{species}}</td>
-                            <td>{{#isMaleOrFemale gender}}{{/isMaleOrFemale}}</td>
+                            <td>{{gender}}</td>
                             <td>{{color}}</td>
                             <td>{{special}}</td>
+                            <td>{{username}}</td>
                             <td class="button-cell">
                                 <div style="display: flex;">
                                     <button class="btn btn-primary" onclick="sendMail('{{username}}', '{{name}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <a href="/admin:pet-profileid-{{petId}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
-                                    <button class="btn btn-danger deletePetModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deletePetModal" data-pet-id="{{petId}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal" onclick="setPetId('{{petId}}')"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -72,21 +72,17 @@
 <div class="modal fade" id="deletePetModal" tabindex="-1" aria-labelledby="deletePetModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="/delete-pet" method="post">
+            <form id="deletePetForm" action="/delete-pet" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deletePetModalLabel">Xác Nhận Xóa Thú Cưng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Bạn có chắc chắn muốn xóa thú cưng này không?
-                    <div class="form-group" hidden>
-                        <label for="petId">Id thú cưng:</label>
-                        <input type="text" class="form-control" id="petId" name="petId" value="{{petId}}">
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
                 </div>
             </form>
         </div>

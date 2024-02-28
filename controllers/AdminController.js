@@ -147,6 +147,9 @@ async function removeAccount(req, res) {
 async function removePet(req, res) {
     try {
         const petId = req.body.petId;
+        
+        console.log(petId);
+
         const deletedPet = await Pet.findOneAndDelete({ petId: petId });
         if (deletedPet) {
             req.flash("success", "Xóa thú cưng thành công");
@@ -156,6 +159,7 @@ async function removePet(req, res) {
             res.redirect('/pet-management');
         }
     } catch (error) {
+        console.log(error)
         req.flash("error", "Xóa nhắc nhở thất bại");
         res.redirect('/pet-management');
     }

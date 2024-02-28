@@ -1,0 +1,37 @@
+.suggestions {
+    position: absolute;
+    background: #ffffff;
+    width: 13%;
+    right: 134px;
+    top: 50px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    border-radius: 0 0 5px 5px;
+    overflow: hidden;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.suggestions div {
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.suggestions div:hover {
+    background-color: #f6f6f6;
+}
+
+@media (max-width: 768px) {
+    .suggestions {
+        width: calc(100% - 20px);
+        margin-left: 10px;
+        border-radius: 0 0 10px 10px;
+    }
+}
+
+.suggestions div {
+    font-size: 16px;
+    color: #333;
+}

@@ -24,14 +24,22 @@ function showCustomToast(message, title) {
     }, 5000);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var deleteButtons = document.querySelectorAll('.deletePetModalToggle');
-    var petIdInput = document.getElementById('petId');
+function setPetId(petId) {
+    document.getElementById('deletePetForm').setAttribute('data-pet-id', petId);
+}
 
-    deleteButtons.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var petId = btn.getAttribute('data-pet-id');
-            petIdInput.value = petId;
-        });
-    });
+document.getElementById('confirmDelete').addEventListener('click', function() {
+    const petId = document.getElementById('deletePetForm').getAttribute('data-pet-id');
+    
+    fetch(`/delete-pet`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ petId: petId }),
+    })
+    .then(() => {
+        window.location.reload(); 
+        $('#deletePetModal').modal('hide');
+    })
 });
