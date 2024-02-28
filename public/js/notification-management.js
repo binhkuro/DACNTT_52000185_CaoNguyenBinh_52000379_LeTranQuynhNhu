@@ -36,8 +36,14 @@ function showCustomToast(message, title) {
     }, 5000);
 }
 
-$(document).ready(function() {
-    $('#deleteNotificationModalToggle').on('click', function() {
-        $('#deleteNotificationModal').modal('show');
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.deleteNotificationModalToggle');
+    var notificationIdInput = document.getElementById('notificationId');
+
+    deleteButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var notificationId = btn.getAttribute('data-notification-id');
+            notificationIdInput.value = notificationId;
+        });
     });
 });

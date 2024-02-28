@@ -35,3 +35,15 @@ function showCustomToast(message, title) {
         }, { once: true });
     }, 5000);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.deleteAccountModalToggle');
+    var accountIdInput = document.getElementById('username');
+
+    deleteButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var accountId = btn.getAttribute('data-account-id');
+            accountIdInput.value = accountId;
+        });
+    });
+});

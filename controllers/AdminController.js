@@ -110,6 +110,57 @@ async function getScheduleManagementPage(req, res) {
     });
 }
 
+async function removeNotification(req, res) {
+    try {
+        const notificationId = req.body.notificationId;
+        const deletedNotification = await Notification.findOneAndDelete({ notificationId: notificationId });
+        if (deletedNotification) {
+            req.flash("success", "Xóa nhắc nhở thành công");
+            res.redirect('/notification-management');
+        } else {
+            req.flash("error", "Không thể xóa nhắc nhở. Nhắc nhở không tồn tại.");
+            res.redirect('/notification-management');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa nhắc nhở thất bại");
+        res.redirect('/notification-management');
+    }
+}
+
+async function removeAccount(req, res) {
+    try {
+        const username = req.body.username;
+        const deletedAccount = await Account.findOneAndDelete({ username: username });
+        if (deletedAccount) {
+            req.flash("success", "Xóa người dùng thành công");
+            res.redirect('/account-management');
+        } else {
+            req.flash("error", "Không thể xóa người dùng. Người dùng không tồn tại.");
+            res.redirect('/account-management');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa người dùng thất bại");
+        res.redirect('/account-management');
+    }
+}
+
+async function removePet(req, res) {
+    try {
+        const petId = req.body.petId;
+        const deletedPet = await Pet.findOneAndDelete({ petId: petId });
+        if (deletedPet) {
+            req.flash("success", "Xóa thú cưng thành công");
+            res.redirect('/pet-management');
+        } else {
+            req.flash("error", "Không thể xóa thú cưng. Thú cưng không tồn tại.");
+            res.redirect('/pet-management');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa nhắc nhở thất bại");
+        res.redirect('/pet-management');
+    }
+}
+
 function lockUser(req, res) {
     Account.findOne({
             username: req.body.username,
@@ -140,52 +191,52 @@ function lockUser(req, res) {
 
 async function getProfileByUsername(req, res) {
     Account.findOne({
-        username: req.params.username,
-    })
-    .then(account => {
-        let options = {
-            layout: 'admin',
-            title: 'Trang thông tin người dùng',
-            username: req.session.username,
-            fullname: req.session.fullname,
-            profilePicture: req.session.profilePicture,
-            email: account.email,
-            username: account.username,
-            fullname: account.fullname,
-            phoneNumber: account.phoneNumber,
-            address: account.address,
-            profilePicture: account.profilePicture,
-        };
+            username: req.params.username,
+        })
+        .then(account => {
+            let options = {
+                layout: 'admin',
+                title: 'Trang thông tin người dùng',
+                username: req.session.username,
+                fullname: req.session.fullname,
+                profilePicture: req.session.profilePicture,
+                email: account.email,
+                username: account.username,
+                fullname: account.fullname,
+                phoneNumber: account.phoneNumber,
+                address: account.address,
+                profilePicture: account.profilePicture,
+            };
 
-        res.render("profileid", options);
-    })
+            res.render("profileid", options);
+        })
 }
 
 async function getPetProfileByPetId(req, res) {
     Pet.findOne({
-        petId: req.params.petId,
-    })
-    .then(pet => {
-        let options = {
-            layout: 'admin',
-            title: 'Trang thông tin thú cưng',
-            username: req.session.username,
-            fullname: req.session.fullname,
-            profilePicture: req.session.profilePicture,
-            petId: pet.petId,
-            name: pet.name,
-            petPicture: pet.petPicture,
-            age: pet.age,
-            type: pet.type,
-            species: pet.species,
-            gender: pet.gender,
-            color: pet.color,
-            special: pet.special,
-            petUsername: pet.username,
-        };
-        
-        res.render("pet-profileid", options)
-    })
+            petId: req.params.petId,
+        })
+        .then(pet => {
+            let options = {
+                layout: 'admin',
+                title: 'Trang thông tin thú cưng',
+                username: req.session.username,
+                fullname: req.session.fullname,
+                profilePicture: req.session.profilePicture,
+                petId: pet.petId,
+                name: pet.name,
+                petPicture: pet.petPicture,
+                age: pet.age,
+                type: pet.type,
+                species: pet.species,
+                gender: pet.gender,
+                color: pet.color,
+                special: pet.special,
+                petUsername: pet.username,
+            };
+
+            res.render("pet-profileid", options)
+        })
 }
 
 async function sendMail(req, res) {
@@ -207,4 +258,7 @@ module.exports = {
     getPetManagementPage,
     getNotificationManagementPage,
     sendMail,
+    removeNotification,
+    removeAccount,
+    removePet,
 };

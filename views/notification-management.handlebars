@@ -38,7 +38,7 @@
                                 <div style="display: flex;">
                                     <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
-                                    <button class="btn btn-danger" type="button" id="deleteNotificationModalToggle"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger deleteNotificationModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deleteNotificationModal" data-notification-id="{{notificationId}}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -54,12 +54,10 @@
 <div class="modal fade" id="deleteNotificationModal" tabindex="-1" aria-labelledby="deleteNotificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="/deleteNotification" method="post">
+            <form action="/delete-notification" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteNotificationModalLabel">Xác Nhận Xóa Thông Báo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Bạn có chắc chắn muốn xóa thông báo này không?
@@ -69,8 +67,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger" value="Xóa nhắc nhở">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
                 </div>
             </form>
         </div>

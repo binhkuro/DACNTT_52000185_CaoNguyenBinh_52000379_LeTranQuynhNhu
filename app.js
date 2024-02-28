@@ -461,6 +461,18 @@ app.get("/notification-management", (req, res) => {
     adminController.getNotificationManagementPage(req, res);
 })
 
+app.post("/delete-notification", (req, res) => {
+    adminController.removeNotification(req, res);
+})
+
+app.post("/delete-account", (req, res) => {
+    adminController.removeAccount(req, res);
+})
+
+app.post("/delete-pet", (req, res) => {
+    adminController.removePet(req, res);
+})
+
 app.post("/send-mail", (req, res) => {
     adminController.sendMail(req, res);
     res.end();

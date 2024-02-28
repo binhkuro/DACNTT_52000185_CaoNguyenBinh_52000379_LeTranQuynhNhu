@@ -23,3 +23,15 @@ function showCustomToast(message, title) {
         }, { once: true });
     }, 5000);
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var deleteButtons = document.querySelectorAll('.deletePetModalToggle');
+    var petIdInput = document.getElementById('petId');
+
+    deleteButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var petId = btn.getAttribute('data-pet-id');
+            petIdInput.value = petId;
+        });
+    });
+});
