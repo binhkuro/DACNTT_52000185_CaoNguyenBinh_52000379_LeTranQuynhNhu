@@ -78,6 +78,10 @@ app.engine('handlebars', hbs.engine({
                 return '<i class="fa-solid fa-venus" style="color: magenta"></i>';
         },
 
+        json: function(context) {
+            return JSON.stringify(context);
+        },
+
         eq: (value1, value2, options) => value1 === value2,
         inc: (value) => parseInt(value) + 1,
         ifEquals: (value1, value2, options) => (value1 === value2) ? options.fn(this) : options.inverse(this),

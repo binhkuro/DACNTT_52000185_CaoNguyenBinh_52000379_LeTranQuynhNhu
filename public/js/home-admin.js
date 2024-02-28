@@ -1,33 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var petDataPerUser = {
-        "Người Dùng 1": 2,
-        "Người Dùng 2": 3,
-        "Người Dùng 3": 1
-    };
-
-    var dogCatComparisonData = {
-        "Chó": dogCount,
-        "Mèo": catCount
-    };
-
-    // Biểu đồ số lượng thú cưng theo người dùng
+    // Biểu đồ số lượng người dùng theo thú cưng
     var ctx1 = document.getElementById('myChart1').getContext('2d');
     var myChart1 = new Chart(ctx1, {
         type: 'bar',
         data: {
-            labels: Object.keys(petDataPerUser),
+            labels: Object.keys(userPetData),
             datasets: [{
-                label: 'Số lượng thú cưng',
-                data: Object.values(petDataPerUser),
+                label: 'Số lượng người dùng',
+                data: Object.values(userPetData),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
                 ],
                 borderWidth: 1
             }]
@@ -37,9 +28,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: {
                     beginAtZero: true
                 }
+            },
+            legend: {
+                display: false
             }
         }
     });
+
+    var dogCatComparisonData = {
+        "Chó": dogCount,
+        "Mèo": catCount
+    };
 
     // Biểu đồ so sánh số lượng chó, mèo
     var ctx2 = document.getElementById('myChart2').getContext('2d');

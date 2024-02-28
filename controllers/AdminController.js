@@ -4,6 +4,34 @@ let Notification = require("../models/notification");
 let Schedule = require("../models/schedule");
 let mailController = require('./MailController')
 
+async function getUserPetData() {
+    let userPetData = {
+        "Không Thú Cưng": 0,
+        "Chỉ Nuôi Chó": 0,
+        "Chỉ Nuôi Mèo": 0,
+        "Nuôi Cả Hai": 0
+    };
+
+    let accounts = await Account.find();
+    for (let account of accounts) {
+        let pets = await Pet.find({ username: account.username });
+        if (pets.length === 0) {
+            userPetData["Không Thú Cưng"]++;
+        } else {
+            let hasDog = pets.some(pet => pet.type === "Chó");
+            let hasCat = pets.some(pet => pet.type === "Mèo");
+            if (hasDog && hasCat) {
+                userPetData["Nuôi Cả Hai"]++;
+            } else if (hasDog) {
+                userPetData["Chỉ Nuôi Chó"]++;
+            } else if (hasCat) {
+                userPetData["Chỉ Nuôi Mèo"]++;
+            }
+        }
+    }
+    return userPetData;
+}
+
 async function getAdminHomePage(req, res) {
     const accountCount = await Account.countDocuments().exec();
     const petCount = await Pet.countDocuments().exec();
@@ -11,6 +39,8 @@ async function getAdminHomePage(req, res) {
     const catCount = await Pet.countDocuments({ type: 'Mèo' }).exec();
     const notificationCount = await Notification.countDocuments().exec();
     const scheduleCount = await Schedule.countDocuments().exec();
+
+    const userPetData = await getUserPetData();
 
     res.render('home-admin', {
         title: 'Trang chủ quản lý',
@@ -23,6 +53,7 @@ async function getAdminHomePage(req, res) {
         catCount: catCount,
         notificationCount: notificationCount,
         scheduleCount: scheduleCount,
+        userPetData: userPetData,
         layout: 'admin',
     });
 }
