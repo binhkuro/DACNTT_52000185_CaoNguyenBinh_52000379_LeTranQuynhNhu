@@ -19,3 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 });
+
+$(document).ready(function() {
+    $('#updatePetProfileModalToggle').on('click', function() {
+        $('#updatePetProfileModal').modal('show');
+    });
+});

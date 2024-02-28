@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #cddbfd;
+    background-color: #f0b70e;
     margin: 0;
     padding: 0;
 }
@@ -9,7 +9,7 @@ body {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    background-color: #9b8cf0;
+    background-color: #d8aa18;
 }
 
 .image-container {
