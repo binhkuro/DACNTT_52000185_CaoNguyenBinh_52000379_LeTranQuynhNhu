@@ -105,7 +105,7 @@ async function getScheduleManagementPage(req, res) {
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
-        pets: pets,
+        schedules: schedules,
         layout: 'admin',
     });
 }
@@ -162,6 +162,23 @@ async function removePet(req, res) {
         console.log(error)
         req.flash("error", "Xóa nhắc nhở thất bại");
         res.redirect('/pet-management');
+    }
+}
+
+async function removeSchedule(req, res) {
+    try {
+        const scheduleId = req.body.scheduleId;
+        const deletedSchedule = await Schedule.findOneAndDelete({ scheduleId: scheduleId });
+        if (deletedSchedule) {
+            req.flash("success", "Xóa lịch trình y tế thành công");
+            res.redirect('/schedule-management');
+        } else {
+            req.flash("error", "Không thể xóa lịch trình y tế. Lịch trình y tế không tồn tại.");
+            res.redirect('/schedule-management');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa lịch trình y tế thất bại");
+        res.redirect('/schedule-management');
     }
 }
 
@@ -253,6 +270,17 @@ async function sendMail(req, res) {
     mailController.sendMail(mail, subject, content);
 }
 
+async function sendScheduleMail(req, res) {
+    let username = req.body.username;
+    const account = await Account.findOne({ username: username }).exec();
+    let mail = account.email;
+    let time = req.body.time;
+    let activity = req.body.activity;
+    let subject = `Lịch trình y tế '${activity}' ngày ${time} của bạn`;
+    let content = `<a href=${process.env.APP_URL}/login> Vào ngày ${time} bạn có hoạt động '${activity}'!</a>`;
+    mailController.sendMail(mail, subject, content);
+}
+
 module.exports = {
     getAdminHomePage,
     lockUser,
@@ -260,9 +288,12 @@ module.exports = {
     getPetProfileByPetId,
     getAccountManagementPage,
     getPetManagementPage,
+    getScheduleManagementPage,
     getNotificationManagementPage,
     sendMail,
+    sendScheduleMail,
     removeNotification,
     removeAccount,
     removePet,
+    removeSchedule,
 };

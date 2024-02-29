@@ -23,14 +23,45 @@ async function getMedicalPage(req, res) {
 }
 
 async function getSchedulePage(req, res) {
-    const schedules = await Schedule.find({ username: req.session.username }).lean(); 
+    const { page = 1, limit = 2, search } = req.query;
+
+    let query = { username: req.session.username };
+    if (search) {
+        query.activity = { $regex: search, $options: 'i' };
+    }
+
+    const schedules = await Schedule.find(query)
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .lean();
+
+    const count = await Schedule.countDocuments(query);
+    const totalPages = Math.ceil(count / limit);
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+    }
+    
+    const currentPage = parseInt(page);
+    const firstPage = currentPage > 2 ? 1 : null;
+    const previousPage = currentPage > 1 ? currentPage - 1 : null;
+    const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+    const finalPage = (totalPages > 2 && currentPage < (totalPages - 1)) ? totalPages : null;
 
     res.render('schedule', {
         title: 'Ghi lịch trình y tế',
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
-        schedules: schedules
+        schedules: schedules,
+        totalPages,
+        firstPage,
+        currentPage,
+        pages,
+        previousPage,
+        finalPage,
+        nextPage,
+        search
     });
 }
 
@@ -245,13 +276,20 @@ async function addSchedule(req, res) {
         return res.redirect("/schedule");
     }
 
+    let currentDate = new Date();
+    let generateId = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}`;
+    let createdAndUpdatedTime = `${currentDate.getDate().toString().padStart(2, '0')}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getFullYear()} ${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
+
     let schedule = new Schedule({
+        scheduleId: generateId,
         time: formatDate(req.body.time),
         activity: req.body.activity,
         purpose: req.body.purpose,
         contact: req.body.contact,
         note: req.body.note,
         result: req.body.result,
+        createdTime: createdAndUpdatedTime,
+        updatedTime: createdAndUpdatedTime,
         username: req.session.username
     });
 
@@ -262,6 +300,64 @@ async function addSchedule(req, res) {
     } catch (error) {
         req.flash("error", "Không thể thêm mới lịch trình");
         res.redirect("/schedule");
+    }
+}
+
+async function updateSchedule(req, res) {
+    const { scheduleId, time, activity, purpose, contact, note, result } = req.body;
+    
+    if (!scheduleId || !time || !activity || !purpose || !contact || !note || !result) {
+        req.flash("error", "Vui lòng không bỏ trống thông tin");
+        return res.redirect("/schedule");
+    }
+
+    let updatedTime = `${new Date().getDate().toString().padStart(2, '0')}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${new Date().getFullYear()} ${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}`;
+
+    try {
+        const updatedSchedule = await Schedule.findOneAndUpdate(
+            { scheduleId: scheduleId },
+            {
+                $set: {
+                    time: formatDate(time),
+                    activity: activity,
+                    purpose: purpose,
+                    contact: contact,
+                    note: note,
+                    result: result,
+                    updatedTime: updatedTime
+                }
+            },
+            { new: true } 
+        );
+
+        if (updatedSchedule) {
+            req.flash("success", "Cập nhật lịch trình y tế thành công");
+            res.redirect("/schedule");
+        } else {
+            req.flash("error", "Lịch trình y tế không tồn tại");
+            res.redirect("/schedule");
+        }
+    } catch (error) {
+        console.error("Error updating schedule:", error);
+        req.flash("error", "Không thể cập nhật lịch trình y tế");
+        res.redirect("/schedule");
+    }
+}
+
+async function removeSchedule(req, res) {
+    try {
+        const scheduleId = req.body.scheduleId;
+        const deletedSchedule = await Schedule.findOneAndDelete({ scheduleId: scheduleId });
+        if (deletedSchedule) {
+            req.flash("success", "Xóa lịch trình y tế thành công");
+            res.redirect('/schedule');
+        } else {
+            req.flash("error", "Không thể xóa lịch trình y tế. Lịch trình y tế không tồn tại.");
+            res.redirect('/schedule');
+        }
+    } catch (error) {
+        req.flash("error", "Xóa lịch trình y tế thất bại");
+        res.redirect('/schedule');
     }
 }
 
@@ -394,6 +490,8 @@ module.exports = {
     updatePetProfile,
     removePet,
     addSchedule,
+    updateSchedule,
+    removeSchedule,
     addNotification,
     editNotification,
     removeNotification,

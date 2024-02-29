@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="/css/schedule-management.css">
+
+<div class="container-fluid px-4">
+    <h4 class="mt-4">Quản lý lịch trình y tế</h4>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách lịch trình y tế
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Thời gian</th>
+                        <th>Thông tin</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Người dùng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Thời gian</th>
+                        <th>Thông tin</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Người dùng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#each schedules}}
+                        <tr>
+                            <td>{{scheduleId}}</td>
+                            <td>{{time}}</td>
+                            <td>
+                                Hoạt động: {{activity}}<br>
+                                Mục đích: {{purpose}}<br>
+                                Liên hệ: {{contact}}<br>
+                                Ghi chú: {{note}}<br>
+                                <strong>Kết quả:</strong> {{result}}
+                            </td>
+                            <td>{{createdTime}}</td>
+                            <td>{{updatedTime}}</td>
+                            <td>{{username}}</td>
+                            <td class="button-cell" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                                    <button class="btn btn-primary" onclick="sendScheduleMail('{{username}}', '{{time}}', '{{activity}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
+                                    <button class="btn btn-danger deleteScheduleModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deleteScheduleModal" data-schedule-id="{{scheduleId}}"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Xác Nhận Xóa Lịch Trình Y Tế -->
+<div class="modal fade" id="deleteScheduleModal" tabindex="-1" aria-labelledby="deleteScheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="/delete-schedule-management" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteScheduleModalLabel">Xác Nhận Xóa Lịch Trình Y Tế</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa lịch trình y tế này không?
+                    <div class="form-group" hidden>
+                        <label for="scheduleId">Id lịch trình y tế:</label>
+                        <input type="text" class="form-control" id="scheduleId" name="scheduleId" value="{{scheduleId}}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/schedule-management.js"></script>

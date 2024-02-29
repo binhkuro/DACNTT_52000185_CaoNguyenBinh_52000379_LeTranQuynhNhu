@@ -399,6 +399,14 @@ app.post("/schedule", (req, res) => {
     petController.addSchedule(req, res);
 })
 
+app.post("/update-schedule", (req, res) => {
+    petController.updateSchedule(req, res);
+})
+
+app.post("/delete-schedule", (req, res) => {
+    petController.removeSchedule(req, res);
+})
+
 app.post("/reminder", (req, res) => {
     petController.addNotification(req, res);
 })
@@ -461,6 +469,13 @@ app.get("/notification-management", (req, res) => {
     adminController.getNotificationManagementPage(req, res);
 })
 
+app.get("/schedule-management", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getScheduleManagementPage(req, res);
+})
+
 app.post("/delete-notification", (req, res) => {
     adminController.removeNotification(req, res);
 })
@@ -473,8 +488,17 @@ app.post("/delete-pet", (req, res) => {
     adminController.removePet(req, res);
 })
 
+app.post("/delete-schedule-management", (req, res) => {
+    adminController.removeSchedule(req, res);
+})
+
 app.post("/send-mail", (req, res) => {
     adminController.sendMail(req, res);
+    res.end();
+})
+
+app.post("/send-schedule-mail", (req, res) => {
+    adminController.sendScheduleMail(req, res);
     res.end();
 })
 

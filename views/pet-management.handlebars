@@ -52,8 +52,8 @@
                             <td>{{color}}</td>
                             <td>{{special}}</td>
                             <td>{{username}}</td>
-                            <td class="button-cell">
-                                <div style="display: flex;">
+                            <td class="button-cell" style="text-align: center; vertical-align: middle;">
+                                <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                     <button class="btn btn-primary" onclick="sendMail('{{username}}', '{{name}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <a href="/admin:pet-profileid-{{petId}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePetModal" onclick="setPetId('{{petId}}')"><i class="fa fa-trash"></i></button>

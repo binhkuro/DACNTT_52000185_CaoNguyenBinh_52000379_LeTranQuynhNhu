@@ -2,6 +2,10 @@ let mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 let scheduleSchema = new Schema({
+    scheduleId: {
+        type: String,
+        required: true
+    },
     time: {
         type: String,
         required: true
@@ -14,6 +18,8 @@ let scheduleSchema = new Schema({
     contact: String,
     note: String,
     result: String,
+    createdTime: String,
+    updatedTime: String,
     username: {
         type: String,
         required: true

@@ -12,33 +12,71 @@
     <div class="content-container">
         <div class="table-container">
             <div class="table-header">
-                <h2>Lịch Trình Y Tế</h2>
+                <h2 class="mr-5">Lịch Trình Y Tế</h2>
                 <div class="add-button-container">
                     <button class="add-button">
                         <img src="img/add.png" alt="Add Icon" />
                         Thêm lịch trình y tế
                     </button>
                 </div>
+                <form action="/schedule" method="get" class="form-inline">
+                    <div class="form-group mr-2">
+                        <input type="text" name="search" class="form-control" placeholder="Hoạt động..." value="{{search}}">
+                    </div>
+                    <button type="submit" class="btn btn-warning "><i class="fas fa-search"></i></button>
+                </form>
             </div>
-            <div class="table">
-                <div>STT</div>
-                <div>Thời gian</div>
-                <div>Hoạt động</div>
-                <div>Mục đích</div>
-                <div>Liên hệ</div>
-                <div>Ghi chú</div>
-                <div>Kết quả</div>
-            </div>
-            <div class="data">
-                {{#each schedules}}
-                    <div>{{inc @index}}</div>
-                    <div>{{time}}</div>
-                    <div>{{activity}}</div>
-                    <div>{{purpose}}</div>
-                    <div>{{contact}}</div>
-                    <div>{{note}}</div>
-                    <div>{{result}}</div>
-                {{/each}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Thông tin</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each schedules}}
+                        <tr>
+                            <td>{{time}}</td>
+                            <td>
+                                Hoạt động: {{activity}}<br>
+                                Mục đích: {{purpose}}<br>
+                                Liên hệ: {{contact}}<br>
+                                Ghi chú: {{note}}<br>
+                                <strong>Kết quả:</strong> {{result}}
+                            </td>
+                            <td>{{createdTime}}</td>
+                            <td>{{updatedTime}}</td>
+                            <td>
+                                <button class="btn btn-outline-warning update-button" type="button" data-schedule-id="{{scheduleId}}" data-schedule-activity="{{activity}}" data-schedule-purpose="{{purpose}}" data-schedule-time="{{time}}" data-schedule-contact="{{contact}}" data-schedule-note="{{note}}" data-schedule-result="{{result}}"><i class="fa-solid fa-wrench"></i></button>
+                                <button class="btn btn-outline-danger delete-button" type="button" data-schedule-id="{{scheduleId}}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div>
+                {{#if totalPages}}
+                    <ul class="pagination justify-content-center">
+                        {{#if firstPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/schedule?page={{firstPage}}&limit=2&search={{search}}">Trang đầu</a></li>
+                        {{/if}}
+                        {{#if previousPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/schedule?page={{previousPage}}&limit=2&search={{search}}">Trước</a></li>
+                        {{/if}}
+                        {{#each pages}}
+                            <li class="page-item {{#ifEquals ../currentPage this}}active{{/ifEquals}}"><a class="page-link page-link-yellow" href="/schedule?page={{this}}&limit=2&search={{../search}}">{{this}}</a></li>
+                        {{/each}}
+                        {{#if nextPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/schedule?page={{nextPage}}&limit=2&search={{search}}">Tiếp theo</a></li>
+                        {{/if}}
+                        {{#if finalPage}}
+                            <li class="page-item"><a class="page-link page-link-yellow" href="/schedule?page={{finalPage}}&limit=2&search={{search}}">Trang cuối</a></li>
+                        {{/if}}
+                    </ul>
+                {{/if}}
             </div>
         </div>
     </div>
@@ -78,6 +116,78 @@
         </form>
     </div>
 </div>
+
+<!-- Modal chỉnh sửa lịch trình y tế -->
+<div id="updateModal" class="modal">
+    <div class="modal-content">
+        <form id="updateScheduleForm" action="/update-schedule" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateScheduleModalLabel">Cập nhật lịch trình y tế</h5>
+                <span class="close2">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-6" hidden>
+                        <label for="scheduleId">Id lịch trình y tế:</label>
+                        <input type="text" class="form-control" id="scheduleId" name="scheduleId" value="{{scheduleId}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newActivity">Cập nhật hoạt động:</label>
+                        <input type="text" class="form-control" id="newActivity" name="activity" placeholder="VD: Sổ giun" value="{{activity}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newTime">Cập nhật thời gian của hoạt động:</label>
+                        <input type="date" class="form-control" id="newTime" name="time" placeholder="VD: 16-12-2023" value="{{time}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newPurpose">Cập nhật mục đích:</label>
+                        <input type="text" class="form-control" id="newPurpose" name="purpose" placeholder="VD: Đề phòng giun xán" value="{{purpose}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newContact">Cập nhật liên hệ:</label>
+                        <input type="text" class="form-control" id="newContact" name="contact" placeholder="VD: Bệnh viện thú y trung ương" value="{{contact}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newNote">Cập nhật ghi chú:</label>
+                        <input type="text" class="form-control" id="newNote" name="note" placeholder="VD: 3 tháng nên sổ giun 1 lần" value="{{note}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="newResult">Cập nhật kết quả:</label>
+                        <input type="text" class="form-control" id="newResult" name="result" placeholder="VD: Sổ giun thành công" value="{{result}}">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal chỉnh sửa lịch trình y tế -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <form id="updateScheduleForm" action="/delete-schedule" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateScheduleModalLabel">Xóa lịch trình y tế</h5>
+                <span class="close3">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" hidden>
+                    <label for="scheduleId">Id lịch trình y tế:</label>
+                    <input type="text" class="form-control" id="scheduleId" name="scheduleId" value="{{scheduleId}}">
+                </div>
+                <div class="form-group">
+                    <p>Bạn có muốn xóa lịch trình này không?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning">Xóa</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="/js/schedule.js"></script>
 <div class="background-image-container">
     <img src="/img/background.png" alt="Image" class="background-image">
