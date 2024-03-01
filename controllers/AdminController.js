@@ -174,12 +174,43 @@ async function getPopularPetBreed() {
     return result.length > 0 ? result[0]._id : null;
 }
 
+async function getServiceUsage() {
+    const serviceUsage = await Schedule.aggregate([{
+        $group: {
+            _id: "$activity",
+            count: { $sum: 1 }
+        }
+    }]);
+
+    let serviceCount = {
+        "Thăm khám sức khỏe": 0,
+        "Dịch vụ làm đẹp": 0,
+        "Khám sức khỏe định kỳ": 0
+    };
+
+    serviceUsage.forEach(item => {
+        if (serviceCount.hasOwnProperty(item._id)) {
+            serviceCount[item._id] = item.count;
+        }
+    });
+
+    return serviceCount;
+}
+
+
 async function getReportsAndAnalyticsPage(req, res) {
     const averagePetAge = await getAveragePetAge();
     const avgPetsPerOwner = await calculateAveragePetsPerOwner();
     const popularPetType = await getPopularPetType();
     const popularPetColor = await getPopularPetColor();
     const popularPetBreed = await getPopularPetBreed();
+    const serviceUsage = await getServiceUsage();
+
+    const formattedServiceUsage = {
+        VeterinaryVisit: serviceUsage["Thăm khám sức khỏe"] || 0,
+        BeautyService: serviceUsage["Dịch vụ làm đẹp"] || 0,
+        HealthCheck: serviceUsage["Khám sức khỏe định kỳ"] || 0,
+    };
 
     res.render('reports-and-analytics', {
         title: 'Báo cáo và phân tích',
@@ -191,6 +222,7 @@ async function getReportsAndAnalyticsPage(req, res) {
         popularPetType,
         popularPetColor,
         popularPetBreed,
+        serviceUsage: formattedServiceUsage,
         layout: 'admin',
     });
 }
