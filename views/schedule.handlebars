@@ -91,8 +91,14 @@
                 <input type="date" class="form-control" id="time" name="time" placeholder="VD: dd/mm/yyyy">
             </div>
             <div class="form-field">
-                <label for="activity">Nhập hoạt động:</label>
-                <input type="text" class="form-control" id="activity" name="activity" placeholder="VD: Tiêm phòng, Sổ giun, Khám sức khỏe định kỳ,..." value="{{activity}}">
+                <label for="activity">Chọn hoạt động:</label>
+                <select class="form-control" id="activity" name="activity">
+                    <option value="">--- Chọn hoạt động ---</option>
+                    <option value="Kiểm tra sức khỏe">Kiểm tra sức khỏe</option>
+                    <option value="Thăm khám sức khỏe">Thăm khám sức khỏe</option>
+                    <option value="Dịch vụ làm đẹp">Dịch vụ làm đẹp</option>
+                    <option value="Khám sức khỏe định kỳ">Khám sức khỏe định kỳ</option>
+                </select>
             </div>
             <div class="form-field">
                 <label for="purpose">Nhập mục đích:</label>
@@ -133,7 +139,13 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="newActivity">Cập nhật hoạt động:</label>
-                        <input type="text" class="form-control" id="newActivity" name="activity" placeholder="VD: Sổ giun" value="{{activity}}">
+                        <select class="form-control" id="newActivity" name="activity">
+                            <option value="">--- Chọn hoạt động ---</option>
+                            <option value="Kiểm tra sức khỏe" {{#ifEquals activity 'Kiểm tra sức khỏe'}}selected{{/ifEquals}}>Kiểm tra sức khỏe</option>
+                            <option value="Thăm khám sức khỏe" {{#ifEquals activity 'Thăm khám sức khỏe'}}selected{{/ifEquals}}>Thăm khám sức khỏe</option>
+                            <option value="Dịch vụ làm đẹp" {{#ifEquals activity 'Dịch vụ làm đẹp'}}selected{{/ifEquals}}>Dịch vụ làm đẹp</option>
+                            <option value="Khám sức khỏe định kỳ" {{#ifEquals activity 'Khám sức khỏe định kỳ'}}selected{{/ifEquals}}>Khám sức khỏe định kỳ</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="newTime">Cập nhật thời gian của hoạt động:</label>
