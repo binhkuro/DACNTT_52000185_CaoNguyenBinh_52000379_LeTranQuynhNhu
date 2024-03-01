@@ -1,4 +1,5 @@
 let Account = require("../models/account");
+let Notification = require("../models/notification");
 let mailController = require('./MailController')
 let multiparty = require('multiparty') // upload file
 let fsx = require('fs-extra'); // upload file
@@ -58,12 +59,30 @@ async function initData() {
     await account2.save()
 }
 
-function getHomePage(req, res) {
+async function getHomePage(req, res) {
+    const currentDate = new Date();
+    let today = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+
+    let notifications = await Notification.find({
+        username: req.session.username,
+        date: { $gte: today }
+    }).sort({ date: 1 }).lean().exec();
+    
+    console.log(notifications);
+    
+    let latestNotification = notifications.length > 0 ? notifications[0] : null;
+    let upcomingNotification = notifications.find(n => n.date > today) || null;
+    let todayNotification = notifications.filter(n => n.date === today);
+
     res.render('index', {
         title: 'Trang Chủ',
         username: req.session.username,
         fullname: req.session.fullname,
         profilePicture: req.session.profilePicture,
+        notifications: notifications,
+        latestNotification,
+        upcomingNotification,
+        todayNotification
     });
 }
 

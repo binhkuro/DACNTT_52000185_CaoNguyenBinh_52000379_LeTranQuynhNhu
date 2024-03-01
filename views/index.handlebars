@@ -27,12 +27,49 @@
             <div class="notification-header">
                 <h2>Thông Báo</h2>
             </div>
-            <div class="notification">
-                <div>STT</div>
-                <div class="text">Nội dung</div>
-            </div>
-            <div class="data">
-                <!-- Dữ liệu sẽ được thêm vào đây -->
+            <div class="notification-content">
+                <div class="row">
+                    <div class="col">
+                        <h2>Nhắc nhở gần đây:</h2>
+                        {{#if latestNotification}}
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">Date: {{latestNotification.date}}</p>
+                                <p class="card-text">Event: {{latestNotification.event}}</p>
+                            </div>
+                        </div>
+                        {{else}}
+                        <p>Không có nhắc nhở gần đây.</p>
+                        {{/if}}
+                    </div>
+                    <div class="col">
+                        <h2>Nhắc nhở sắp tới:</h2>
+                        {{#if upcomingNotification}}
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">Date: {{upcomingNotification.date}}</p>
+                                <p class="card-text">Event: {{upcomingNotification.event}}</p>
+                            </div>
+                        </div>
+                        {{else}}
+                        <p>Không có nhắc nhở sắp tới.</p>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h2>Nhắc nhở hôm nay:</h2>
+                        {{#each todayNotification}}
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">Nhắc nhở {{inc @index}}:</p>
+                                <p class="card-text">Ngày: {{date}}</p>
+                                <p class="card-text">Sự kiện: {{event}}</p>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
