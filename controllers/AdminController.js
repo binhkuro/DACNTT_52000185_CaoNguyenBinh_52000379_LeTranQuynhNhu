@@ -110,6 +110,91 @@ async function getScheduleManagementPage(req, res) {
     });
 }
 
+async function getAveragePetAge() {
+    const avgAges = await Pet.aggregate([{
+        $group: {
+            _id: "$type",
+            averageAge: { $avg: "$age" }
+        }
+    }]);
+
+    let averageAgeByType = {
+        "Chó": null,
+        "Mèo": null
+    };
+
+    avgAges.forEach(age => {
+        if (age._id === "Chó") {
+            averageAgeByType["Chó"] = age.averageAge;
+        } else if (age._id === "Mèo") {
+            averageAgeByType["Mèo"] = age.averageAge;
+        }
+    });
+
+    return averageAgeByType;
+}
+
+async function calculateAveragePetsPerOwner() {
+    const aggregate = await Pet.aggregate([
+        { $group: { _id: "$owner", count: { $sum: 1 } } },
+        { $group: { _id: null, avgPets: { $avg: "$count" } } }
+    ]);
+
+    if (aggregate.length > 0) {
+        return aggregate[0].avgPets;
+    } else {
+        return 0;
+    }
+}
+
+async function getPopularPetType() {
+    const result = await Pet.aggregate([
+        { $group: { _id: "$type", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 1 }
+    ]);
+    return result.length > 0 ? result[0]._id : null;
+}
+
+async function getPopularPetColor() {
+    const result = await Pet.aggregate([
+        { $group: { _id: "$color", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 1 }
+    ]);
+    return result.length > 0 ? result[0]._id : null;
+}
+
+async function getPopularPetBreed() {
+    const result = await Pet.aggregate([
+        { $group: { _id: "$species", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 1 }
+    ]);
+    return result.length > 0 ? result[0]._id : null;
+}
+
+async function getReportsAndAnalyticsPage(req, res) {
+    const averagePetAge = await getAveragePetAge();
+    const avgPetsPerOwner = await calculateAveragePetsPerOwner();
+    const popularPetType = await getPopularPetType();
+    const popularPetColor = await getPopularPetColor();
+    const popularPetBreed = await getPopularPetBreed();
+
+    res.render('reports-and-analytics', {
+        title: 'Báo cáo và phân tích',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+        averagePetAge: JSON.stringify(averagePetAge),
+        avgPetsPerOwner: avgPetsPerOwner.toFixed(2),
+        popularPetType,
+        popularPetColor,
+        popularPetBreed,
+        layout: 'admin',
+    });
+}
+
 async function removeNotification(req, res) {
     try {
         const notificationId = req.body.notificationId;
@@ -147,7 +232,7 @@ async function removeAccount(req, res) {
 async function removePet(req, res) {
     try {
         const petId = req.body.petId;
-        
+
         console.log(petId);
 
         const deletedPet = await Pet.findOneAndDelete({ petId: petId });
@@ -296,4 +381,5 @@ module.exports = {
     removeAccount,
     removePet,
     removeSchedule,
+    getReportsAndAnalyticsPage,
 };

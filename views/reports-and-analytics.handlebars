@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/css/reports-and-analytics.css">
+
+<div class="container-fluid px-4">
+    <h4 class="mt-4">Báo cáo và phân tích</h4>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Các báo cáo và thống kê
+        </div>
+        <div class="card-body">
+            <section id="pet-age-analysis">
+                <h5>Phân Tích Tuổi Thú Cưng</h5>
+                <p>Biểu đồ phân bố tuổi trung bình của thú cưng theo loại:</p>
+                <canvas id="petAgeChart"></canvas>
+            </section>
+
+            <section id="owner-statistics">
+                <h5>Thống Kê Theo Chủ Sở Hữu</h5>
+                <p>Thống kê số lượng thú cưng trung bình mỗi chủ sở hữu.</p>
+                <div class="alert alert-info" role="alert">
+                    Số lượng thú cưng trung bình mỗi chủ sở hữu: <strong>{{avgPetsPerOwner}}</strong>
+                </div>
+            </section>
+
+            <section id="popular-trends">
+                <h5>Xu Hướng Phổ Biến</h5>
+                <p>Loại thú cưng, màu sắc, và giống nào là phổ biến nhất, dựa trên dữ liệu đăng ký.</p>
+                <p>Loại thú cưng phổ biến nhất: <strong>{{popularPetType}}</strong></p>
+                <p>Màu sắc phổ biến nhất: <strong>{{popularPetColor}}</strong></p>
+                <p>Giống phổ biến nhất: <strong>{{popularPetBreed}}</strong></p>
+            </section>
+
+            <!-- Phân Tích Dịch Vụ -->
+            <section id="service-analysis">
+                <h5>Phân Tích Dịch Vụ</h5>
+                <p>Dữ liệu về các dịch vụ được sử dụng nhiều nhất qua hệ thống, như lịch hẹn thăm thú y, dịch vụ làm đẹp, hoặc khám sức khỏe định kỳ.</p>
+                <ul>
+                    <li>Lịch hẹn thăm thú y: 150 lần</li>
+                    <li>Dịch vụ làm đẹp: 90 lần</li>
+                    <li>Khám sức khỏe định kỳ: 120 lần</li>
+                </ul>
+            </section>
+
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var averagePetAge = {{{averagePetAge}}};
+</script>
+
+<script src="/js/reports-and-analytics.js"></script>

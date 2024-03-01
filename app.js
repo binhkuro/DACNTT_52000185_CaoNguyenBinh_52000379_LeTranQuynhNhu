@@ -448,6 +448,13 @@ app.get("/pet-management", (req, res) => {
     adminController.getPetManagementPage(req, res);
 })
 
+app.get("/reports-and-analytics", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getReportsAndAnalyticsPage(req, res);
+})
+
 app.get("/admin:profileid::username", (req, res) => {
     if (req.session.username !== "admin")
         return res.redirect("/login");
