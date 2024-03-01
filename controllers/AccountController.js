@@ -61,18 +61,33 @@ async function initData() {
 
 async function getHomePage(req, res) {
     const currentDate = new Date();
-    let today = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+    let todayStr = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 
     let notifications = await Notification.find({
-        username: req.session.username,
-        date: { $gte: today }
-    }).sort({ date: 1 }).lean().exec();
-    
-    console.log(notifications);
-    
-    let latestNotification = notifications.length > 0 ? notifications[0] : null;
-    let upcomingNotification = notifications.find(n => n.date > today) || null;
-    let todayNotification = notifications.filter(n => n.date === today);
+        username: req.session.username
+    }).lean().exec();
+
+    notifications.forEach(notification => {
+        notification.dateObj = new Date(notification.date.split('/').reverse().join('-'));
+    });
+
+    notifications.sort((a, b) => a.dateObj - b.dateObj);
+
+    let latestNotification = null;
+    for (let i = notifications.length - 1; i >= 0; i--) {
+        if (notifications[i].dateObj < currentDate) {
+            latestNotification = notifications[i];
+            break;
+        }
+    }
+
+    let upcomingNotification = notifications.find(n => n.dateObj > currentDate) || null;
+
+    let todayNotification = notifications.filter(n => n.date === todayStr);
+
+    notifications.forEach(notification => {
+        delete notification.dateObj;
+    });
 
     res.render('index', {
         title: 'Trang Chủ',
