@@ -216,7 +216,11 @@ app.get('/petDetail', (req, res) => {
 });
 
 app.get('/environment', (req, res) => {
-    res.render('environment');
+    res.render('environment', {
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture
+    });
 });
 
 app.get("/introduce", (req, res) => {
