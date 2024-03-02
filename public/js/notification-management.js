@@ -11,11 +11,13 @@ function lockUser(username) {
         .then(() => location.reload())
 }
 
-function sendEmail(email) {
-    fetch("/send-email", {
+function sendNotificationMail(username, date, event) {
+    fetch("/send-notification-mail", {
             method: "post",
             body: new URLSearchParams({
-                'email': email
+                'username': username,
+                'date': date,
+                'event': event
             })
         })
         .then(() => showCustomToast("Gửi email thành công", "Thông báo"))

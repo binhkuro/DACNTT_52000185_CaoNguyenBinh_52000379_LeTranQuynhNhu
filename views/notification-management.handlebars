@@ -36,8 +36,7 @@
                             <td>{{username}}</td>
                             <td class="button-cell" style="text-align: center; vertical-align: middle;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                                    <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
-                                    <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
+                                    <button class="btn btn-primary" onclick="sendNotificationMail('{{username}}', '{{date}}', '{{event}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <button class="btn btn-danger deleteNotificationModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deleteNotificationModal" data-notification-id="{{notificationId}}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>

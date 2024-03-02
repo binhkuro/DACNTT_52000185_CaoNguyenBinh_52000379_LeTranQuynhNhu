@@ -387,6 +387,22 @@ async function sendMail(req, res) {
     mailController.sendMail(mail, subject, content);
 }
 
+async function sendNotificationMail(req, res) {
+    let username = req.body.username;
+    const account = await Account.findOne({ username: username }).exec();
+    let mail = account.email;
+    let date = req.body.date;
+    let event = req.body.event;
+
+    console.log(mail)
+    console.log(date)
+    console.log(event)
+
+    let subject = `Thông báo ngày ${date} của bạn`;
+    let content = `<a href=${process.env.APP_URL}/login> Vào ngày ${date} bạn có nhắc nhở '${event}'!</a>`;
+    mailController.sendMail(mail, subject, content);
+}
+
 async function sendScheduleMail(req, res) {
     let username = req.body.username;
     const account = await Account.findOne({ username: username }).exec();
@@ -408,6 +424,7 @@ module.exports = {
     getScheduleManagementPage,
     getNotificationManagementPage,
     sendMail,
+    sendNotificationMail,
     sendScheduleMail,
     removeNotification,
     removeAccount,

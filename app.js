@@ -508,6 +508,11 @@ app.post("/send-mail", (req, res) => {
     res.end();
 })
 
+app.post("/send-notification-mail", (req, res) => {
+    adminController.sendNotificationMail(req, res);
+    res.end();
+})
+
 app.post("/send-schedule-mail", (req, res) => {
     adminController.sendScheduleMail(req, res);
     res.end();
