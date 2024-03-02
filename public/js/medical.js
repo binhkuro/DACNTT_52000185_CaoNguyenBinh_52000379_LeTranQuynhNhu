@@ -174,22 +174,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
             eventsList.forEach((item, index) => {
                 const eventItem = document.createElement('li');
-                eventItem.textContent = `${item.event}`;
                 eventItem.style.position = 'relative';
+                eventItem.style.display = 'flex';
+                eventItem.style.alignItems = 'center';
+        
+                const textContainer = document.createElement('div');
+                const eventNumber = index + 1;
+                const splitEventText = item.event.match(/.{1,15}/g) || [];
+                const formattedEventText = `<strong>${eventNumber}.</strong> ${splitEventText.join('<br>')}`;
+                textContainer.innerHTML = formattedEventText;
+                textContainer.style.flexGrow = '1';
+        
+                eventItem.appendChild(textContainer);
         
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'x';
                 deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
-                deleteButton.style.position = 'absolute';
-                deleteButton.style.right = '0';
-                deleteButton.style.marginRight = '5px';
-
+                deleteButton.style.marginLeft = '10px';
+        
                 const editButton = document.createElement('button');
                 editButton.textContent = 'edit';
                 editButton.classList.add('btn', 'btn-sm', 'btn-warning');
-                editButton.style.position = 'absolute';
-                editButton.style.right = '20px';
-                editButton.style.marginRight = '5px';
+                editButton.style.marginLeft = '5px';
 
                 var modalUpdate = document.getElementById("updateModal");
                 var spanClose = modalUpdate.querySelector(".close");
@@ -244,9 +250,19 @@ document.addEventListener('DOMContentLoaded', function() {
             notificationBoardContent.appendChild(eventsListElement);
         } else if (eventsList.length === 1) {
             const eventItem = document.createElement('div');
-            eventItem.textContent = eventsList[0].event;
-            eventItem.style.textAlign = 'center';
+            eventItem.style.display = 'flex';
+            eventItem.style.alignItems = 'center';
+            eventItem.style.justifyContent = 'flex-start';
             eventItem.style.position = 'relative';
+        
+            const textContainer = document.createElement('div');
+            const splitEventText = eventsList[0].event.match(/.{1,17}/g) || [];
+            const formattedEventText = splitEventText.join('<br>');
+            textContainer.innerHTML = formattedEventText;
+            textContainer.style.flexGrow = '1';
+        
+            textContainer.style.paddingLeft = '40px'; 
+            eventItem.appendChild(textContainer);
         
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'x';
