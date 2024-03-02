@@ -25,14 +25,22 @@ function showCustomToast(message, title) {
     }, 5000);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var deleteButtons = document.querySelectorAll('.deleteScheduleModalToggle');
-    var scheduleIdInput = document.getElementById('scheduleId');
+function setScheduleId(scheduleId) {
+    document.getElementById('deleteScheduleForm').setAttribute('data-schedule-id', scheduleId);
+}
 
-    deleteButtons.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var scheduleId = btn.getAttribute('data-schedule-id');
-            scheduleIdInput.value = scheduleId;
-        });
-    });
+document.getElementById('confirmDelete').addEventListener('click', function() {
+    const scheduleId = document.getElementById('deleteScheduleForm').getAttribute('data-schedule-id');
+    
+    fetch(`/delete-schedule-management`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ scheduleId: scheduleId }),
+    })
+    .then(() => {
+        window.location.reload(); 
+        $('#deleteScheduleModal').modal('hide');
+    })
 });

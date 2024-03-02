@@ -50,7 +50,7 @@
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                     <button class="btn btn-primary" onclick="sendEmail('{{email}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
                                     <a href="/admin:profileid:{{username}}" class="btn btn-secondary" style="text-decoration: none; color: white;"><i class="fa-solid fa-circle-info"></i></a>
-                                    <button class="btn btn-danger deleteAccountModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deleteAccountModal" data-account-id="{{username}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal" onclick="setAccountId('{{username}}')"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -66,21 +66,17 @@
 <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="/delete-account" method="post">
+            <form id="deleteAccountForm" action="/delete-account" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteAccountModalLabel">Xác Nhận Xóa Người Dùng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Bạn có chắc chắn muốn xóa người dùng này không?
-                    <div class="form-group" hidden>
-                        <label for="username">Id người dùng:</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{username}}">
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
                 </div>
             </form>
         </div>

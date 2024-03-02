@@ -296,7 +296,6 @@ async function removeNotification(req, res) {
 async function removeAccount(req, res) {
     try {
         const username = req.body.username;
-
         const notificationExists = await Notification.findOne({ username: username });
         if (notificationExists) {
             req.flash("error", "Không thể xóa người dùng. Người dùng này đã tạo dữ liệu nhắc nhở.");

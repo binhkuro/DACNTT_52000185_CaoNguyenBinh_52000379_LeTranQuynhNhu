@@ -11,7 +11,7 @@ function lockUser(username) {
         .then(() => location.reload())
 }
 
-function sendEmail(email) {
+function sendEmail(email) { 
     fetch("/send-email", {
             method: "post",
             body: new URLSearchParams({
@@ -36,14 +36,22 @@ function showCustomToast(message, title) {
     }, 5000);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var deleteButtons = document.querySelectorAll('.deleteAccountModalToggle');
-    var accountIdInput = document.getElementById('username');
+function setAccountId(username) {
+    document.getElementById('deleteAccountForm').setAttribute('data-account-id', username);
+}
 
-    deleteButtons.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var accountId = btn.getAttribute('data-account-id');
-            accountIdInput.value = accountId;
-        });
-    });
+document.getElementById('confirmDelete').addEventListener('click', function() {
+    const username = document.getElementById('deleteAccountForm').getAttribute('data-account-id');
+    
+    fetch(`/delete-account`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username }),
+    })
+    .then(() => {
+        window.location.reload(); 
+        $('#deleteAccountModal').modal('hide');
+    })
 });
