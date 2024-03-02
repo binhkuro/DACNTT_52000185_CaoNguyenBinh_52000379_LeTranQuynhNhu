@@ -97,6 +97,19 @@ async function getNotificationManagementPage(req, res) {
     });
 }
 
+async function getNotificationManagementPage(req, res) {
+    let notifications = await Notification.find().lean().exec();
+
+    res.render('notification-management', {
+        title: 'Quản lý nhắc nhở',
+        username: req.session.username,
+        fullname: req.session.fullname,
+        profilePicture: req.session.profilePicture,
+        notifications: notifications,
+        layout: 'admin',
+    });
+}
+
 async function getScheduleManagementPage(req, res) {
     let schedules = await Schedule.find().lean().exec();
 
@@ -108,6 +121,42 @@ async function getScheduleManagementPage(req, res) {
         schedules: schedules,
         layout: 'admin',
     });
+}
+
+async function getAnalysisStatisticsPage(req, res) {
+    try {
+        const users = await Account.find({}).lean().exec();
+
+        const userData = [];
+
+        for (const user of users) {
+            const userPetCount = await Pet.countDocuments({ username: user.username }).exec();
+            const userNotificationCount = await Notification.countDocuments({ username: user.username }).exec();
+            const userScheduleCount = await Schedule.countDocuments({ username: user.username }).exec();
+
+            userData.push({
+                profilePicture: user.profilePicture,
+                email: user.email,
+                username: user.username,
+                fullname: user.fullname,
+                petCount: userPetCount,
+                notificationCount: userNotificationCount,
+                scheduleCount: userScheduleCount
+            });
+        }
+
+        res.render('analysis-statistics', {
+            title: 'Số liệu thống kê',
+            username: req.session.username,
+            fullname: req.session.fullname,
+            profilePicture: req.session.profilePicture,
+            userData: userData,
+            layout: 'admin'
+        });
+    } catch (error) {
+        req.flash("error", "Đã xảy ra lỗi khi lấy số liệu thống kê");
+        res.redirect('/admin-home');
+    }
 }
 
 async function getAveragePetAge() {
@@ -433,6 +482,7 @@ module.exports = {
     getAccountManagementPage,
     getPetManagementPage,
     getScheduleManagementPage,
+    getAnalysisStatisticsPage,
     getNotificationManagementPage,
     sendMail,
     sendNotificationMail,

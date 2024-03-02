@@ -480,6 +480,13 @@ app.get("/notification-management", (req, res) => {
     adminController.getNotificationManagementPage(req, res);
 })
 
+app.get("/analysis-statistics", (req, res) => {
+    if (req.session.username !== "admin")
+        return res.redirect("/login");
+
+    adminController.getAnalysisStatisticsPage(req, res);
+})
+
 app.get("/schedule-management", (req, res) => {
     if (req.session.username !== "admin")
         return res.redirect("/login");

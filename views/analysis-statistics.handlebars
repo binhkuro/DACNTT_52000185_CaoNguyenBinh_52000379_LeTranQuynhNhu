@@ -1,0 +1,138 @@
+<link rel="stylesheet" href="/css/analysis-statistics.css">
+
+<div class="container-fluid px-4">
+    <h4 class="mt-4">Thống kê số liệu</h4>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Số lượng thú cưng theo người dùng
+        </div>
+        <div class="card-body">
+            <table id="petTable" class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng thú cưng sở hữu</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng thú cưng sở hữu</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#each userData}}
+                        <tr>
+                            <td>{{inc @index}}</td>
+                            <td><img src="/uploads/avatars/{{profilePicture}}" class="avatar-small"></td>
+                            <td>{{username}}</td>
+                            <td>{{email}}</td>
+                            <td>{{fullname}}</td>
+                            <td>{{petCount}}</td>
+                        </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Số lượng lịch trình y tế theo người dùng
+        </div>
+        <div class="card-body">
+            <table id="scheduleTable" class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng lịch trình y tế đã tạo</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng lịch trình y tế đã tạo</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#each userData}}
+                        <tr>
+                            <td>{{inc @index}}</td>
+                            <td><img src="/uploads/avatars/{{profilePicture}}" class="avatar-small"></td>
+                            <td>{{username}}</td>
+                            <td>{{email}}</td>
+                            <td>{{fullname}}</td>
+                            <td>{{scheduleCount}}</td>
+                        </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Số lượng nhắc nhở theo người dùng
+        </div>
+        <div class="card-body">
+            <table id="notificationTable" class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng nhắc nhở đã tạo</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Tên người dùng</th>
+                        <th>Số lượng nhắc nhở đã tạo</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {{#each userData}}
+                        <tr>
+                            <td>{{inc @index}}</td>
+                            <td><img src="/uploads/avatars/{{profilePicture}}" class="avatar-small"></td>
+                            <td>{{username}}</td>
+                            <td>{{email}}</td>
+                            <td>{{fullname}}</td>
+                            <td>{{notificationCount}}</td>
+                        </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/analysis-statistics.js"></script>
