@@ -38,14 +38,23 @@ function showCustomToast(message, title) {
     }, 5000);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var deleteButtons = document.querySelectorAll('.deleteNotificationModalToggle');
-    var notificationIdInput = document.getElementById('notificationId');
+function setNotificationId(notificationId) {
+    document.getElementById('deleteNotificationForm').setAttribute('data-notification-id', notificationId);
+}
 
-    deleteButtons.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var notificationId = btn.getAttribute('data-notification-id');
-            notificationIdInput.value = notificationId;
-        });
-    });
+document.getElementById('confirmDelete').addEventListener('click', function() {
+    const notificationId = document.getElementById('deleteNotificationForm').getAttribute('data-notification-id');
+    
+    fetch(`/delete-notification`, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ notificationId: notificationId }),
+    })
+    .then(() => {
+        window.location.reload(); 
+        console.log(notificationId)
+        $('#deleteNotificationModal').modal('hide');
+    })
 });

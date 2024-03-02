@@ -247,6 +247,25 @@ async function removeNotification(req, res) {
 async function removeAccount(req, res) {
     try {
         const username = req.body.username;
+
+        const notificationExists = await Notification.findOne({ username: username });
+        if (notificationExists) {
+            req.flash("error", "Không thể xóa người dùng. Người dùng này đã tạo dữ liệu nhắc nhở.");
+            return res.redirect('/account-management');
+        }
+
+        const petExists = await Pet.findOne({ username: username });
+        if (petExists) {
+            req.flash("error", "Không thể xóa người dùng. Người dùng này đã tạo dữ liệu thú cưng.");
+            return res.redirect('/account-management');
+        }
+
+        const scheduleExists = await Schedule.findOne({ username: username });
+        if (scheduleExists) {
+            req.flash("error", "Không thể xóa người dùng. Người dùng này đã tạo dữ liệu lịch trình y tế.");
+            return res.redirect('/account-management');
+        }
+        
         const deletedAccount = await Account.findOneAndDelete({ username: username });
         if (deletedAccount) {
             req.flash("success", "Xóa người dùng thành công");
@@ -265,8 +284,6 @@ async function removePet(req, res) {
     try {
         const petId = req.body.petId;
 
-        console.log(petId);
-
         const deletedPet = await Pet.findOneAndDelete({ petId: petId });
         if (deletedPet) {
             req.flash("success", "Xóa thú cưng thành công");
@@ -276,7 +293,6 @@ async function removePet(req, res) {
             res.redirect('/pet-management');
         }
     } catch (error) {
-        console.log(error)
         req.flash("error", "Xóa nhắc nhở thất bại");
         res.redirect('/pet-management');
     }
@@ -393,11 +409,6 @@ async function sendNotificationMail(req, res) {
     let mail = account.email;
     let date = req.body.date;
     let event = req.body.event;
-
-    console.log(mail)
-    console.log(date)
-    console.log(event)
-
     let subject = `Thông báo ngày ${date} của bạn`;
     let content = `<a href=${process.env.APP_URL}/login> Vào ngày ${date} bạn có nhắc nhở '${event}'!</a>`;
     mailController.sendMail(mail, subject, content);

@@ -37,7 +37,7 @@
                             <td class="button-cell" style="text-align: center; vertical-align: middle;">
                                 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
                                     <button class="btn btn-primary" onclick="sendNotificationMail('{{username}}', '{{date}}', '{{event}}')"><i class="fa-solid fa-envelope-circle-check"></i></button> 
-                                    <button class="btn btn-danger deleteNotificationModalToggle" type="button" data-bs-toggle="modal" data-bs-target="#deleteNotificationModal" data-notification-id="{{notificationId}}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteNotificationModal" onclick="setNotificationId('{{notificationId}}')"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -53,21 +53,17 @@
 <div class="modal fade" id="deleteNotificationModal" tabindex="-1" aria-labelledby="deleteNotificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="/delete-notification" method="post">
+            <form id="deleteNotificationForm" action="/delete-notification" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteNotificationModalLabel">Xác Nhận Xóa Thông Báo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa thông báo này không?
-                    <div class="form-group" hidden>
-                        <label for="notificationId">Id nhắc nhở:</label>
-                        <input type="text" class="form-control" id="notificationId" name="notificationId" value="{{notificationId}}">
-                    </div>
+                    Bạn có chắc chắn muốn xóa nhắc nhở này không?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
                 </div>
             </form>
         </div>
