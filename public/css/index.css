@@ -39,7 +39,7 @@ body {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 1200px;
-    height: 500px;
+    height: 600px;
 }
 
 .notification-header h2 {
@@ -89,6 +89,10 @@ body {
 .notification-table th {
     background-color: #f2f2f2;
     color: #333;
+}
+
+.notification-content .row {
+    padding: 10px 0;
 }
 
 .table-container {
@@ -169,7 +173,7 @@ table td {
 .cat-image {
     position: absolute;
     right: 0px;
-    bottom: 50px;
+    bottom: 30px;
     width: 100px;
 }
 

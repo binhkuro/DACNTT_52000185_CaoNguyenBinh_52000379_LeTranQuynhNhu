@@ -60,6 +60,8 @@ async function initData() {
 }
 
 async function getHomePage(req, res) {
+    const currentBeforeDate = new Date();
+    currentBeforeDate.setHours(0, 0, 0, 0);
     const currentDate = new Date();
     let todayStr = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 
@@ -73,18 +75,22 @@ async function getHomePage(req, res) {
 
     notifications.sort((a, b) => a.dateObj - b.dateObj);
 
-    let latestNotification = null;
+    let oneLatestNotification = null;
     for (let i = notifications.length - 1; i >= 0; i--) {
-        if (notifications[i].dateObj < currentDate) {
-            latestNotification = notifications[i];
+        if (notifications[i].dateObj < currentBeforeDate) {
+            oneLatestNotification = notifications[i];
             break;
         }
     }
-
-    let upcomingNotification = notifications.find(n => n.dateObj > currentDate) || null;
+    let latestDate = oneLatestNotification ? oneLatestNotification.date : null;
+    let latestNotification = notifications.filter(n => n.date === latestDate);
 
     let todayNotification = notifications.filter(n => n.date === todayStr);
 
+    let oneUpcomingNotification = notifications.find(n => n.dateObj > currentDate) || null;
+    let upcomingDate = oneUpcomingNotification ? oneUpcomingNotification.date : null;
+    let upcomingNotification = notifications.filter(n => n.date === upcomingDate);
+        
     notifications.forEach(notification => {
         delete notification.dateObj;
     });

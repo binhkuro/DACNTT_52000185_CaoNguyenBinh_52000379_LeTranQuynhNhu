@@ -29,45 +29,69 @@
             </div>
             <div class="notification-content">
                 <div class="row">
-                    <div class="col">
-                        <h2>Nhắc nhở gần đây:</h2>
-                        {{#if latestNotification}}
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text">Date: {{latestNotification.date}}</p>
-                                <p class="card-text">Event: {{latestNotification.event}}</p>
+                    <div class="col-12">
+                        <h5>NHẮC NHỞ GẦN ĐÂY:</h5>
+                        {{#if latestNotification.length}}
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">Ngày: {{latestNotification.[0].date}}</p>
+                                    <p class="card-text">Sự kiện:
+                                        {{#each latestNotification}}
+                                            {{#if @first}}{{event}}
+                                            {{else}}{{#if (gt @index 4)}}{{else}}, {{event}}{{/if}}
+                                            {{/if}}
+                                        {{/each}}
+                                        {{#if (gt latestNotification.length 5)}}...{{/if}}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                         {{else}}
-                        <p>Không có nhắc nhở gần đây.</p>
-                        {{/if}}
-                    </div>
-                    <div class="col">
-                        <h2>Nhắc nhở sắp tới:</h2>
-                        {{#if upcomingNotification}}
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text">Date: {{upcomingNotification.date}}</p>
-                                <p class="card-text">Event: {{upcomingNotification.event}}</p>
-                            </div>
-                        </div>
-                        {{else}}
-                        <p>Không có nhắc nhở sắp tới.</p>
+                            <p>Không có nhắc nhở gần đây.</p>
                         {{/if}}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <h2>Nhắc nhở hôm nay:</h2>
-                        {{#each todayNotification}}
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text">Nhắc nhở {{inc @index}}:</p>
-                                <p class="card-text">Ngày: {{date}}</p>
-                                <p class="card-text">Sự kiện: {{event}}</p>
+                    <div class="col-12">
+                        <h5>NHẮC NHỞ SẮP TỚI:</h5>
+                        {{#if upcomingNotification.length}}
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">Ngày: {{upcomingNotification.[0].date}}</p>
+                                    <p class="card-text">Sự kiện:
+                                        {{#each upcomingNotification}}
+                                            {{#if @first}}{{event}}
+                                            {{else}}{{#if (gt @index 4)}}{{else}}, {{event}}{{/if}}
+                                            {{/if}}
+                                        {{/each}}
+                                        {{#if (gt upcomingNotification.length 5)}}...{{/if}}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        {{/each}}
+                        {{else}}
+                            <p>Không có nhắc nhở sắp tới.</p>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>NHẮC NHỞ HÔM NAY:</h5>
+                        {{#if todayNotification.length}}
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">Ngày: {{todayNotification.[0].date}}</p>
+                                    <p class="card-text">Sự kiện:
+                                        {{#each todayNotification}}
+                                            {{#if @first}}{{event}}
+                                            {{else}}{{#if (gt @index 4)}}{{else}}, {{event}}{{/if}}
+                                            {{/if}}
+                                        {{/each}}
+                                        {{#if (gt todayNotification.length 5)}}...{{/if}}
+                                    </p>
+                                </div>
+                            </div>
+                        {{else}}
+                            <p>Không có nhắc nhở hôm nay.</p>
+                        {{/if}}
                     </div>
                 </div>
             </div>
