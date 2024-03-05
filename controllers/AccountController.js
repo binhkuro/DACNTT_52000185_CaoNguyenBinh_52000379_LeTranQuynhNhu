@@ -38,7 +38,7 @@ async function initData() {
         fullname: "Cao Nguyên Bình",
         phoneNumber: "0942563747",
         address: "142, Thống Nhất, khóm 01, phường 05, thành phố Bạc Liêu, tỉnh Bạc Liêu",
-        profilePicture: "default-avatar.png",
+        profilePicture: "cnbinhblvn.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -53,7 +53,7 @@ async function initData() {
         fullname: "Lê Trần Quỳnh Như",
         phoneNumber: "0853094094",
         address: "160/8A, chợ Láng Tròn, Thị Xã Giá Rai, tỉnh Bạc Liêu",
-        profilePicture: "default-avatar.png",
+        profilePicture: "ltqn1692.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -68,7 +68,7 @@ async function initData() {
         fullname: "Trần Gia Kỳ",
         phoneNumber: "0909778472",
         address: "145, Phạm Ngũ Lão, quận 5, thành phố Hồ Chí Minh",
-        profilePicture: "default-avatar.png",
+        profilePicture: "soulknight.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -82,7 +82,7 @@ async function initData() {
         fullname: "Toàn Nhí Nhảnh",
         phoneNumber: "0988778424",
         address: "155, Trần Quốc Toản, phường 8, thành phố Cần Thơ, tỉnh Cần Thơ",
-        profilePicture: "default-avatar.png",
+        profilePicture: "nguimethucung.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -96,7 +96,7 @@ async function initData() {
         fullname: "Khiêm Kháu Khỉnh",
         phoneNumber: "0877998776",
         address: "987, Trần Hưng Đạo, phường 12, thành phố Hậu Giang, tỉnh Hậu Giang",
-        profilePicture: "default-avatar.png",
+        profilePicture: "meolaban.jpg",
         activateStatus: 1,
         lockedStatus: 1
     });
@@ -110,7 +110,7 @@ async function initData() {
         fullname: "Trần Trung Trực",
         phoneNumber: "0634522123",
         address: "543/2A, Lý Thường Kiệt, phường 5, thành phố Bắc Giang, tỉnh Bắc Giang",
-        profilePicture: "default-avatar.png",
+        profilePicture: "kebian6931.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -124,7 +124,7 @@ async function initData() {
         fullname: "Trần Như Quỳnh",
         phoneNumber: "0704816896",
         address: "125, Lý Công Uẩn, phường 3, thành phố Hải Phòng, tỉnh Hải Phòng",
-        profilePicture: "default-avatar.png",
+        profilePicture: "nhuquynhCute.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -138,7 +138,7 @@ async function initData() {
         fullname: "Anh Lê",
         phoneNumber: "0912345768",
         address: "177, Phạm Ngũ Lão, phường Tân Thọ, thành phố Ninh Bình, tỉnh Ninh Bình",
-        profilePicture: "default-avatar.png",
+        profilePicture: "baobinht2.jpg",
         activateStatus: 0,
         lockedStatus: 1
     });
@@ -152,7 +152,7 @@ async function initData() {
         fullname: "Nguyễn Tiến Đạt",
         phoneNumber: "0334353660",
         address: "20/6B/1A, Lê Đại Hành, phường 3, thành phố Tiền Giang, tỉnh Tiền Giang",
-        profilePicture: "default-avatar.png",
+        profilePicture: "menot123.jpg",
         activateStatus: 0,
         lockedStatus: 1
     });
@@ -166,7 +166,7 @@ async function initData() {
         fullname: "Nguyễn Minh Nghiêm",
         phoneNumber: "0911257832",
         address: "333, Hải Thượng Lãn Ông, phường 4, thành phố An Giang, tỉnh An Giang",
-        profilePicture: "default-avatar.png",
+        profilePicture: "nghiemngayngan.jpg",
         activateStatus: 0,
         lockedStatus: 0
     });
@@ -180,7 +180,7 @@ async function initData() {
         fullname: "Lê Khắc Nghiêm",
         phoneNumber: "0454777558",
         address: "98/7A, Lê Long Đỉnh, phường Bến Nghế, thành phố Kiên Giang, tỉnh Kiên Giang",
-        profilePicture: "default-avatar.png",
+        profilePicture: "khacnghiem123.jpg",
         activateStatus: 1,
         lockedStatus: 1
     });
@@ -194,7 +194,7 @@ async function initData() {
         fullname: "Lê Phạm Anh Trí",
         phoneNumber: "0344556210",
         address: "100/10A, Nguyễn Hữu Thọ, phường Tân Phong, thành phố Hà Nội",
-        profilePicture: "default-avatar.png",
+        profilePicture: "ltri0429.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -208,7 +208,7 @@ async function initData() {
         fullname: "Vũ Nhật Long",
         phoneNumber: "0907614570",
         address: "123, Đường số 1, Quận 1, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "nhatlongvu.jpg",
         activateStatus: 1,
         lockedStatus: 1
     });
@@ -222,7 +222,7 @@ async function initData() {
         fullname: "Ông Tấn Phát",
         phoneNumber: "0942811202",
         address: "456, Đường số 2, Quận 2, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "phatongtan.jpg",
         activateStatus: 0,
         lockedStatus: 0
     });
@@ -236,7 +236,7 @@ async function initData() {
         fullname: "Trần Thanh Thịnh",
         phoneNumber: "0876888822",
         address: "789, Đường số 3, Quận 3, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "thinhtran.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -250,7 +250,7 @@ async function initData() {
         fullname: "Trương Quốc Thịnh",
         phoneNumber: "0233888999",
         address: "101, Đường số 4, Quận 4, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "thinhtruong.jpg",
         activateStatus: 0,
         lockedStatus: 1
     });
@@ -263,7 +263,7 @@ async function initData() {
         fullname: "Lê Đông Hải",
         phoneNumber: "0544332111",
         address: "202, Đường số 5, Quận 5, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "haidongle.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -276,7 +276,7 @@ async function initData() {
         fullname: "Phạm Hồng Dương",
         phoneNumber: "0238444111",
         address: "303, Đường số 6, Quận 6, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "duongpham.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -289,7 +289,7 @@ async function initData() {
         fullname: "Lê Phạm Anh Trí",
         phoneNumber: "0922334511",
         address: "404, Đường số 7, Quận 7, TP.HCM",
-        profilePicture: "default-avatar.png",
+        profilePicture: "trilephan.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -303,7 +303,7 @@ async function initData() {
         fullname: "Diệp Chấn Phong",
         phoneNumber: "0778416279",
         address: "122, Nguyễn Hữu Thọ, phường Tân Hưng, quận 7, thành phố Hồ Chí Minh",
-        profilePicture: "default-avatar.png",
+        profilePicture: "diepchanphong.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
@@ -317,7 +317,7 @@ async function initData() {
         fullname: "Cao Nhật Bình",
         phoneNumber: "0948844848",
         address: "300, Thống Nhất, khóm 2, phường 7, thành phố Bạc Liêu",
-        profilePicture: "default-avatar.png",
+        profilePicture: "nhatbinhmapcutie.jpg",
         activateStatus: 1,
         lockedStatus: 0
     });
