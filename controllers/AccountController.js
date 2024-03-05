@@ -13,6 +13,8 @@ async function initData() {
     await Account.deleteMany()
 
     const hashedPasswordAdmin = await bcrypt.hash("A123456789", 10);
+    const hashedPasswordUser = await bcrypt.hash("A12345678", 10);
+
     // Tài khoản admin
     let account = new Account({
         email: "admin@gmail.com",
@@ -57,6 +59,270 @@ async function initData() {
     });
 
     await account2.save()
+
+    const hashedPasswordUser3 = await bcrypt.hash("A12345678", 10);
+    let account3 = new Account({
+        email: "binhcaonguyen12@gmail.com",
+        username: "soulknight",
+        password: hashedPasswordUser3,
+        fullname: "Trần Gia Kỳ",
+        phoneNumber: "0909778472",
+        address: "145, Phạm Ngũ Lão, quận 5, thành phố Hồ Chí Minh",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account3.save()
+
+    let account4 = new Account({
+        email: "caobinhnguyen21@gmail.com",
+        username: "nguimethucung",
+        password: hashedPasswordUser,
+        fullname: "Toàn Nhí Nhảnh",
+        phoneNumber: "0988778424",
+        address: "155, Trần Quốc Toản, phường 8, thành phố Cần Thơ, tỉnh Cần Thơ",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account4.save()
+
+    let account5 = new Account({
+        email: "swnl6930@gmail.com",
+        username: "meolaban",
+        password: hashedPasswordUser,
+        fullname: "Khiêm Kháu Khỉnh",
+        phoneNumber: "0877998776",
+        address: "987, Trần Hưng Đạo, phường 12, thành phố Hậu Giang, tỉnh Hậu Giang",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 1
+    });
+
+    await account5.save()
+
+    let account6 = new Account({
+        email: "swnl6931@gmail.com",
+        username: "kebian6931",
+        password: hashedPasswordUser,
+        fullname: "Trần Trung Trực",
+        phoneNumber: "0634522123",
+        address: "543/2A, Lý Thường Kiệt, phường 5, thành phố Bắc Giang, tỉnh Bắc Giang",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account6.save()
+
+    let account7 = new Account({
+        email: "ltqn1692@gmail.com",
+        username: "nhuquynhCute",
+        password: hashedPasswordUser,
+        fullname: "Trần Như Quỳnh",
+        phoneNumber: "0704816896",
+        address: "125, Lý Công Uẩn, phường 3, thành phố Hải Phòng, tỉnh Hải Phòng",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account7.save()
+
+    let account8 = new Account({
+        email: "letranquynhanh22@gmail.com",
+        username: "baobinht2",
+        password: hashedPasswordUser,
+        fullname: "Anh Lê",
+        phoneNumber: "0912345768",
+        address: "177, Phạm Ngũ Lão, phường Tân Thọ, thành phố Ninh Bình, tỉnh Ninh Bình",
+        profilePicture: "default-avatar.png",
+        activateStatus: 0,
+        lockedStatus: 1
+    });
+
+    await account8.save()
+
+    let account9 = new Account({
+        email: "immenot123@gmail.com",
+        username: "menot123",
+        password: hashedPasswordUser,
+        fullname: "Nguyễn Tiến Đạt",
+        phoneNumber: "0334353660",
+        address: "20/6B/1A, Lê Đại Hành, phường 3, thành phố Tiền Giang, tỉnh Tiền Giang",
+        profilePicture: "default-avatar.png",
+        activateStatus: 0,
+        lockedStatus: 1
+    });
+
+    await account9.save()
+
+    let account10 = new Account({
+        email: "nghiem782002@gmail.com",
+        username: "nghiemngayngan",
+        password: hashedPasswordUser,
+        fullname: "Nguyễn Minh Nghiêm",
+        phoneNumber: "0911257832",
+        address: "333, Hải Thượng Lãn Ông, phường 4, thành phố An Giang, tỉnh An Giang",
+        profilePicture: "default-avatar.png",
+        activateStatus: 0,
+        lockedStatus: 0
+    });
+
+    await account10.save()
+
+    let account11 = new Account({
+        email: "nghiem7755@gmail.com",
+        username: "khacnghiem123",
+        password: hashedPasswordUser,
+        fullname: "Lê Khắc Nghiêm",
+        phoneNumber: "0454777558",
+        address: "98/7A, Lê Long Đỉnh, phường Bến Nghế, thành phố Kiên Giang, tỉnh Kiên Giang",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 1
+    });
+
+    await account11.save()
+
+    let account12 = new Account({
+        email: "ltri0429@gmail.com",
+        username: "ltri0429",
+        password: hashedPasswordUser,
+        fullname: "Lê Phạm Anh Trí",
+        phoneNumber: "0344556210",
+        address: "100/10A, Nguyễn Hữu Thọ, phường Tân Phong, thành phố Hà Nội",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account12.save()
+
+    let account13 = new Account({
+        email: "longnhat1982002@gmail.com",
+        username: "nhatlongvu",
+        password: hashedPasswordUser,
+        fullname: "Vũ Nhật Long",
+        phoneNumber: "0907614570",
+        address: "123, Đường số 1, Quận 1, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 1
+    });
+
+    await account13.save();
+
+    let account14 = new Account({
+        email: "ongtanphat25@gmail.com",
+        username: "phatongtan",
+        password: hashedPasswordUser,
+        fullname: "Ông Tấn Phát",
+        phoneNumber: "0942811202",
+        address: "456, Đường số 2, Quận 2, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 0,
+        lockedStatus: 0
+    });
+
+    await account14.save();
+
+    let account15 = new Account({
+        email: "ttthinhvip@gmail.com",
+        username: "thinhtran",
+        password: hashedPasswordUser,
+        fullname: "Trần Thanh Thịnh",
+        phoneNumber: "0876888822",
+        address: "789, Đường số 3, Quận 3, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account15.save();
+
+    let account16 = new Account({
+        email: "truongthinh252423@gmail.com",
+        username: "thinhtruong",
+        password: hashedPasswordUser,
+        fullname: "Trương Quốc Thịnh",
+        phoneNumber: "0233888999",
+        address: "101, Đường số 4, Quận 4, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 0,
+        lockedStatus: 1
+    });
+    await account16.save();
+    
+    let account17 = new Account({
+        email: "ledonghai0404@gmail.com",
+        username: "haidongle",
+        password: hashedPasswordUser,
+        fullname: "Lê Đông Hải",
+        phoneNumber: "0544332111",
+        address: "202, Đường số 5, Quận 5, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+    await account17.save();
+    
+    let account18 = new Account({
+        email: "phduong249@gmail.com",
+        username: "duongpham",
+        password: hashedPasswordUser,
+        fullname: "Phạm Hồng Dương",
+        phoneNumber: "0238444111",
+        address: "303, Đường số 6, Quận 6, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+    await account18.save();
+    
+    let account19 = new Account({
+        email: "lephamanhtri000@gmail.com",
+        username: "trilephan",
+        password: hashedPasswordUser,
+        fullname: "Lê Phạm Anh Trí",
+        phoneNumber: "0922334511",
+        address: "404, Đường số 7, Quận 7, TP.HCM",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account19.save();
+
+    let account20 = new Account({
+        email: "pp18050406@gmail.com",
+        username: "diepchanphong",
+        password: hashedPasswordUser,
+        fullname: "Diệp Chấn Phong",
+        phoneNumber: "0778416279",
+        address: "122, Nguyễn Hữu Thọ, phường Tân Hưng, quận 7, thành phố Hồ Chí Minh",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account20.save();
+
+    let account21 = new Account({
+        email: "caonhatbinhlsgsv@gmail.com",
+        username: "nhatbinhmapcutie",
+        password: hashedPasswordUser,
+        fullname: "Cao Nhật Bình",
+        phoneNumber: "0948844848",
+        address: "300, Thống Nhất, khóm 2, phường 7, thành phố Bạc Liêu",
+        profilePicture: "default-avatar.png",
+        activateStatus: 1,
+        lockedStatus: 0
+    });
+
+    await account21.save();
 }
 
 async function getHomePage(req, res) {
@@ -136,40 +402,40 @@ async function registerAccount(req, res) {
     // Kiểm tra tính hợp lệ của dữ liệu
     if (req.body.email === "" || req.body.username === "" || req.body.fullname === "" || req.body.phoneNumber === "" || req.body.address === "" || req.body.password === "" || req.body.confirmPassword === "") {
         req.flash("error", "Vui lòng không bỏ trống thông tin");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     if (!mailController.isEmail(req.body.email)) {
         req.flash("error", "Email không hợp lệ");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     // Kiểm tra username (ít nhất 5 kí tự, không chứa kí tự đặc biệt)
     if (!/^[A-Za-z0-9]{5,}$/.test(req.body.username)) {
         req.flash("error", "Username phải có ít nhất 5 kí tự và không chứa kí tự đặc biệt");
-        return res.render("register", { error: req.flash("error"), ...req.body });
+        return res.redirect('/register');
     }
 
     // Kiểm tra số điện thoại
     if (!/^\d{10}$/.test(req.body.phoneNumber)) {
         req.flash("error", "Số điện thoại phải gồm 10 chữ số");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     // Kiểm tra mật khẩu
     if (!/(?=.*[A-Z]).{8,16}/.test(req.body.password)) {
         req.flash("error", "Mật khẩu phải dài từ 8 đến 16 ký tự và có ít nhất một chữ cái in hoa");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     if (req.body.password !== req.body.confirmPassword) {
         req.flash("error", "Mật khẩu và xác nhận mật khẩu không khớp");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     if ((await mailController.checkEmailExistence(req.body.email)) === false) {
         req.flash("error", "Địa chỉ email không tồn tại");
-        return res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+        return res.redirect('/register');
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -190,11 +456,12 @@ async function registerAccount(req, res) {
         .then(newAccount => {
             sendEmail(req, res);
             req.flash("success", "Đăng ký tài khoản thành công. Vui lòng kiểm tra email của bạn");
-            res.render("register", { success: req.flash("success") });
+            res.redirect('/register');
         })
         .catch(error => {
+            console.log(error)
             req.flash("error", "Email hoặc username này đã tồn tại");
-            res.render("register", { error: req.flash("error"), email: req.body.email, username: req.body.username, fullname: req.body.fullname, phoneNumber: req.body.phoneNumber, address: req.body.address });
+            res.redirect('/register');
         });
 }
 

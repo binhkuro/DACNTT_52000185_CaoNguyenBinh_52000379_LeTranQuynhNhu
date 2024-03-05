@@ -542,6 +542,8 @@ app.use((err, req, res, next) => {
 mongoose.connect(CONNECTION_STRING)
     .then(() => {
         accountController.initData();
+        petController.initData();
+
         console.log('Đã kết nối cơ sở dữ liệu');
         server.listen(PORT, () => {
             console.log(`Server đang chạy trên cổng ${PORT}`);

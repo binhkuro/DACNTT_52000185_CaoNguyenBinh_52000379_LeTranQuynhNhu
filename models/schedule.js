@@ -24,8 +24,6 @@ let scheduleSchema = new Schema({
         type: String,
         required: true
     }
-}, {
-    timestamps: true
 });
 
 let Schedule = mongoose.model("Schedule", scheduleSchema);

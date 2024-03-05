@@ -185,10 +185,10 @@ async function getAveragePetAge() {
 
 async function calculateAveragePetsPerOwner() {
     const aggregate = await Pet.aggregate([
-        { $group: { _id: "$owner", count: { $sum: 1 } } },
+        { $group: { _id: "$username", count: { $sum: 1 } } },
         { $group: { _id: null, avgPets: { $avg: "$count" } } }
     ]);
-
+    
     if (aggregate.length > 0) {
         return aggregate[0].avgPets;
     } else {
