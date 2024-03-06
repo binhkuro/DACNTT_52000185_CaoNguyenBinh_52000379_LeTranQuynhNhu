@@ -349,7 +349,7 @@ async function initData() {
         type: "Mèo",
         species: "Mèo Turkish Van",
         gender: "Cái",
-        color: "Trắng với đốm đỏ",
+        color: "Trắng với đốm vàng",
         special: "Thích nước và bơi lội",
         username: "soulknight"
     });
@@ -464,7 +464,7 @@ async function initData() {
     let pet31 = new Pet({
         petId: "03032024001931",
         name: "Simba",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "simba-nhatlongvu.jpg",
         age: 3,
         type: "Mèo",
         species: "Mèo Anh Lông Dài",
@@ -479,7 +479,7 @@ async function initData() {
     let pet32 = new Pet({
         petId: "03032024001932",
         name: "Hazel",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "hazel-phatongtan.jpg",
         age: 2,
         type: "Mèo",
         species: "Mèo Munchkin",
@@ -494,12 +494,12 @@ async function initData() {
     let pet33 = new Pet({
         petId: "03032024001933",
         name: "Murphy",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "murphy-phatongtan.jpg",
         age: 4,
         type: "Chó",
         species: "Australian Shepherd",
         gender: "Đực",
-        color: "Xanh đen và trắng",
+        color: "Đen vàng và trắng",
         special: "Rất thông minh và trung thành",
         username: "phatongtan"
     });
@@ -509,7 +509,7 @@ async function initData() {
     let pet34 = new Pet({
         petId: "03032024001934",
         name: "Willow",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "willow-nghiemngayngan.jpg",
         age: 5,
         type: "Mèo",
         species: "Mèo Himalaya",
@@ -524,7 +524,7 @@ async function initData() {
     let pet35 = new Pet({
         petId: "03032024001935",
         name: "Toby",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "toby-haidongle.jpg",
         age: 2,
         type: "Chó",
         species: "Poodle",
@@ -539,7 +539,7 @@ async function initData() {
     let pet36 = new Pet({
         petId: "03032024001936",
         name: "Milo",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "milo-trilephan.jpg",
         age: 1,
         type: "Mèo",
         species: "Mèo Anh Lông Ngắn",
@@ -554,12 +554,12 @@ async function initData() {
     let pet37 = new Pet({
         petId: "03032024001937",
         name: "Bailey",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "bailey-haidongle.jpg",
         age: 2,
         type: "Chó",
         species: "Cavalier King Charles Spaniel",
         gender: "Cái",
-        color: "Nâu và trắng",
+        color: "Nâu, đen và trắng",
         special: "Rất dễ thương và thích gần gũi với con người",
         username: "haidongle"
     });
@@ -569,12 +569,12 @@ async function initData() {
     let pet38 = new Pet({
         petId: "03032024001938",
         name: "Cleo",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "cleo-trilephan.jpg",
         age: 3,
         type: "Mèo",
         species: "Mèo Devon Rex",
         gender: "Cái",
-        color: "Nâu",
+        color: "Xám",
         special: "Có tính cách hiếu động và thích khám phá",
         username: "trilephan"
     });
@@ -584,7 +584,7 @@ async function initData() {
     let pet39 = new Pet({
         petId: "03032024001939",
         name: "Dexter",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "dexter-nhatlongvu.jpg",
         age: 4,
         type: "Chó",
         species: "French Bulldog",
@@ -599,13 +599,13 @@ async function initData() {
     let pet41 = new Pet({
         petId: "03032024001941",
         name: "Gizmo",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "gizmo-meolaban.jpg",
         age: 6,
         type: "Mèo",
         species: "Mèo Devon Rex",
         gender: "Đực",
-        color: "Xám",
-        special: "Có bộ lông xoăn đặc trưng, rất thân thiện",
+        color: "Xám trắng",
+        special: "Có bộ lông ngắn nhưng xoăn đặc trưng, rất thân thiện",
         username: "meolaban"
     });
 
@@ -614,7 +614,7 @@ async function initData() {
     let pet43 = new Pet({
         petId: "03032024001943",
         name: "Jasper",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "jasper-diepchanphong.jpg",
         age: 4,
         type: "Mèo",
         species: "Mèo Norwegian Forest",
@@ -629,7 +629,7 @@ async function initData() {
     let pet44 = new Pet({
         petId: "03032024001944",
         name: "Zelda",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "zelda-diepchanphong.jpg",
         age: 2,
         type: "Mèo",
         species: "Mèo Siberian",
@@ -644,12 +644,12 @@ async function initData() {
     let pet45 = new Pet({
         petId: "03032024001945",
         name: "Milo",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "milo-diepchanphong.jpg",
         age: 1,
         type: "Chó",
         species: "French Bulldog",
         gender: "Đực",
-        color: "Nâu",
+        color: "Vàng",
         special: "Thích gặp gỡ người mới và rất dễ thương",
         username: "diepchanphong"
     });
@@ -659,12 +659,12 @@ async function initData() {
     let pet46 = new Pet({
         petId: "03032024001946",
         name: "Piper",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "piper-meolaban.jpg",
         age: 2,
         type: "Mèo",
         species: "Mèo American Shorthair",
         gender: "Cái",
-        color: "Bạc",
+        color: "Xám vằn đen",
         special: "Rất nhanh nhẹn và thích chơi đùa",
         username: "meolaban"
     });
@@ -674,7 +674,7 @@ async function initData() {
     let pet47 = new Pet({
         petId: "03032024001947",
         name: "Frankie",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "frankie-nhatlongvu.jpg",
         age: 3,
         type: "Chó",
         species: "Boston Terrier",
@@ -689,7 +689,7 @@ async function initData() {
     let pet48 = new Pet({
         petId: "03032024001948",
         name: "Lola",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "lola-nhatbinhmapcutie.jpg",
         age: 1,
         type: "Mèo",
         species: "Mèo Bengal",
@@ -704,7 +704,7 @@ async function initData() {
     let pet49 = new Pet({
         petId: "03032024001949",
         name: "Bruno",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "bruno-kebian6931.jpg",
         age: 4,
         type: "Chó",
         species: "Boxer",
@@ -719,7 +719,7 @@ async function initData() {
     let pet50 = new Pet({
         petId: "03032024001950",
         name: "Nala",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "nala-nhatbinhmapcutie.jpg",
         age: 3,
         type: "Mèo",
         species: "Mèo Siamese",
@@ -734,7 +734,7 @@ async function initData() {
     let pet51 = new Pet({
         petId: "03032024001955",
         name: "Bella",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "bella-ltqn1692.jpg",
         age: 1,
         type: "Mèo",
         species: "Border Collie",
@@ -749,7 +749,7 @@ async function initData() {
     let pet52 = new Pet({
         petId: "03032024001952",
         name: "Dexter",
-        petPicture: "mèo bảy màu.jpg",
+        petPicture: "dexter-duongpham.jpg",
         age: 3,
         type: "Mèo",
         species: "Dachshund",
