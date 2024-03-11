@@ -77,13 +77,13 @@ body {
     border-radius: 0 0.25rem 0.25rem 0;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
+.custom-control-input:checked~.custom-control-label::before {
     color: #fff;
     border-color: black;
     background-color: black;
 }
 
-.custom-control-input ~ .custom-control-label::before {
+.custom-control-input~.custom-control-label::before {
     border-color: black;
 }
 
@@ -121,4 +121,17 @@ body {
     90% {
         opacity: 1;
     }
+}
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.background-image {
+    width: 800px;
 }

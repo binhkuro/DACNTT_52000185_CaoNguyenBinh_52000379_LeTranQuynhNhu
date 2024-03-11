@@ -81,3 +81,16 @@ body {
 .input-group-append .btn {
     border-radius: 0 0.25rem 0.25rem 0;
 }
+
+.background-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.background-image {
+    width: 800px;
+}
