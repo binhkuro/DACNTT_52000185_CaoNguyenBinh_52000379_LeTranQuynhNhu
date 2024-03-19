@@ -7,7 +7,7 @@
 
 ## Hướng dẫn chạy website
 
-1. Clone project trên Github về máy tính.
+1. Clone trên Github hoặc tải project về máy tính.
 2. Mở cmd và gõ lệnh `yarn install` để tải các module trong file `package.json`.
 3. Mở cmd và gõ lệnh `node app.js`.
 
