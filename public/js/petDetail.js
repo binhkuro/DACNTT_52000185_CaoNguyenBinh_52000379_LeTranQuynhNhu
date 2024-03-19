@@ -36,7 +36,7 @@ socket.on('note', (healthIssues) => {
             console.log('Cảnh báo được nhấn:', issue.warning); // Gỡ lỗi xem cảnh báo nào được nhấn
 
             const modalContent = document.getElementById('modalContent');
-            let contentHtml = '<p>' + issue.suggestion + '</p>'; // Đảm bảo rằng đây là nội dung bạn muốn hiển thị
+            let contentHtml = '<p>' + issue.suggestion + '</p>';
 
             if (issue.warning.includes('Nhiệt độ cơ thể của chó thấp, cần giữ ấm. Xem thêm...')) {
                 contentHtml += `
