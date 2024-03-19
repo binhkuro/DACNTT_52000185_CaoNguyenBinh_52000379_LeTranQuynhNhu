@@ -24,5 +24,3 @@ Mở trình duyệt và truy cập vào địa chỉ `http://localhost:8080`.
 
 - Tài khoản: cnbinhblvn
 - Mật khẩu: A12345678
-
-## Video demo
