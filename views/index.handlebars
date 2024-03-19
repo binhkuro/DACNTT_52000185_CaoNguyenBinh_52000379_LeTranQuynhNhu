@@ -1,38 +1,32 @@
 <link rel="stylesheet" href="/css/index.css">
-<div>
-    <!-- Bao bên ngoài cho cả ba section -->
-    <div class="services-container">
-        <!-- Section Theo dõi sức khỏe -->
-        <section id="health-tracking">
-            <img src="/img/health.png" alt="Health Tracking Icon" class="service-item">
+<div class="container mt-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <img src="/img/health.png" alt="Health Tracking Icon" class="img-fluid mb-2">
             <h3>Theo dõi sức khỏe</h3>
-        </section>
-
-        <!-- Section Quản lý lịch trình y tế -->
-        <section id="medical-schedule">
-            <img src="/img/yte.png" alt="Medical Schedule Icon" class="service-item">
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="/img/yte.png" alt="Medical Schedule Icon" class="img-fluid mb-2">
             <h3>Quản lý lịch trình y tế</h3>
-        </section>
-
-        <!-- Section Môi trường sống thú cưng -->
-        <section id="environment-management">
-            <img src="/img/environment.png" alt="Environment Management Icon" class="service-item">
+        </div>
+        <div class="col-md-4 mb-4">
+            <img src="/img/environment.png" alt="Environment Management Icon" class="img-fluid mb-2">
             <h3>Môi trường sống thú cưng</h3>
-        </section>
+        </div>
     </div>
 </div>
-<div class="container">
-    <div class="content-container">
-        <div class="notification-container">
-            <div class="notification-header">
-                <h2>Thông Báo</h2>
-            </div>
-            <div class="notification-content">
-                <div class="row">
-                    <div class="col-12">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="notification-container p-4 shadow rounded bg-white">
+                <div class="notification-header mb-4">
+                    <h2 class="text-center">Thông Báo</h2>
+                </div>
+                <div class="notification-content">
+                    <div class="mb-3">
                         <h5>NHẮC NHỞ GẦN ĐÂY:</h5>
                         {{#if latestNotification.length}}
-                            <div class="card">
+                            <div class="card mb-2">
                                 <div class="card-body">
                                     <p class="card-text">Ngày: {{latestNotification.[0].date}}</p>
                                     <p class="card-text">Sự kiện:
@@ -49,12 +43,11 @@
                             <p>Không có nhắc nhở gần đây.</p>
                         {{/if}}
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
+
+                    <div class="mb-3">
                         <h5>NHẮC NHỞ SẮP TỚI:</h5>
                         {{#if upcomingNotification.length}}
-                            <div class="card">
+                            <div class="card mb-2">
                                 <div class="card-body">
                                     <p class="card-text">Ngày: {{upcomingNotification.[0].date}}</p>
                                     <p class="card-text">Sự kiện:
@@ -71,12 +64,10 @@
                             <p>Không có nhắc nhở sắp tới.</p>
                         {{/if}}
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
+                    <div class="mb-3">
                         <h5>NHẮC NHỞ HÔM NAY:</h5>
                         {{#if todayNotification.length}}
-                            <div class="card">
+                            <div class="card mb-2">
                                 <div class="card-body">
                                     <p class="card-text">Ngày: {{todayNotification.[0].date}}</p>
                                     <p class="card-text">Sự kiện:
@@ -97,11 +88,11 @@
             </div>
         </div>
     </div>
-    <img src="/img/mydieu.png" alt="Cat Image" class="cat-image">
 </div>
-
-<div class="background-image-container">
-    <img src="/img/background.png" alt="Image" class="background-image">
+<div class="container mt-5">
+    <div class="background-image-container">
+        <img src="/img/background.png" alt="Image" class="background-image">
+    </div>
 </div>
 
 <script src="/js/index.js"></script>
