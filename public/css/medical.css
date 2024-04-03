@@ -209,7 +209,7 @@ body {
 .notification-board {
     display: none;
     position: fixed;
-    right: 80px;
+    right: 30px;
     top: 165px;
     width: 300px;
     background-color: #fff;
@@ -223,7 +223,7 @@ body {
 
 @keyframes animateRight {
     from {right: -300px; opacity: 0;}
-    to {right: 80px; opacity: 1;} 
+    to {right: 30px; opacity: 1;} 
 }
 
 .notification-board-header {
